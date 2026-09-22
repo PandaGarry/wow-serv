@@ -1,0 +1,14 @@
+# Артефакты сборки
+dist/
+
+# Зависимости тестового стенда
+tools/node_modules/
+tools/package-lock.json
+
+# Временные файлы редакторов
+*.bak
+*.orig
+*.swp
+*~
+.DS_Store
+Thumbs.db

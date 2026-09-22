@@ -1,0 +1,12 @@
+{
+  "name": "admin-tools-ru-tools",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Проверка и упаковка аддона Admin Tools RU",
+  "scripts": {
+    "test": "node test/run.js"
+  },
+  "dependencies": {
+    "fengari": "^0.1.4"
+  }
+}

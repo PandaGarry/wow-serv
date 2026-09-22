@@ -1,0 +1,10 @@
+<Bindings>
+	<!--
+		Горячая клавиша для панели. Появляется в меню «Назначение клавиш» (категория «Admin Tools RU»).
+		Файл загружается клиентом автоматически, в .toc его указывать НЕ нужно.
+		Если горячая клавиша не нужна — просто удали этот файл.
+	-->
+	<Binding name="ADMINTOOLSRU_TOGGLE" header="ADMINTOOLSRU" runOnUp="false">
+		if AT and AT.Toggle then AT.Toggle() end
+	</Binding>
+</Bindings>

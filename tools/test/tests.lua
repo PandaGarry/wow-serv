@@ -1,0 +1,550 @@
+--===========================================================================
+-- tools/test/tests.lua
+-- Набор проверок аддона Admin Tools RU на заглушке WoW API.
+-- Результат складывается в глобальную таблицу AT_TEST (её читает run.js).
+--===========================================================================
+
+local T = { pass = 0, fail = 0, fails = {}, notes = {} }
+AT_TEST = T
+
+local function ok(cond, name, extra)
+	if cond then
+		T.pass = T.pass + 1
+	else
+		T.fail = T.fail + 1
+		table.insert(T.fails, name .. (extra and ("  → " .. tostring(extra)) or ""))
+	end
+	return cond and true or false
+end
+
+local function eq(actual, expected, name)
+	return ok(actual == expected, name,
+		"ожидалось [" .. tostring(expected) .. "], получено [" .. tostring(actual) .. "]")
+end
+
+local function note(s) table.insert(T.notes, s) end
+
+--===========================================================================
+-- Вспомогательные поиски
+--===========================================================================
+local function FindButton(tabName, textPart)
+	local page = AT.pages[tabName]
+	if not page then return nil end
+	for _, c in ipairs(page:GetChildren()) do
+		if c.__kind == "Button" and c:IsShown() then
+			local t = c:GetText() or ""
+			if t:find(textPart, 1, true) then return c end
+		end
+	end
+	return nil
+end
+
+local function ButtonsOf(tabName)
+	local out = {}
+	local page = AT.pages[tabName]
+	if not page then return out end
+	for _, c in ipairs(page:GetChildren()) do
+		if c.__kind == "Button" and c:IsShown() then table.insert(out, c) end
+	end
+	return out
+end
+
+local function EditsOf(tabName)
+	local out = {}
+	local page = AT.pages[tabName]
+	if not page then return out end
+	for _, c in ipairs(page:GetChildren()) do
+		if c.__kind == "EditBox" and c:IsShown() then table.insert(out, c) end
+	end
+	return out
+end
+
+--===========================================================================
+-- 1. Загрузка и реестр вкладок
+--===========================================================================
+eq(type(AT), "table", "AT создан при загрузке Core.lua")
+eq(type(AT.frame), "table", "главное окно AT.frame создано")
+eq(#AT.TABS, 10, "зарегистрировано 10 вкладок")
+
+local EXPECTED_TABS = {
+	"Телепорт", "Путешествие", "Боты", "NPC", "Себя",
+	"Персонаж", "Группа", "Сервер", "Настройки", "Свои",
+}
+for i, name in ipairs(EXPECTED_TABS) do
+	eq(AT.TABS[i], name, "порядок вкладок: " .. name)
+	ok(AT.tabButtons[name] ~= nil, "есть кнопка вкладки «" .. name .. "»")
+	ok(AT.pages[name] ~= nil, "есть страница вкладки «" .. name .. "»")
+	ok(AT.scrolls[name] ~= nil, "есть прокрутка вкладки «" .. name .. "»")
+end
+
+-- Страницы должны иметь реальные размеры
+for _, name in ipairs(AT.TABS) do
+	local page = AT.pages[name]
+	ok(page:GetWidth() > 300, "ширина страницы «" .. name .. "» > 300 (" .. tostring(page:GetWidth()) .. ")")
+	ok(AT.pageBottom[page] ~= nil, "учтён низ контента «" .. name .. "»")
+end
+
+-- Сохранённые переменные инициализированы
+eq(type(AdminToolsDB), "table", "AdminToolsDB создан по ADDON_LOADED")
+eq(AdminToolsDB.echo, true, "по умолчанию эхо команд включено")
+eq(AdminToolsDB.mySec, 3, "по умолчанию уровень доступа 3")
+eq(AdminToolsDB.restrictBySec, false, "по умолчанию блокировка по уровню выключена")
+eq(type(AdminToolsDB.tabVisibility), "table", "таблица видимости вкладок создана")
+eq(type(AdminToolsDB.custom), "table", "список своих кнопок создан")
+ok(#STUB.chat > 0, "аддон что-то сказал в чат при загрузке")
+
+--===========================================================================
+-- 2. Высота страниц и влезание контента
+--===========================================================================
+for _, name in ipairs(AT.TABS) do
+	local page = AT.pages[name]
+	AT.ShowPage(name)
+	local h = AT.FitPage(page)
+	ok(h and h > 0, "высота страницы «" .. name .. "» > 0 (" .. tostring(h) .. ")")
+
+	local pageLeft, pageRight = page:GetLeft(), page:GetRight()
+	for _, c in ipairs(page:GetChildren()) do
+		if c:IsShown() and c.__kind == "Button" then
+			local right = c:GetRight()
+			ok(right <= pageRight + 1,
+				"кнопка влезает по ширине в «" .. name .. "»",
+				string.format("«%s» правый край %.0f > %.0f", tostring(c:GetText()), right, pageRight))
+
+			local left = c:GetLeft()
+			ok(left >= pageLeft - 1,
+				"кнопка не вылезает влево в «" .. name .. "»",
+				string.format("«%s» левый край %.0f < %.0f", tostring(c:GetText()), left, pageLeft))
+		end
+	end
+end
+
+--===========================================================================
+-- 3. Все кнопки: клик без ошибок и осмысленный результат
+--===========================================================================
+local totalClicked = 0
+
+-- Для кнопок «OK» в строках форм заполняем поля той же строки,
+-- иначе кнопка справедливо ничего не делает.
+local function FillFormRow(btn, page)
+	if not page then return end
+	local by = (btn:GetTop() + btn:GetBottom()) / 2
+	local bx = btn:GetLeft()
+	for _, c in ipairs(page:GetChildren()) do
+		if c.__kind == "EditBox" and c:IsShown() then
+			local cy = (c:GetTop() + c:GetBottom()) / 2
+			if math.abs(cy - by) < 6 and c:GetRight() <= bx + 8 then
+				c:SetText("1")
+			end
+		end
+	end
+end
+
+-- Масштаб не по умолчанию, чтобы кнопки «-», «+» и сброс были заметны
+AT.SetScale(1.2)
+
+for _, tabName in ipairs(AT.TABS) do
+	if tabName ~= "Свои" then
+		AT.ShowPage(tabName)
+		for _, btn in ipairs(ButtonsOf(tabName)) do
+			local label = tostring(btn:GetText())
+			local page = AT.pages[tabName]
+			STUB.ClearSent()
+			STUB.visiblePopup = nil
+			local chatBefore = #STUB.chat
+			local menusBefore = #STUB.dropdownOpened
+			local scaleBefore = AT.GetScale()
+
+			if label == "OK" then FillFormRow(btn, page) end
+
+			local clicked, err = STUB.Click(btn, "LeftButton")
+			totalClicked = totalClicked + 1
+
+			ok(clicked, "клик без ошибки: " .. tabName .. " / " .. label, err)
+
+			local msg = STUB.LastCommand()
+			if msg then
+				local first = msg:sub(1, 1)
+				ok(first == "." or first == "#", "команда начинается с точки: " .. msg)
+				ok(#msg > 1, "команда не пустая: " .. label)
+				ok(not msg:find("nil", 1, true), "в команде нет nil: " .. msg)
+				ok(not msg:find(" ", -1, true), "в конце команды нет пробела: [" .. msg .. "]")
+			else
+				local effect = (STUB.visiblePopup ~= nil)
+					or (#STUB.chat > chatBefore)
+					or (#STUB.dropdownOpened > menusBefore)
+					or (AT.GetScale() ~= scaleBefore)
+				ok(effect, "кнопка что-то делает (команда, попап, меню или сообщение): "
+					.. tabName .. " / " .. label)
+				if STUB.visiblePopup then
+					ok(type(STUB.visiblePopup.data) == "string" or STUB.visiblePopup.data == nil,
+						"попап несёт команду: " .. tostring(STUB.visiblePopup.data))
+				end
+			end
+		end
+	end
+end
+
+ok(totalClicked > 60, "прокликано больше 60 кнопок (" .. totalClicked .. ")")
+note("прокликано кнопок: " .. totalClicked)
+
+-- Вернуть настройки, которые могли поменяться при прокликивании
+AdminToolsDB.mySec = 3
+AdminToolsDB.restrictBySec = false
+AT.SetScale(1)
+STUB.visiblePopup = nil
+
+--===========================================================================
+-- 4. Подтверждения (попапы)
+--===========================================================================
+STUB.ClearSent()
+STUB.visiblePopup = nil
+AT.ConfirmCmd(".server restart 60", "Перезапустить сервер?")
+ok(STUB.visiblePopup ~= nil, "AT.ConfirmCmd показал попап")
+eq(STUB.visiblePopup and STUB.visiblePopup.data, ".server restart 60", "попап несёт команду")
+
+local accepted = STUB.AcceptPopup(AT.POPUP_CONFIRM)
+ok(accepted, "нажатие «Да» обработано")
+eq(STUB.LastCommand(), ".server restart 60", "после подтверждения команда ушла")
+
+-- «Опасные» кнопки на вкладке «Сервер» должны требовать подтверждения
+local restartBtn = FindButton("Сервер", "Рестарт 60с")
+ok(restartBtn ~= nil, "найдена кнопка «Рестарт 60с»")
+if restartBtn then
+	STUB.ClearSent()
+	STUB.visiblePopup = nil
+	STUB.Click(restartBtn)
+	eq(#STUB.sent, 0, "без подтверждения команда не уходит")
+	ok(STUB.visiblePopup ~= nil, "и показывается попап")
+	STUB.AcceptPopup()
+	eq(STUB.LastCommand(), ".server restart 60", "после подтверждения уходит .server restart 60")
+end
+
+--===========================================================================
+-- 5. Предупреждение о столице вражеской фракции
+--===========================================================================
+STUB.faction = "Horde"
+STUB.ClearSent()
+STUB.visiblePopup = nil
+
+local stormwindBtn = FindButton("Телепорт", "Штормград")
+ok(stormwindBtn ~= nil, "найдена кнопка «Штормград»")
+if stormwindBtn then
+	STUB.Click(stormwindBtn)
+	eq(#STUB.sent, 0, "ордынец не телепортируется в Штормград без подтверждения")
+	ok(STUB.visiblePopup ~= nil, "показано предупреждение о вражеской столице")
+	eq(STUB.visiblePopup and STUB.visiblePopup.data, ".tele Stormwind", "попап несёт .tele Stormwind")
+	STUB.AcceptPopup()
+	eq(STUB.LastCommand(), ".tele Stormwind", "после согласия телепорт выполнен")
+end
+
+-- Своя столица — без вопросов
+local orgrimmarBtn = FindButton("Телепорт", "Оргриммар")
+if orgrimmarBtn then
+	STUB.ClearSent()
+	STUB.visiblePopup = nil
+	STUB.Click(orgrimmarBtn)
+	eq(STUB.LastCommand(), ".tele Orgrimmar", "своя столица телепортируется сразу")
+	eq(#STUB.popups > 0 and STUB.visiblePopup ~= nil, false, "для своей столицы попап не показывается")
+end
+
+STUB.faction = "Alliance"
+STUB.visiblePopup = nil
+
+--===========================================================================
+-- 6. Ограничение по уровню доступа
+--===========================================================================
+AdminToolsDB.restrictBySec = true
+AdminToolsDB.mySec = 1
+
+local delNpcBtn = FindButton("NPC", "Удалить выбранного NPC")
+ok(delNpcBtn ~= nil, "найдена кнопка «Удалить выбранного NPC»")
+if delNpcBtn then
+	STUB.ClearSent()
+	local chatBefore = #STUB.chat
+	STUB.Click(delNpcBtn)
+	eq(#STUB.sent, 0, "кнопка уровня 3 не срабатывает на уровне 1")
+	ok(#STUB.chat > chatBefore, "и объясняет причину в чате")
+end
+
+AdminToolsDB.mySec = 3
+STUB.ClearSent()
+if delNpcBtn then
+	STUB.Click(delNpcBtn)
+	eq(STUB.LastCommand(), ".npc delete", "на уровне 3 та же кнопка работает")
+end
+
+AdminToolsDB.restrictBySec = false
+
+--===========================================================================
+-- 7. Видимость вкладок
+--===========================================================================
+ok(AT.IsTabVisible("Боты"), "вкладка «Боты» видна по умолчанию")
+AT.SetTabVisible("Боты", false)
+ok(not AT.IsTabVisible("Боты"), "вкладку «Боты» можно скрыть")
+ok(not AT.tabButtons["Боты"]:IsShown(), "кнопка скрытой вкладки не показана")
+
+AT.ApplyTabVisibility()
+local xs = {}
+local overlaps = 0
+for _, name in ipairs(AT.TABS) do
+	local b = AT.tabButtons[name]
+	if b and b:IsShown() then
+		if xs[b:GetLeft()] then overlaps = overlaps + 1 end
+		xs[b:GetLeft()] = true
+	end
+end
+eq(overlaps, 0, "кнопки видимых вкладок не накладываются друг на друга")
+
+AT.SetTabVisible("Настройки", false)
+ok(AT.IsTabVisible("Настройки"), "вкладку «Настройки» нельзя скрыть (иначе не вернуть остальные)")
+
+AT.SetTabVisible("Боты", true)
+AT.ApplyTabVisibility()
+ok(AT.tabButtons["Боты"]:IsShown(), "вкладку «Боты» можно вернуть")
+
+-- Переключение на скрытую вкладку не должно срабатывать
+AT.ShowPage("Боты")
+AT.SetTabVisible("Боты", false)
+ok(AT.currentTab ~= "Боты", "после скрытия текущей вкладки панель переключилась на другую")
+AT.SetTabVisible("Боты", true)
+AT.ApplyTabVisibility()
+
+--===========================================================================
+-- 8. Слэш-команды
+--===========================================================================
+STUB.ClearSent()
+SlashCmdList["ADMINTOOLSRU"]("")
+ok(AT.frame:IsShown(), "/admin открывает панель")
+SlashCmdList["ADMINTOOLSRU"]("")
+ok(not AT.frame:IsShown(), "повторный /admin закрывает панель")
+
+STUB.ClearSent()
+SlashCmdList["ADMINTOOLSRU"]("tele stormwind")
+eq(STUB.LastCommand(), ".tele stormwind", "/admin <команда> выполняет команду")
+
+STUB.ClearSent()
+SlashCmdList["ADMINTOOLSRU"](".gps")
+eq(STUB.LastCommand(), ".gps", "точка в команде не дублируется")
+
+local chatBefore = #STUB.chat
+SlashCmdList["ADMINTOOLSRUHELP"]()
+ok(#STUB.chat - chatBefore >= 5, "/ath печатает справку")
+
+local echoBefore = AT.EchoEnabled()
+SlashCmdList["ADMINTOOLSRUECHO"]()
+eq(AT.EchoEnabled(), not echoBefore, "/atecho переключает эхо команд")
+SlashCmdList["ADMINTOOLSRUECHO"]()
+eq(AT.EchoEnabled(), echoBefore, "/atecho возвращает эхо обратно")
+
+--===========================================================================
+-- 9. RunCmd: нормализация, обрезка, история
+--===========================================================================
+STUB.ClearSent()
+AT.RunCmd("   tele   dalaran   ")
+eq(STUB.LastCommand(), ".tele   dalaran", "RunCmd обрезает пробелы по краям")
+
+STUB.ClearSent()
+AT.RunCmd("")
+AT.RunCmd(nil)
+eq(#STUB.sent, 0, "пустая команда и nil ничего не отправляют")
+
+STUB.ClearSent()
+AT.RunCmd(string.rep("x", 400))
+eq(#STUB.LastCommand(), 255, "слишком длинная команда обрезается до 255 символов")
+
+AT.history = {}
+for i = 1, 35 do AT.RunCmd(".gps " .. i) end
+eq(#AT.history, 30, "история ограничена 30 командами")
+eq(AT.history[1], ".gps 35", "последняя команда лежит первой")
+AT.RunCmd(".gps 35")
+local dup = 0
+for _, c in ipairs(AT.history) do if c == ".gps 35" then dup = dup + 1 end end
+eq(dup, 1, "повтор команды не плодит дубликаты в истории")
+
+--===========================================================================
+-- 10. Кнопка на миникарте
+--===========================================================================
+local mmBtn = _G["AdminToolsRUMMBtn"]
+ok(mmBtn ~= nil, "кнопка на миникарте создана")
+if mmBtn then
+	AT.frame:Hide()
+	STUB.Click(mmBtn, "LeftButton")
+	ok(AT.frame:IsShown(), "ЛКМ по кнопке миникарты открывает панель")
+	STUB.Click(mmBtn, "LeftButton")
+	ok(not AT.frame:IsShown(), "повторный ЛКМ закрывает панель")
+	STUB.Click(mmBtn, "RightButton")
+	ok(AT.frame:IsShown(), "ПКМ открывает панель")
+	eq(AT.currentTab, "Телепорт", "ПКМ открывает вкладку «Телепорт»")
+end
+
+--===========================================================================
+-- 11. Выпадающие меню (вкладка «Путешествие»)
+--===========================================================================
+local travelBtn = FindButton("Путешествие", "Подземелья")
+ok(travelBtn ~= nil, "найдена кнопка «Подземелья (по дополнениям)»")
+if travelBtn then
+	STUB.clearLastDropdown = nil
+	STUB.Click(travelBtn)
+	local menu = STUB.lastDropdown
+	ok(menu ~= nil, "по клику открылось выпадающее меню")
+	if menu then
+		ok(menu.initError == nil, "построение меню без ошибок", menu.initError)
+		ok(#menu.entries >= 3, "в меню есть группы дополнений (" .. #menu.entries .. ")")
+		local hasArrow = false
+		for _, e in ipairs(menu.entries) do
+			if e.info.text and e.info.hasArrow then hasArrow = true end
+		end
+		ok(hasArrow, "у групп меню есть вложенные списки")
+
+		-- открываем первую группу (второй уровень) и жмём первый пункт
+		local group = AT.DATA.dungeons[1][2]
+		UIDROPDOWNMENU_MENU_VALUE = group
+		STUB.currentMenu = menu
+		menu.entries = {}
+		menu.init(menu, 2)
+		STUB.currentMenu = nil
+		ok(#menu.entries == #group, "во втором уровне столько же пунктов, сколько в данных")
+		local func = menu.entries[1] and menu.entries[1].info.func
+		ok(type(func) == "function", "у пункта меню есть обработчик")
+		if func then
+			STUB.ClearSent()
+			func()
+			eq(STUB.LastCommand(), group[1][2], "пункт меню выполняет свою команду")
+		end
+		UIDROPDOWNMENU_MENU_VALUE = nil
+	end
+end
+
+--===========================================================================
+-- 12. Вкладка «Свои»: добавление, выполнение, меню, удаление
+--===========================================================================
+AT.ShowPage("Свои")
+AdminToolsDB.custom = {}
+AT.refreshCustom()
+
+local edits = EditsOf("Свои")
+ok(#edits >= 2, "на вкладке «Свои» есть поля ввода (" .. #edits .. ")")
+if #edits >= 2 then
+	local labelEdit, cmdEdit = edits[1], edits[2]
+	labelEdit:SetText("Даларан")
+	cmdEdit:SetText("tele dalaran")
+
+	local addBtn = FindButton("Свои", "Добавить кнопку")
+	ok(addBtn ~= nil, "найдена кнопка «Добавить кнопку»")
+	if addBtn then
+		STUB.Click(addBtn)
+		eq(#AdminToolsDB.custom, 1, "кнопка добавлена в сохранённые")
+		eq(AdminToolsDB.custom[1] and AdminToolsDB.custom[1].cmd, "tele dalaran", "команда сохранена как введена")
+		eq(labelEdit:GetText(), "", "поле названия очищено после добавления")
+
+		-- нажатие своей кнопки
+		local customBtn = FindButton("Свои", "Даларан")
+		ok(customBtn ~= nil, "своя кнопка появилась в списке")
+		if customBtn then
+			STUB.ClearSent()
+			STUB.Click(customBtn, "LeftButton")
+			eq(STUB.LastCommand(), ".tele dalaran", "своя кнопка выполняет команду")
+
+			-- ПКМ: меню действий
+			STUB.Click(customBtn, "RightButton")
+			local menu = STUB.lastDropdown
+			ok(menu ~= nil and menu.initError == nil, "ПКМ открывает меню действий")
+			if menu then
+				local deleteEntry
+				for _, e in ipairs(menu.entries) do
+					if e.info.text and e.info.text:find("Удалить") then deleteEntry = e.info end
+				end
+				ok(deleteEntry ~= nil, "в меню есть пункт «Удалить»")
+				if deleteEntry then
+					STUB.visiblePopup = nil
+					deleteEntry.func()
+					ok(STUB.visiblePopup ~= nil, "удаление просит подтверждения")
+					STUB.AcceptPopup(AT.POPUP_DELCUSTOM)
+					eq(#AdminToolsDB.custom, 0, "кнопка удалена после подтверждения")
+				end
+			end
+		end
+	end
+end
+
+-- Перемещение своих кнопок
+AdminToolsDB.custom = { { label = "A", cmd = ".gps" }, { label = "B", cmd = ".gps" } }
+AT.refreshCustom()
+local btnB = FindButton("Свои", "B")
+if btnB then
+	STUB.Click(btnB, "RightButton")
+	local menu = STUB.lastDropdown
+	local upEntry
+	for _, e in ipairs(menu.entries) do
+		if e.info.text == "Вверх" then upEntry = e.info end
+	end
+	ok(upEntry ~= nil, "в меню есть пункт «Вверх»")
+	if upEntry then
+		upEntry.func()
+		eq(AdminToolsDB.custom[1].label, "B", "кнопка переместилась наверх")
+	end
+end
+AdminToolsDB.custom = {}
+AT.refreshCustom()
+
+-- Высота страницы «Свои» пересчитывается после изменения списка
+local before = AT.pageBottom[AT.pages["Свои"]]
+AdminToolsDB.custom = { { label = "X", cmd = ".gps" }, { label = "Y", cmd = ".gps" },
+	{ label = "Z", cmd = ".gps" }, { label = "W", cmd = ".gps" }, { label = "V", cmd = ".gps" } }
+AT.refreshCustom()
+local after = AT.pageBottom[AT.pages["Свои"]]
+ok(after ~= nil and after < (before or 0), "высота страницы «Свои» выросла вместе со списком")
+AdminToolsDB.custom = {}
+AT.refreshCustom()
+
+--===========================================================================
+-- 13. Меню настроек построены
+--===========================================================================
+eq(#STUB.menus, 5, "создано 5 выпадающих меню (4 в путешествии + меню своих кнопок)")
+
+--===========================================================================
+-- 14. Данные сервера консистентны
+--===========================================================================
+for _, g in ipairs(AT.DATA.cities) do
+	ok(type(g.header) == "string" and #g.header > 0, "у группы городов есть заголовок")
+	for _, e in ipairs(g.list) do
+		ok(type(e[1]) == "string" and #e[1] > 0, "у города есть подпись")
+		ok(type(e[2]) == "string" and #e[2] > 0, "у города есть имя телепорта")
+		ok(e[3] == "Alliance" or e[3] == "Horde" or e[3] == "Neutral",
+			"фракция города корректна: " .. tostring(e[3]))
+	end
+end
+
+for _, group in ipairs(AT.DATA.npcGroups) do
+	ok(type(group.header) == "string" and #group.header > 0, "у группы NPC есть заголовок")
+	for _, npc in ipairs(group.list) do
+		ok(type(npc[2]) == "number" and npc[2] > 0, "у NPC числовой entry: " .. tostring(npc[2]))
+		ok(type(npc[3]) == "string" and #npc[3] > 0, "у NPC есть подсказка")
+	end
+end
+
+local function CheckCmdList(list, what)
+	for _, e in ipairs(list) do
+		ok(type(e[2]) == "string" and #e[2] > 1, what .. ": команда не пустая")
+		ok(e[2]:sub(1, 1) == ".", what .. ": команда начинается с точки (" .. tostring(e[2]) .. ")")
+		ok(e[2] == STUB.trim and e[2] or e[2] == (e[2]:gsub("^%s+", ""):gsub("%s+$", "")),
+			what .. ": в команде нет лишних пробелов")
+	end
+end
+
+for _, grp in ipairs(AT.DATA.dungeons) do CheckCmdList(grp[2], "подземелья/" .. grp[1]) end
+for _, grp in ipairs(AT.DATA.raids) do CheckCmdList(grp[2], "рейды/" .. grp[1]) end
+CheckCmdList(AT.DATA.grindAlliance, "кач/альянс")
+CheckCmdList(AT.DATA.grindHorde, "кач/орда")
+
+ok(type(AT.DATA.bagItemId) == "number" and AT.DATA.bagItemId > 0, "ID сумки задан числом")
+
+--===========================================================================
+-- 15. Сообщения об ошибках не пустые (проверка, что PrintErr работает)
+--===========================================================================
+local chatBefore = #STUB.chat
+AT.PrintErr("проверка")
+ok(#STUB.chat == chatBefore + 1, "PrintErr пишет в чат")
+ok(STUB.chat[#STUB.chat]:find("проверка"), "сообщение дошло целиком")
+
+return T
