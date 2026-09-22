@@ -63,7 +63,7 @@ do
 	openClassMenu = AT.BuildMenu("AdminToolsRUBotClassMenu", items)
 end
 
-local classBtn = AT.MakeButton(p, "Найти ботов по классу ▾", 220,
+local classBtn = AT.MakeButton(p, "Найти ботов по классу (меню)", 220,
 	function(btn) openClassMenu(btn) end, 1,
 	"Список ботов выбранного класса с их ID")
 classBtn:SetPoint("TOPLEFT", p, "TOPLEFT", 4, y)

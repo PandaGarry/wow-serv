@@ -69,7 +69,7 @@ end
 local y = AT.MakeSection(p, "Уровень доступа", -2)
 
 local secLegend = AT.MakeLabel(p,
-	"1 — " .. AT.SecName(1) .. "  ·  2 — " .. AT.SecName(2) .. "  ·  3 — " .. AT.SecName(3),
+	"1 — " .. AT.SecName(1) .. "   2 — " .. AT.SecName(2) .. "   3 — " .. AT.SecName(3),
 	"GameFontDisableSmall")
 secLegend:SetJustifyH("LEFT")
 secLegend:SetPoint("TOPLEFT", p, "TOPLEFT", 6, y)
@@ -116,7 +116,7 @@ _, y = MakeCheck("minimap",
 	end,
 	function(v)
 		AdminToolsDB = AdminToolsDB or {}
-		AdminToolsDB.minimapHidden = not v
+		AT.SetMinimapShown(v)
 		local btn = _G["AdminToolsRUMMBtn"]
 		if btn then
 			if v then btn:Show() else btn:Hide() end

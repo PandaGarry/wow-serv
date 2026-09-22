@@ -257,6 +257,49 @@ if (regionProblems.length) {
 	console.log(`${C.green}✓${C.off} регионы (FontString/Texture) используют только свои методы`);
 }
 
+// Шрифты 3.3.5 содержат ASCII, кириллицу и часть типографских знаков.
+// Символы вне этого набора рискуют превратиться в «?» или пустоту.
+function auditGlyphs() {
+	const allowed = new Set([
+		0x00ab, 0x00bb,   // « »
+		0x2013, 0x2014,   // – —
+		0x2026,           // …
+	]);
+	const problems = [];
+	const files = fs.readdirSync(ADDON_DIR).filter((f) => f.endsWith(".lua"));
+
+	for (const file of files) {
+		const text = fs.readFileSync(path.join(ADDON_DIR, file), "utf8");
+		text.split(/\r?\n/).forEach((line, idx) => {
+			const code = line.replace(/--.*$/, "");
+			const literals = code.match(/"(?:[^"\\]|\\.)*"/g) || [];
+			for (const lit of literals) {
+				for (const ch of lit) {
+					const cp = ch.codePointAt(0);
+					const safe = (cp >= 0x20 && cp <= 0x7e)      // ASCII
+						|| (cp >= 0x410 && cp <= 0x44f)          // А-я
+						|| cp === 0x401 || cp === 0x451          // Ё ё
+						|| allowed.has(cp);
+					if (!safe) {
+						problems.push(`${file}:${idx + 1} — U+${cp.toString(16).toUpperCase()} ` +
+							`"${ch}" в «${lit.slice(0, 40)}»`);
+					}
+				}
+			}
+		});
+	}
+	return problems;
+}
+
+const glyphs = auditGlyphs();
+if (glyphs.length) {
+	console.log(`${C.red}${C.bold}Символы, которых может не быть в шрифте 3.3.5:${C.off}`);
+	for (const g of glyphs) console.log(`  ${C.red}✗${C.off} ${g}`);
+	console.log(`${C.dim}  замени на безопасные: стрелки/треугольники текстом${C.off}`);
+} else {
+	console.log(`${C.green}✓${C.off} в текстах только символы, которые есть в шрифтах 3.3.5`);
+}
+
 const audit = auditCommands();
 console.log(`${C.dim}Команд в аддоне: ${audit.total}${C.off}`);
 if (audit.unknown.length) {
@@ -309,5 +352,6 @@ if (eventError) console.log(`${C.yellow}⚠ ошибка в обработчик
 console.log(`${C.bold}Итог:${C.off} ${C.green}${pass} пройдено${C.off}, ` +
 	(fail ? `${C.red}${fail} провалено${C.off}` : `${C.green}0 провалено${C.off}`));
 
-const failed = fail + audit.unknown.length + skin.missing.length + regionProblems.length;
+const failed = fail + audit.unknown.length + skin.missing.length
+	+ regionProblems.length + glyphs.length;
 process.exit(failed === 0 ? 0 : 1);

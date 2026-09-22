@@ -37,7 +37,7 @@ local function StartEdit(idx)
 	cmdEdit:SetText(item.cmd or "")
 	addBtn:SetText("Сохранить")
 	cancelBtn:Show()
-	statusLabel:SetText("Редактирую кнопку №" .. idx .. " — измени поля и нажми «Сохранить».")
+	statusLabel:SetText("Редактирую кнопку номер " .. idx .. " — измени поля и нажми «Сохранить».")
 end
 
 local function StopEdit()

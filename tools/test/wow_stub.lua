@@ -369,7 +369,13 @@ function M:GetNumChildren() return #self.__children end
 function M:SetTexture(a, b, c, d)
 	if type(a) == "string" then self.__texture = a else self.__rgba = { a, b, c, d } end
 end
-function M:SetVertexColor(a, b, c, d) self.__rgba = { a, b, c, d } end
+function M:SetVertexColor(a, b, c, d)
+	self.__rgba = { a or 1, b or 1, c or 1, d or 1 }
+end
+function M:GetVertexColor()
+	local c = self.__rgba or { 1, 1, 1, 1 }
+	return c[1], c[2], c[3], c[4]
+end
 function M:SetAlpha(a) self.__alpha = a end
 function M:SetBlendMode(m) end
 function M:SetAllPoints(f) if f then self:SetPoint("TOPLEFT", f, "TOPLEFT") self:SetPoint("BOTTOMRIGHT", f, "BOTTOMRIGHT") end end
@@ -608,6 +614,40 @@ function CloseDropDownMenus() STUB.dropdownClosed = true end
 -- Тултип
 --===========================================================================
 GameTooltip = NewWidget("GameTooltip", "GameTooltip", UIParent, nil)
+
+-- у тултипа своя логика: тесты должны видеть, показан он и с каким текстом
+local tooltipLines = {}
+GameTooltip.__lines = tooltipLines
+
+function GameTooltip:SetOwner(owner, anchor)
+	self.__owner = owner
+	self.__anchor = anchor
+end
+function GameTooltip:SetText(text, r, g, b)
+	wipe(tooltipLines)
+	table.insert(tooltipLines, tostring(text))
+	self.__text = tostring(text)
+	STUB.lastTooltipText = tostring(text)
+end
+function GameTooltip:AddLine(text)
+	table.insert(tooltipLines, tostring(text))
+end
+function GameTooltip:AddDoubleLine(left, right)
+	table.insert(tooltipLines, tostring(left) .. " " .. tostring(right))
+end
+function GameTooltip:ClearLines() wipe(tooltipLines) end
+function GameTooltip:NumLines() return #tooltipLines end
+function GameTooltip:GetLine(i) return tooltipLines[i] end
+function GameTooltip:Show()
+	self.__shown = true
+	STUB.lastTooltipShown = true
+	STUB.lastTooltipLines = #tooltipLines
+end
+function GameTooltip:Hide()
+	self.__shown = false
+	STUB.lastTooltipShown = false
+end
+function GameTooltip:IsShown() return self.__shown and true or false end
 
 --===========================================================================
 -- Мелкие глобальные функции и константы, как в игре

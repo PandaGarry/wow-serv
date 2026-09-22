@@ -2,9 +2,9 @@
 ## Title: Admin Tools RU
 ## Title-ruRU: Admin Tools RU — GM-панель
 ## Notes: Modular GM command panel with minimap button
-## Notes-ruRU: Модульная GM-панель: телепорты, путешествия, боты, NPC, персонаж, сервер, свои кнопки
+## Notes-ruRU: Модульная GM-панель: 5 тем оформления, телепорты, боты, NPC, модули сборки, свои кнопки
 ## Author: valdrea (original idea), RU-adaptation and v5 rebuild
-## Version: 5.1.1
+## Version: 5.2.0
 ## SavedVariables: AdminToolsDB
 ## X-Category: Miscellaneous
 ## X-Website: https://github.com/PandaGarry/wow-serv
@@ -30,6 +30,7 @@ Tab_Self.lua
 Tab_Character.lua
 Tab_Group.lua
 Tab_Server.lua
+Tab_Interface.lua
 Tab_Settings.lua
 Tab_Custom.lua
 

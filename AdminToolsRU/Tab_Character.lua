@@ -112,7 +112,7 @@ bag4:SetPoint("TOPLEFT", p, "TOPLEFT", 4 + (AT.BTN_W + AT.PAD), y)
 
 local setIdBtn = AT.MakeButton(p, "ID сумки", AT.BTN_W, function()
 	AT.Print("ID предмета сумки: |cffffd100" .. AT.DATA.bagItemId .. "|r")
-	AT.Print("Сменить можно в AdminToolsRU/Data.lua → AT.DATA.bagItemId")
+	AT.Print("Сменить можно в AdminToolsRU/Data.lua, поле AT.DATA.bagItemId")
 end, 1, "Показать, какой предмет выдаётся как «сумка»")
 setIdBtn:SetPoint("TOPLEFT", p, "TOPLEFT", 4 + 2 * (AT.BTN_W + AT.PAD), y)
 

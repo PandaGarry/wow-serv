@@ -23,7 +23,7 @@ title:SetPoint("TOPLEFT", frame, "TOPLEFT", 18, -12)
 local version = AT.MakeLabel(frame, "v" .. AT.VERSION, "GameFontDisableSmall")
 version:SetPoint("BOTTOMLEFT", title, "BOTTOMRIGHT", 8, 2)
 
-local subtitle = AT.MakeLabel(frame, "AzerothCore · NPCBots + Extras · Custom Races", "GameFontDisableSmall")
+local subtitle = AT.MakeLabel(frame, "AzerothCore - NPCBots + Extras - Custom Races", "GameFontDisableSmall")
 subtitle:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -2)
 
 local close = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
@@ -117,10 +117,11 @@ end)
 local runBtn = AT.MakeButton(frame, "Выполнить", 90, RunFromBox, nil, "Выполнить команду из поля ввода")
 runBtn:SetPoint("LEFT", cmdBox, "RIGHT", 8, 0)
 
-local upBtn = AT.MakeButton(frame, "▲", 26, function() NavigateHistory(1) end, nil, "Предыдущая команда")
+-- Символы ▲/▼ есть не во всех шрифтах 3.3.5, поэтому подписи текстом
+local upBtn = AT.MakeButton(frame, "Вверх", 58, function() NavigateHistory(1) end, nil, "Предыдущая команда")
 upBtn:SetPoint("LEFT", runBtn, "RIGHT", 8, 0)
 
-local downBtn = AT.MakeButton(frame, "▼", 26, function() NavigateHistory(-1) end, nil, "Следующая команда")
+local downBtn = AT.MakeButton(frame, "Вниз", 58, function() NavigateHistory(-1) end, nil, "Следующая команда")
 downBtn:SetPoint("LEFT", upBtn, "RIGHT", 4, 0)
 
 -- Счётчик истории.
@@ -175,6 +176,9 @@ mmBtn:RegisterForDrag("LeftButton")
 mmBtn:SetMovable(true)
 mmBtn:SetClampedToScreen(true)
 
+-- кнопка нужна ядру для установки угла и скрытия (вкладка «Интерфейс»)
+AT.minimapButton = mmBtn
+
 local mmIcon = mmBtn:CreateTexture(nil, "BACKGROUND")
 mmIcon:SetSize(20, 20)
 mmIcon:SetPoint("CENTER")
@@ -211,16 +215,28 @@ mmBtn:SetScript("OnDragStart", function(self) self:StartMoving() end)
 mmBtn:SetScript("OnDragStop", function(self)
 	self:StopMovingOrSizing()
 	local point, _, relPoint, x, y = self:GetPoint()
-	if AdminToolsDB then AdminToolsDB.minimapPos = { point, relPoint, x, y } end
+	if AdminToolsDB then
+		AdminToolsDB.minimapPos = { point, relPoint, x, y }
+		AdminToolsDB.minimapAngle = nil   -- ручная позиция важнее угла
+	end
 end)
 
 function AT.RestoreMinimapPos()
 	if not mmBtn then return end
+
+	-- 1) угол на окружности (вкладка «Интерфейс»)
+	local angle = AT.GetMinimapAngle()
+	if angle and angle >= 0 then
+		AT.SetMinimapAngle(angle)
+		return
+	end
+
+	-- 2) позиция, куда игрок сам перетащил кнопку
 	if AdminToolsDB and AdminToolsDB.minimapPos then
-		local p = AdminToolsDB.minimapPos
-		if p[1] and p[2] then
+		local pos = AdminToolsDB.minimapPos
+		if pos[1] and pos[2] then
 			mmBtn:ClearAllPoints()
-			mmBtn:SetPoint(p[1], Minimap, p[2], p[3] or 0, p[4] or 0)
+			mmBtn:SetPoint(pos[1], Minimap, pos[2], pos[3] or 0, pos[4] or 0)
 		end
 	end
 end
@@ -316,6 +332,11 @@ end
 -- Инициализация
 --===========================================================================
 local DEFAULTS = {
+	theme = "cyan",
+	windowSize = 2,
+	tooltips = true,
+	rowHighlight = true,
+	filters = true,
 	echo = true,
 	restrictBySec = false,
 	mySec = 3,
@@ -361,13 +382,16 @@ events:SetScript("OnEvent", function(self, event, arg1)
 		end
 
 		AT.SetScale(AdminToolsDB.scale)
+		AT.ApplyTheme(AT.GetThemeKey(), true)
+		AT.SetWindowSize(AT.GetWindowSize())
 		AT.SetFontSizeDelta(AdminToolsDB.fontSize or 0)
 		AT.RestoreMinimapPos()
 
-		if AdminToolsDB.minimapHidden and mmBtn then mmBtn:Hide() end
+		if not AT.IsMinimapShown() and mmBtn then mmBtn:Hide() end
 
 		if AT.refreshCustom then AT.refreshCustom() end
 		if AT.RefreshSettings then AT.RefreshSettings() end
+		if AT.RefreshInterfaceSettings then AT.RefreshInterfaceSettings() end
 		AT.RefreshFavorites()
 		AT.RefreshLocks()
 

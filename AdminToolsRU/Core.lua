@@ -9,7 +9,7 @@
 AT = AT or {}
 
 AT.ADDON_NAME = "AdminToolsRU"
-AT.VERSION    = "5.1.1"
+AT.VERSION    = "5.2.0"
 AT.PREFIX     = "|cff2fd6ff[AT-RU]|r "
 
 local floor, ceil, min, max = math.floor, math.ceil, math.min, math.max
@@ -99,7 +99,116 @@ AT.THEME = {
 	danger  = { 1.00, 0.35, 0.35, 1.00 },
 }
 
-AT.WIN_W, AT.WIN_H = 880, 620
+--===========================================================================
+-- Темы оформления.
+-- Меняется только цвет: текстуры скина белые и тонируются в рантайме,
+-- поэтому смена темы — это перекраска, а не пересборка интерфейса.
+--===========================================================================
+AT.Themes = {
+	cyan = {
+		name  = "Голубая",
+		bg      = { 0.045, 0.055, 0.075, 0.97 },
+		border  = { 0.16, 0.18, 0.24, 1.00 },
+		accent  = { 0.18, 0.84, 1.00, 1.00 },
+		accent2 = { 0.55, 0.40, 1.00, 1.00 },
+	},
+	emerald = {
+		name  = "Изумрудная",
+		bg      = { 0.040, 0.070, 0.060, 0.97 },
+		border  = { 0.16, 0.26, 0.22, 1.00 },
+		accent  = { 0.30, 0.95, 0.62, 1.00 },
+		accent2 = { 0.15, 0.70, 0.95, 1.00 },
+	},
+	violet = {
+		name  = "Аметистовая",
+		bg      = { 0.060, 0.045, 0.090, 0.97 },
+		border  = { 0.24, 0.18, 0.32, 1.00 },
+		accent  = { 0.70, 0.45, 1.00, 1.00 },
+		accent2 = { 0.30, 0.85, 1.00, 1.00 },
+	},
+	amber = {
+		name  = "Янтарная",
+		bg      = { 0.075, 0.060, 0.035, 0.97 },
+		border  = { 0.28, 0.22, 0.14, 1.00 },
+		accent  = { 1.00, 0.72, 0.25, 1.00 },
+		accent2 = { 1.00, 0.45, 0.20, 1.00 },
+	},
+	rose = {
+		name  = "Розовая",
+		bg      = { 0.080, 0.045, 0.060, 0.97 },
+		border  = { 0.30, 0.18, 0.24, 1.00 },
+		accent  = { 1.00, 0.45, 0.65, 1.00 },
+		accent2 = { 0.80, 0.40, 1.00, 1.00 },
+	},
+}
+
+AT.THEME_ORDER = { "cyan", "emerald", "violet", "amber", "rose" }
+
+-- Реестр элементов, которые перекрашиваются при смене темы.
+-- role: accent | line | glow | thumb
+AT.themed = {}
+
+function AT.RegisterThemed(region, role, alpha)
+	if region then
+		table.insert(AT.themed, { region = region, role = role, alpha = alpha })
+	end
+	return region
+end
+
+local ROLE_ALPHA = {
+	accent = 1.00,
+	line   = 0.42,
+	glow   = 0.13,
+	thumb  = 0.55,
+}
+
+function AT.ApplyTheme(key, silent)
+	local theme = AT.Themes[key] or AT.Themes.cyan
+	key = AT.Themes[key] and key or "cyan"
+
+	AT.THEME.bg[1], AT.THEME.bg[2], AT.THEME.bg[3], AT.THEME.bg[4] =
+		theme.bg[1], theme.bg[2], theme.bg[3], theme.bg[4]
+	AT.THEME.border[1], AT.THEME.border[2], AT.THEME.border[3], AT.THEME.border[4] =
+		theme.border[1], theme.border[2], theme.border[3], theme.border[4]
+	AT.THEME.accent[1], AT.THEME.accent[2], AT.THEME.accent[3], AT.THEME.accent[4] =
+		theme.accent[1], theme.accent[2], theme.accent[3], theme.accent[4]
+	AT.THEME.accent2[1], AT.THEME.accent2[2], AT.THEME.accent2[3], AT.THEME.accent2[4] =
+		theme.accent2[1], theme.accent2[2], theme.accent2[3], theme.accent2[4]
+
+	AT.themeKey = key
+	if AdminToolsDB then AdminToolsDB.theme = key end
+
+	local a = AT.THEME.accent
+	local fr = AT.frame
+	if fr then
+		fr:SetBackdropColor(AT.THEME.bg[1], AT.THEME.bg[2], AT.THEME.bg[3], AT.THEME.bg[4])
+		fr:SetBackdropBorderColor(AT.THEME.border[1], AT.THEME.border[2],
+			AT.THEME.border[3], AT.THEME.border[4])
+	end
+
+	for _, item in ipairs(AT.themed) do
+		local alpha = item.alpha or ROLE_ALPHA[item.role] or 1
+		item.region:SetVertexColor(a[1], a[2], a[3], alpha)
+	end
+
+	-- активная вкладка и её маркер тоже цветные
+	if AT.currentTab then AT.SetTabActive(AT.currentTab, true) end
+	if AT.RefreshThemeSwatches then AT.RefreshThemeSwatches() end
+
+	if not silent then
+		AT.Print("Тема оформления: |cff2fd6ff" .. theme.name .. "|r")
+	end
+	return theme
+end
+
+function AT.GetThemeKey()
+	if AdminToolsDB and AdminToolsDB.theme and AT.Themes[AdminToolsDB.theme] then
+		return AdminToolsDB.theme
+	end
+	return "cyan"
+end
+
+AT.WIN_W, AT.WIN_H = 880, 620       -- размер окна по умолчанию; пресеты — во вкладке «Интерфейс»
 AT.BTN_W, AT.BTN_H, AT.PAD = 142, 22, 6
 AT.TAB_W, AT.TAB_H, AT.TAB_STEP = 132, 24, 26
 AT.FLOW_COLS = 4
@@ -182,7 +291,7 @@ glow:SetTexture(AT.SKIN.glow)
 glow:SetPoint("TOPLEFT", frame, "TOPLEFT", 1, -1)
 glow:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -1, -1)
 glow:SetHeight(150)
-glow:SetVertexColor(AT.THEME.accent[1], AT.THEME.accent[2], AT.THEME.accent[3], 0.13)
+AT.RegisterThemed(glow, "glow")
 
 -- вертикальная колонка вкладок: подложка
 local tabBg = frame:CreateTexture(nil, "BACKGROUND")
@@ -481,29 +590,73 @@ function AT.MakeButton(parent, text, w, action, sec, tooltip)
 		end
 	end)
 
-	if tooltip or sec or type(action) == "string" then
-		b:SetScript("OnEnter", function(self)
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-			GameTooltip:SetText(tooltip or text or "?", 1, 1, 1)
+	b:SetScript("OnEnter", function(self)
+		AT.ShowRowHighlight(self)
+		if not AT.TooltipsEnabled() then return end
+		if not (tooltip or sec or type(action) == "string") then return end
 
-			if sec then
-				local lockNote = AT.IsLocked(sec) and "  |cffff5555(заблокировано)|r" or ""
-				GameTooltip:AddLine("Уровень: " .. AT.SecName(sec) .. lockNote, 0.6, 0.8, 1)
-			end
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+		GameTooltip:SetText(tooltip or text or "?", 1, 1, 1)
 
-			if type(action) == "string" then
-				GameTooltip:AddLine(" ")
-				GameTooltip:AddLine("Команда: |cff2fd6ff" .. action .. "|r", 0.7, 0.7, 0.7)
-				local fav = AT.IsFavorite(action) and "|cffffd100в избранном|r" or "Shift+ЛКМ — в избранное"
-				GameTooltip:AddLine("ПКМ — в поле ввода · " .. fav, 0.5, 0.5, 0.5)
-			end
+		if sec then
+			local lockNote = AT.IsLocked(sec) and "  |cffff5555(заблокировано)|r" or ""
+			GameTooltip:AddLine("Уровень: " .. AT.SecName(sec) .. lockNote, 0.6, 0.8, 1)
+		end
 
-			GameTooltip:Show()
-		end)
-		b:SetScript("OnLeave", function() GameTooltip:Hide() end)
-	end
+		if type(action) == "string" then
+			GameTooltip:AddLine(" ")
+			GameTooltip:AddLine("Команда: |cff2fd6ff" .. action .. "|r", 0.7, 0.7, 0.7)
+			local fav = AT.IsFavorite(action) and "|cffffd100в избранном|r" or "Shift+ЛКМ — в избранное"
+			GameTooltip:AddLine("ПКМ — в поле ввода. " .. fav, 0.5, 0.5, 0.5)
+		end
+
+		GameTooltip:Show()
+	end)
+	b:SetScript("OnLeave", function(self)
+		AT.HideRowHighlight(self)
+		GameTooltip:Hide()
+	end)
 
 	return b
+end
+
+-- Чекбокс с подписью и подсказкой (используется в «Настройках» и «Интерфейсе»)
+function AT.MakeCheckbox(parent, label, getter, setter, y, tooltip)
+	local cb = CreateFrame("CheckButton", nil, parent, "UICheckButtonTemplate")
+	cb:SetSize(24, 24)
+	cb:SetPoint("TOPLEFT", parent, "TOPLEFT", 4, y)
+
+	local text = AT.MakeLabel(parent, label, "GameFontNormalSmall")
+	text:SetPoint("LEFT", cb, "RIGHT", 4, 0)
+	text:SetPoint("RIGHT", parent, "RIGHT", -10, 0)
+	text:SetJustifyH("LEFT")
+
+	cb.__getter = getter
+	cb.__label = text
+
+	cb:SetScript("OnClick", function(self)
+		local now = self:GetChecked() and true or false
+		if setter then setter(now) end
+		if getter then self:SetChecked(getter() and true or false) end
+	end)
+
+	cb:SetScript("OnEnter", function(self)
+		if text then text:SetTextColor(1, 1, 1) end
+		if not tooltip or not AT.TooltipsEnabled() then return end
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+		GameTooltip:SetText(label, 1, 1, 1)
+		GameTooltip:AddLine(tooltip, 0.7, 0.7, 0.7)
+		GameTooltip:Show()
+	end)
+	cb:SetScript("OnLeave", function()
+		if text then
+			text:SetTextColor(AT.THEME.text[1], AT.THEME.text[2], AT.THEME.text[3])
+		end
+		GameTooltip:Hide()
+	end)
+
+	if getter then cb:SetChecked(getter() and true or false) end
+	return cb
 end
 
 function AT.MakeEdit(parent, w)
@@ -518,6 +671,10 @@ end
 function AT.MakeLabel(parent, text, template)
 	local fs = parent:CreateFontString(nil, "ARTWORK", template or "GameFontNormalSmall")
 	fs:SetText(text)
+	-- подписи наследуют цвет темы, а не фиксированный жёлтый Blizzard
+	if not template or template == "GameFontNormalSmall" or template == "GameFontDisableSmall" then
+		fs:SetTextColor(AT.THEME.text[1], AT.THEME.text[2], AT.THEME.text[3])
+	end
 	AT.RegisterFont(fs)
 	return fs
 end
@@ -526,7 +683,7 @@ end
 function AT.MakeLine(parent, y, left, right)
 	local line = parent:CreateTexture(nil, "ARTWORK")
 	line:SetTexture(AT.SKIN.line)
-	line:SetVertexColor(AT.THEME.accent[1], AT.THEME.accent[2], AT.THEME.accent[3], 0.45)
+	AT.RegisterThemed(line, "line", 0.45)
 	line:SetHeight(8)
 	line:SetPoint("TOPLEFT", parent, "TOPLEFT", left or 6, y + 3)
 	line:SetPoint("TOPRIGHT", parent, "TOPRIGHT", right or -8, y + 3)
@@ -571,7 +728,7 @@ function AT.MakeSection(page, title, y)
 
 	local line = page:CreateTexture(nil, "ARTWORK")
 	line:SetTexture(AT.SKIN.line)
-	line:SetVertexColor(AT.THEME.accent[1], AT.THEME.accent[2], AT.THEME.accent[3], 0.40)
+	AT.RegisterThemed(line, "line", 0.40)
 	line:SetHeight(8)
 	line:SetPoint("TOPLEFT", header, "BOTTOMLEFT", -1, -1)
 	line:SetPoint("RIGHT", page, "RIGHT", -10, 0)
@@ -602,6 +759,8 @@ function AT.FlowButtons(page, defs, startY, cols)
 	if fit < 1 then fit = 1 end
 	if cols > fit then cols = fit end
 
+	-- по одной подсветке на строку (не на каждую кнопку — иначе альфа складывается)
+	local rowHL = {}
 	for i, d in ipairs(defs) do
 		local col = (i - 1) % cols
 		local row = floor((i - 1) / cols)
@@ -610,6 +769,13 @@ function AT.FlowButtons(page, defs, startY, cols)
 		local tip = d[5]
 		if tip == nil and type(d[3]) == "string" then tip = d[3] end
 		local b = AT.MakeButton(page, d[1], widthOf(d), d[2], sec, tip)
+
+		if not rowHL[row] then
+			rowHL[row] = AT.MakeRowHighlight(page,
+				startY - row * (AT.BTN_H + AT.PAD), AT.BTN_H + 4)
+		end
+		b.__rowHL = rowHL[row]
+
 		b:SetPoint("TOPLEFT", page, "TOPLEFT",
 			4 + col * (cellW + AT.PAD),
 			startY - row * (AT.BTN_H + AT.PAD))
@@ -635,6 +801,12 @@ function AT.FormRow(page, y, labelText, builder, width)
 
 	local go = AT.MakeButton(page, "OK", 40, fire)
 	go:SetPoint("LEFT", edit, "RIGHT", 6, 0)
+
+	local hl = AT.MakeRowHighlight(page, y, 22)
+	edit.__rowHL = hl
+	go.__rowHL = hl
+	edit:SetScript("OnEnter", function(self) AT.ShowRowHighlight(self) end)
+	edit:SetScript("OnLeave", function(self) AT.HideRowHighlight(self) end)
 
 	edit:SetScript("OnEnterPressed", function(self)
 		fire()
@@ -663,6 +835,15 @@ function AT.FormRow2(page, y, labelText, builder)
 	local go = AT.MakeButton(page, "OK", 40, fire)
 	go:SetPoint("LEFT", e2, "RIGHT", 6, 0)
 
+	local hl = AT.MakeRowHighlight(page, y, 22)
+	e1.__rowHL = hl
+	e2.__rowHL = hl
+	go.__rowHL = hl
+	for _, box in ipairs({ e1, e2 }) do
+		box:SetScript("OnEnter", function(self) AT.ShowRowHighlight(self) end)
+		box:SetScript("OnLeave", function(self) AT.HideRowHighlight(self) end)
+	end
+
 	e1:SetScript("OnEnterPressed", function() fire() end)
 	e2:SetScript("OnEnterPressed", function(self)
 		fire()
@@ -671,6 +852,187 @@ function AT.FormRow2(page, y, labelText, builder)
 
 	AT.NoteY(page, y - 26)
 	return y - 26
+end
+
+--===========================================================================
+-- Оформление: подсветка строк, подсказки, фильтр
+--===========================================================================
+
+function AT.TooltipsEnabled()
+	return not (AdminToolsDB and AdminToolsDB.tooltips == false)
+end
+
+function AT.SetTooltipsEnabled(enabled)
+	AdminToolsDB = AdminToolsDB or {}
+	AdminToolsDB.tooltips = enabled and true or false
+	if not enabled then GameTooltip:Hide() end
+end
+
+function AT.RowHighlightEnabled()
+	return not (AdminToolsDB and AdminToolsDB.rowHighlight == false)
+end
+
+-- Показать/скрыть подсветку строки с учётом выключенной настройки
+function AT.ShowRowHighlight(widget)
+	if not widget or not widget.__rowHL then return end
+	if not AT.RowHighlightEnabled() then return end
+	widget.__rowHL:Show()
+end
+
+function AT.HideRowHighlight(widget)
+	if not widget or not widget.__rowHL then return end
+	widget.__rowHL:Hide()
+end
+
+-- Полупрозрачная полоса под строкой кнопок/полей — вспыхивает при наведении
+function AT.MakeRowHighlight(page, y, height)
+	if not AT.RowHighlightEnabled() then return nil end
+
+	local tex = page:CreateTexture(nil, "BACKGROUND")
+	tex:SetTexture(AT.SKIN.panel)
+	tex:SetVertexColor(AT.THEME.accent[1], AT.THEME.accent[2], AT.THEME.accent[3], 0.10)
+	tex:SetPoint("TOPLEFT", page, "TOPLEFT", 2, y + (height or AT.BTN_H))
+	tex:SetPoint("TOPRIGHT", page, "TOPRIGHT", -10, y + (height or AT.BTN_H))
+	tex:SetHeight(height or AT.BTN_H)
+	tex:Hide()
+
+	AT.rowHL = AT.rowHL or {}
+	table.insert(AT.rowHL, tex)
+	return tex
+end
+
+-- Включить/выключить подсветку строк (при включении существующие строки
+-- не пересоздаются — они появятся при следующей загрузке интерфейса)
+function AT.SetRowHighlight(enabled)
+	AdminToolsDB = AdminToolsDB or {}
+	AdminToolsDB.rowHighlight = enabled and true or false
+	if not enabled then
+		for _, tex in ipairs(AT.rowHL or {}) do
+			tex:Hide()
+		end
+	end
+end
+
+function AT.FiltersEnabled()
+	return not (AdminToolsDB and AdminToolsDB.filters == false)
+end
+
+function AT.SetFiltersEnabled(enabled)
+	AdminToolsDB = AdminToolsDB or {}
+	AdminToolsDB.filters = enabled and true or false
+	if AT.currentTab and AT.pages[AT.currentTab] then
+		AT.ShowFiltersFor(AT.pages[AT.currentTab])
+	end
+end
+
+--===========================================================================
+-- Размер окна
+--===========================================================================
+AT.WINDOW_SIZES = {
+	{ "Компактный", 780, 560 },
+	{ "Обычный",    880, 620 },
+	{ "Широкий",   1000, 660 },
+	{ "Максимум",  1120, 700 },
+}
+
+function AT.SetWindowSize(index)
+	index = tonumber(index) or 2
+	if not AT.WINDOW_SIZES[index] then index = 2 end
+
+	local w, h = AT.WINDOW_SIZES[index][2], AT.WINDOW_SIZES[index][3]
+	if AT.frame then AT.frame:SetSize(w, h) end
+
+	AdminToolsDB = AdminToolsDB or {}
+	AdminToolsDB.windowSize = index
+
+	for name, page in pairs(AT.pages) do
+		local scroll = AT.scrolls[name]
+		if scroll then scroll:UpdateScrollChildRect() end
+		AT.FitPage(page)
+	end
+	return AT.WINDOW_SIZES[index][1]
+end
+
+function AT.GetWindowSize()
+	local index = adminToolsWindowSizeIndex()
+	if AT.WINDOW_SIZES[index] then return index end
+	return 2
+end
+
+-- вынесено отдельно, чтобы GetWindowSize не зависел от порядка загрузки
+function adminToolsWindowSizeIndex()
+	if AdminToolsDB and tonumber(AdminToolsDB.windowSize) then
+		return tonumber(AdminToolsDB.windowSize)
+	end
+	return 2
+end
+
+function AT.WindowSizeLabel()
+	local index = AT.GetWindowSize()
+	local size = AT.WINDOW_SIZES[index]
+	return size[1] .. " (" .. size[2] .. "x" .. size[3] .. ")"
+end
+
+--===========================================================================
+-- Положение окна
+--===========================================================================
+AT.WINDOW_POSITIONS = {
+	{ "По центру", "CENTER", "CENTER", 0, 0 },
+	{ "Слева",     "LEFT",   "LEFT",   24, 0 },
+	{ "Справа",    "RIGHT",  "RIGHT", -24, 0 },
+	{ "Сверху",    "TOP",    "TOP",    0, -24 },
+}
+
+function AT.SetWindowPosition(index)
+	local pos = AT.WINDOW_POSITIONS[tonumber(index) or 1]
+	if not pos or not AT.frame then return end
+	AT.frame:ClearAllPoints()
+	AT.frame:SetPoint(pos[2], UIParent, pos[3], pos[4], pos[5])
+	if AdminToolsDB then AdminToolsDB.pos = { pos[2], pos[3], pos[4], pos[5] } end
+	return pos[1]
+end
+
+--===========================================================================
+-- Кнопка на миникарте: угол на окружности
+--===========================================================================
+AT.MINIMAP_RADIUS = 80
+
+function AT.SetMinimapAngle(deg)
+	AdminToolsDB = AdminToolsDB or {}
+	AdminToolsDB.minimapAngle = deg
+
+	local btn = AT.minimapButton
+	if not btn then return end
+
+	btn:ClearAllPoints()
+	if not deg or deg < 0 then
+		btn:SetPoint("BOTTOMLEFT", Minimap, "BOTTOMLEFT", 4, 4)
+	else
+		local rad = math.rad(deg)
+		btn:SetPoint("CENTER", Minimap, "CENTER",
+			math.cos(rad) * AT.MINIMAP_RADIUS,
+			math.sin(rad) * AT.MINIMAP_RADIUS)
+	end
+end
+
+function AT.GetMinimapAngle()
+	if AdminToolsDB and tonumber(AdminToolsDB.minimapAngle) then
+		return tonumber(AdminToolsDB.minimapAngle)
+	end
+	return -1
+end
+
+function AT.SetMinimapShown(shown)
+	AdminToolsDB = AdminToolsDB or {}
+	AdminToolsDB.minimapHidden = not shown
+	if AT.minimapButton then
+		if shown then AT.minimapButton:Show() else AT.minimapButton:Hide() end
+	end
+	AT.Print(shown and "Кнопка на миникарте показана." or "Кнопка на миникарте скрыта.")
+end
+
+function AT.IsMinimapShown()
+	return not (AdminToolsDB and AdminToolsDB.minimapHidden)
 end
 
 --===========================================================================
@@ -732,8 +1094,9 @@ end
 
 -- Показать только фильтр нужной вкладки
 function AT.ShowFiltersFor(page)
+	local enabled = AT.FiltersEnabled()
 	for _, box in ipairs(AT.filters or {}) do
-		if box.__page == page then box:Show() else box:Hide() end
+		if enabled and box.__page == page then box:Show() else box:Hide() end
 	end
 end
 
@@ -791,7 +1154,7 @@ function AT.RegisterTab(name)
 
 	local marker = b:CreateTexture(nil, "OVERLAY")
 	marker:SetTexture(AT.SKIN.line)
-	marker:SetVertexColor(AT.THEME.accent[1], AT.THEME.accent[2], AT.THEME.accent[3], 1)
+	AT.RegisterThemed(marker, "accent", 1)
 	marker:SetHeight(8)
 	marker:SetWidth(4)
 	marker:SetPoint("TOPLEFT", b, "TOPLEFT", 0, 0)
@@ -863,7 +1226,7 @@ function AT.RegisterTab(name)
 		local thumb = sbName and _G[sbName .. "ThumbTexture"]
 		if thumb then
 			thumb:SetTexture(AT.SKIN.panel)
-			thumb:SetVertexColor(AT.THEME.accent[1], AT.THEME.accent[2], AT.THEME.accent[3], 0.55)
+			AT.RegisterThemed(thumb, "thumb", 0.55)
 			thumb:SetWidth(6)
 		end
 		if sbName then
@@ -933,6 +1296,18 @@ function AT.SetTabActive(name, active)
 	end
 end
 
+-- Вкладка может подписаться на собственный показ (обновление подписей и т.п.)
+AT.pageHooks = {}
+
+function AT.RegisterPageHook(name, fn)
+	AT.pageHooks[name] = fn
+end
+
+function AT.RunPageHook(name)
+	local fn = AT.pageHooks[name]
+	if fn then fn() end
+end
+
 function AT.ShowPage(name)
 	if not name then return end
 	if not AT.IsTabVisible(name) then return end
@@ -958,6 +1333,7 @@ function AT.ShowPage(name)
 
 	if AT.pages[name] then AT.FitPage(AT.pages[name]) end
 	if AdminToolsDB then AdminToolsDB.tab = name end
+	AT.RunPageHook(name)
 end
 
 function AT.Toggle()

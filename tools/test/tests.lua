@@ -49,6 +49,49 @@ local function ButtonsOf(tabName)
 	return out
 end
 
+--===========================================================================
+-- Вспомогательное: отпечаток состояния интерфейса
+--===========================================================================
+function UiSignature()
+	local fr = AT.frame
+	local w, h = 0, 0
+	if fr and fr.GetWidth then w, h = fr:GetWidth() or 0, fr:GetHeight() or 0 end
+
+	local mmShown, mmX, mmY = 0, 0, 0
+	if AT.minimapButton then
+		mmShown = AT.minimapButton:IsShown() and 1 or 0
+		mmX = math.floor((AT.minimapButton:GetLeft() or 0) * 10)
+		mmY = math.floor((AT.minimapButton:GetTop() or 0) * 10)
+	end
+
+	local visibleTabs = 0
+	for _, name in ipairs(AT.TABS) do
+		local b = AT.tabButtons[name]
+		if b and b:IsShown() then visibleTabs = visibleTabs + 1 end
+	end
+
+	local visibleFilters = 0
+	for _, box in ipairs(AT.filters or {}) do
+		if box:IsShown() then visibleFilters = visibleFilters + 1 end
+	end
+
+	return table.concat({
+		w, h,
+		math.floor(AT.GetScale() * 100),
+		AT.GetFontSizeDelta(),
+		AT.GetThemeKey(),
+		AT.WindowSizeLabel(),
+		AT.GetMinimapAngle(),
+		mmShown, mmX, mmY,
+		visibleTabs,
+		visibleFilters,
+		AT.RowHighlightEnabled() and 1 or 0,
+		AT.TooltipsEnabled() and 1 or 0,
+		AT.FiltersEnabled() and 1 or 0,
+		AT.currentTab or "",
+	}, "|")
+end
+
 local function EditsOf(tabName)
 	local out = {}
 	local page = AT.pages[tabName]
@@ -64,11 +107,11 @@ end
 --===========================================================================
 eq(type(AT), "table", "AT создан при загрузке Core.lua")
 eq(type(AT.frame), "table", "главное окно AT.frame создано")
-eq(#AT.TABS, 12, "зарегистрировано 12 вкладок")
+eq(#AT.TABS, 13, "зарегистрировано 13 вкладок")
 
 local EXPECTED_TABS = {
 	"Мир", "Телепорт", "Путешествие", "Боты", "NPC", "Модули",
-	"Себя", "Персонаж", "Группа", "Сервер", "Настройки", "Свои",
+	"Себя", "Персонаж", "Группа", "Сервер", "Интерфейс", "Настройки", "Свои",
 }
 for i, name in ipairs(EXPECTED_TABS) do
 	eq(AT.TABS[i], name, "порядок вкладок: " .. name)
@@ -153,8 +196,9 @@ for _, tabName in ipairs(AT.TABS) do
 			STUB.visiblePopup = nil
 			local chatBefore = #STUB.chat
 			local menusBefore = #STUB.dropdownOpened
-			local scaleBefore = AT.GetScale()
-			local fontBefore = AT.GetFontSizeDelta()
+			-- «отпечаток» интерфейса до клика: если он изменился, кнопка
+			-- сделала что-то видимое, даже если не отправила команду
+			local sigBefore = UiSignature()
 
 			if label == "OK" then FillFormRow(btn, page) end
 
@@ -174,9 +218,8 @@ for _, tabName in ipairs(AT.TABS) do
 				local effect = (STUB.visiblePopup ~= nil)
 					or (#STUB.chat > chatBefore)
 					or (#STUB.dropdownOpened > menusBefore)
-					or (AT.GetScale() ~= scaleBefore)
 					or (STUB.focused ~= nil)              -- кнопка перевела фокус в поле
-					or (AT.GetFontSizeDelta() ~= fontBefore)
+					or (UiSignature() ~= sigBefore)       -- изменился интерфейс
 				ok(effect, "кнопка что-то делает (команда, попап, меню или сообщение): "
 					.. tabName .. " / " .. label)
 				if STUB.visiblePopup then
@@ -866,5 +909,199 @@ end
 local unknownCount = 0
 for _ in pairs(STUB.unknownMethods) do unknownCount = unknownCount + 1 end
 eq(unknownCount, 0, "нет вызовов неизвестных методов API")
+
+--===========================================================================
+-- 26. Темы оформления
+--===========================================================================
+local accentBefore = { AT.THEME.accent[1], AT.THEME.accent[2], AT.THEME.accent[3] }
+
+ok(AT.Themes ~= nil and AT.Themes.cyan ~= nil, "палитры тем загружены")
+ok(#AT.THEME_ORDER >= 4, "тем не меньше четырёх (" .. #AT.THEME_ORDER .. ")")
+
+-- у каждой темы все нужные цвета
+for _, key in ipairs(AT.THEME_ORDER) do
+	local th = AT.Themes[key]
+	ok(th and th.name and th.bg and th.border and th.accent and th.accent2,
+		"тема укомплектована: " .. tostring(key))
+end
+
+-- переключение темы меняет цвет акцента и перекрашивает элементы
+local themedOk = false
+AT.ApplyTheme("emerald", true)
+eq(AT.GetThemeKey(), "emerald", "тема переключилась на «изумрудную»")
+eq(AdminToolsDB.theme, "emerald", "выбор темы сохранён в настройках")
+ok(AT.THEME.accent[2] > accentBefore[2] - 0.01, "акцент темы применился к палитре")
+
+if AT.themed and #AT.themed > 0 then
+	local region = AT.themed[1].region
+	local r, g, b = region:GetVertexColor()
+	themedOk = (math.abs(r - AT.THEME.accent[1]) < 0.01
+		and math.abs(g - AT.THEME.accent[2]) < 0.01)
+	ok(#AT.themed >= 5, "в реестре тем не меньше 5 перекрашиваемых элементов")
+end
+ok(themedOk, "элементы интерфейса перекрасились в цвет темы (маркеры, линии, свечение)")
+
+-- некорректное имя темы не ломает аддон
+AT.ApplyTheme("такой-темы-нет", true)
+eq(AT.GetThemeKey(), "cyan", "неизвестная тема откатывается на голубую")
+
+-- проверка вкладки «Интерфейс»: у каждой темы есть кнопка-образец
+AT.ShowPage("Интерфейс")
+local swatches = 0
+for _, name in ipairs(AT.THEME_ORDER) do
+	if FindButton("Интерфейс", AT.Themes[name].name) then swatches = swatches + 1 end
+end
+eq(swatches, #AT.THEME_ORDER, "на вкладке «Интерфейс» есть кнопка для каждой темы")
+
+--===========================================================================
+-- 27. Размер и положение окна
+--===========================================================================
+ok(#AT.WINDOW_SIZES >= 3, "есть пресеты размера окна (" .. #AT.WINDOW_SIZES .. ")")
+
+for i, size in ipairs(AT.WINDOW_SIZES) do
+	AT.SetWindowSize(i)
+	local w, h = AT.frame:GetWidth(), AT.frame:GetHeight()
+	eq(w, size[2], "ширина окна для пресета «" .. size[1] .. "»")
+	eq(h, size[3], "высота окна для пресета «" .. size[1] .. "»")
+end
+
+AT.SetWindowSize(2)
+eq(AT.GetWindowSize(), 2, "выбранный размер окна сохраняется")
+ok(AT.WindowSizeLabel():find("Обычный") ~= nil, "подпись размера окна читаема")
+
+-- положение
+for i, pos in ipairs(AT.WINDOW_POSITIONS) do
+	AT.SetWindowPosition(i)
+	local point = AT.frame:GetPoint()
+	eq(point, pos[2], "точка привязки окна для «" .. pos[1] .. "»")
+end
+AT.SetWindowPosition(1)
+eq(AdminToolsDB.pos[1], "CENTER", "положение окна сохраняется в настройках")
+
+--===========================================================================
+-- 28. Кнопка на миникарте: угол и скрытие
+--===========================================================================
+local mm = AT.minimapButton
+ok(mm ~= nil, "ядро видит кнопку на миникарте (AT.minimapButton)")
+
+if mm then
+	-- до установки угла кнопка в углу миникарты
+	AT.SetMinimapAngle(-1)
+	eq(AT.GetMinimapAngle(), -1, "угол «по умолчанию» сохранён")
+
+	-- угол 0 = справа по центру: X максимальный, Y примерно нулевой
+	AT.SetMinimapAngle(0)
+	local x0 = mm:GetLeft()
+	eq(AT.GetMinimapAngle(), 0, "угол 0 сохранён")
+
+	-- 90 = сверху: Y больше, чем при 0
+	AT.SetMinimapAngle(90)
+	local y90 = mm:GetTop()
+	ok(y90 and x0 and y90 > 0, "кнопка переместилась по окружности миникарты")
+
+	AT.SetMinimapAngle(180)
+	local x180 = mm:GetLeft()
+	ok(x180 and x0 and x180 < x0, "угол 180 ставит кнопку слева, а 0 — справа")
+
+	-- скрытие/показ
+	AT.SetMinimapShown(false)
+	ok(not mm:IsShown(), "кнопку миникарты можно скрыть")
+	ok(not AT.IsMinimapShown(), "состояние «скрыта» читается из настроек")
+	eq(AdminToolsDB.minimapHidden, true, "скрытие сохраняется")
+
+	AT.SetMinimapShown(true)
+	ok(mm:IsShown(), "кнопку можно показать обратно")
+	eq(AdminToolsDB.minimapHidden, false, "показ сохраняется")
+
+	-- перетаскивание отменяет угол
+	AT.SetMinimapAngle(45)
+	AdminToolsDB.minimapPos = { "BOTTOMLEFT", "BOTTOMLEFT", 4, 4 }
+	AdminToolsDB.minimapAngle = nil
+	AT.RestoreMinimapPos()
+	eq(AT.GetMinimapAngle(), -1, "после перетаскивания позиция важнее угла")
+
+	AT.SetMinimapAngle(-1)
+	AdminToolsDB.minimapPos = nil
+end
+
+--===========================================================================
+-- 29. Переключатели чтения интерфейса
+--===========================================================================
+-- подсказки
+AT.SetTooltipsEnabled(false)
+ok(not AT.TooltipsEnabled(), "подсказки выключаются")
+AdminToolsDB.restrictBySec = false
+local tipBtn = FindButton("Мир", "GPS")
+if tipBtn then
+	STUB.Enter(tipBtn)
+	local shown = STUB.lastTooltipShown and true or false
+	ok(not shown, "при выключенных подсказках тултип не показывается")
+	STUB.Leave(tipBtn)
+end
+AT.SetTooltipsEnabled(true)
+ok(AT.TooltipsEnabled(), "подсказки включаются обратно")
+if tipBtn then
+	STUB.Enter(tipBtn)
+	ok(STUB.lastTooltipShown, "при включённых подсказках тултип показывается")
+	STUB.Leave(tipBtn)
+end
+
+-- фильтры
+AT.SetFiltersEnabled(false)
+local hiddenAll = true
+for _, box in ipairs(AT.filters or {}) do
+	if box:IsShown() then hiddenAll = false end
+end
+ok(hiddenAll, "выключенный фильтр скрыт на всех вкладках")
+AT.SetFiltersEnabled(true)
+AT.ShowPage("Телепорт")
+local filterShown = false
+for _, box in ipairs(AT.filters or {}) do
+	if box:IsShown() then filterShown = true end
+end
+ok(filterShown, "включённый фильтр снова виден")
+
+-- подсветка строк
+ok(AT.rowHL ~= nil and #AT.rowHL > 0, "полосы подсветки строк созданы (" .. #(AT.rowHL or {}) .. ")")
+AT.SetRowHighlight(false)
+local anyShown = false
+for _, tex in ipairs(AT.rowHL or {}) do
+	if tex:IsShown() then anyShown = true end
+end
+ok(not anyShown, "при выключенной подсветке все полосы скрыты")
+ok(not AT.RowHighlightEnabled(), "состояние подсветки читается из настроек")
+
+if tipBtn and tipBtn.__rowHL then
+	STUB.Enter(tipBtn)
+	ok(not tipBtn.__rowHL:IsShown(), "выключенная подсветка не появляется при наведении")
+	STUB.Leave(tipBtn)
+end
+
+AT.SetRowHighlight(true)
+ok(AT.RowHighlightEnabled(), "подсветка включается обратно")
+if tipBtn and tipBtn.__rowHL then
+	STUB.Enter(tipBtn)
+	ok(tipBtn.__rowHL:IsShown(), "включённая подсветка строки появляется при наведении")
+	STUB.Leave(tipBtn)
+	ok(not tipBtn.__rowHL:IsShown(), "подсветка гаснет, когда курсор ушёл")
+end
+
+--===========================================================================
+-- 30. Хук показа вкладки
+--===========================================================================
+ok(AT.pageHooks ~= nil and type(AT.pageHooks["Интерфейс"]) == "function",
+	"вкладка «Интерфейс» подписана на собственный показ")
+AT.SetMinimapAngle(90)
+AT.ShowPage("Интерфейс")
+local mmTextFound = false
+for _, child in ipairs(AT.pages["Интерфейс"]:GetChildren()) do
+	local getter = child.GetText
+	local t = getter and getter(child)
+	if t and tostring(t):find("угол 90") then mmTextFound = true end
+end
+ok(mmTextFound, "при показе вкладки подпись угла обновилась")
+AT.SetMinimapAngle(-1)
+
+AT.ShowPage("Телепорт")
 
 return T
