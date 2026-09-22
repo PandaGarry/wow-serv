@@ -12,7 +12,7 @@ local p = AT.RegisterTab("Настройки")
 
 local tabCheckboxes = {}   -- галочки видимости вкладок
 local behaviorChecks = {}  -- галочки поведения
-local secBtn, scaleLabel
+local secBtn, scaleLabel, fontLabel
 
 --===========================================================================
 -- Хелперы
@@ -53,6 +53,14 @@ function AT.RefreshSettings()
 
 	-- %.0f, а не %d: масштаб — дробное число, %d с ним падает в Lua 5.3+
 	if scaleLabel then scaleLabel:SetText(string.format("%.0f%%", AT.GetScale() * 100)) end
+	if fontLabel then
+		local d = AT.GetFontSizeDelta()
+		fontLabel:SetText((d > 0 and "+" or "") .. d .. " пт")
+	end
+
+	-- перекрасить кнопки-команды: доступные — цветом уровня, закрытые — серым
+	AT.RefreshLocks()
+	AT.RefreshFavorites()
 end
 
 --===========================================================================
@@ -143,6 +151,44 @@ resetScaleBtn:SetPoint("TOPLEFT", p, "TOPLEFT", 200, y)
 y = y - 30
 
 --===========================================================================
+-- Шрифт (размер текста; сам шрифт берётся из клиента — кириллица гарантирована)
+--===========================================================================
+y = AT.MakeSection(p, "Шрифт панели", y - 4)
+
+fontLabel = AT.MakeLabel(p, "0 пт", "GameFontNormalSmall")
+fontLabel:SetPoint("TOPLEFT", p, "TOPLEFT", 132, y - 5)
+
+local fontMinus = AT.MakeButton(p, "Мельче", 80, function()
+	AT.SetFontSizeDelta(AT.GetFontSizeDelta() - 1)
+	AT.RefreshSettings()
+	AT.Print("Размер текста: " .. AT.GetFontSizeDelta() .. " пт")
+end, nil, "Уменьшить текст панели на 1 пункт")
+fontMinus:SetPoint("TOPLEFT", p, "TOPLEFT", 6, y)
+
+local fontPlus = AT.MakeButton(p, "Крупнее", 80, function()
+	AT.SetFontSizeDelta(AT.GetFontSizeDelta() + 1)
+	AT.RefreshSettings()
+	AT.Print("Размер текста: " .. AT.GetFontSizeDelta() .. " пт")
+end, nil, "Увеличить текст панели на 1 пункт")
+fontPlus:SetPoint("TOPLEFT", p, "TOPLEFT", 92, y)
+
+local fontReset = AT.MakeButton(p, "Сбросить шрифт", 130, function()
+	AT.SetFontSizeDelta(0)
+	AT.RefreshSettings()
+	AT.Print("Размер текста сброшен (0 пт).")
+end, nil, "Вернуть исходный размер текста")
+fontReset:SetPoint("TOPLEFT", p, "TOPLEFT", 178, y)
+y = y - 28
+
+local fontNote = AT.MakeLabel(p,
+	"Шрифт не подменяется — берётся тот, что уже использует клиент, поэтому русский\n" ..
+	"текст корректен и на ruRU, и на enUS. Настраивается только размер.",
+	"GameFontDisableSmall")
+fontNote:SetJustifyH("LEFT")
+fontNote:SetPoint("TOPLEFT", p, "TOPLEFT", 6, y)
+y = y - 36
+
+--===========================================================================
 -- Видимость вкладок
 --===========================================================================
 y = AT.MakeSection(p, "Видимость вкладок", y - 6)
@@ -206,6 +252,14 @@ local mmResetBtn = AT.MakeButton(p, "Позиция кнопки миникар�
 end, nil, "Вернуть кнопку к левому нижнему углу миникарты")
 mmResetBtn:SetPoint("TOPLEFT", p, "TOPLEFT", 6 + 196, y)
 y = y - 32
+
+local favResetBtn = AT.MakeButton(p, "Очистить избранное", 190, function()
+	AT.GetFavorites()
+	wipe(AdminToolsDB.favorites)
+	AT.RefreshFavorites()
+	AT.Print("Избранное очищено.")
+end, nil, "Убрать все кнопки из строки «Избранное» в шапке")
+favResetBtn:SetPoint("TOPLEFT", p, "TOPLEFT", 6 + 196 + 228, y)
 
 local note = AT.MakeLabel(p,
 	"Полный сброс всех настроек — команда |cff33ff99/atreset|r (перезагрузит интерфейс).",

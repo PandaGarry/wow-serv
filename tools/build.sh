@@ -58,6 +58,16 @@ mkdir -p "$ADDON"
 cp "$SRC"/*.lua "$SRC"/*.toc "$ADDON/"
 [ -f "$SRC/Bindings.xml" ] && cp "$SRC/Bindings.xml" "$ADDON/"
 
+# текстуры оформления — без них кнопки останутся без скина
+if [ -d "$SRC/skin" ]; then
+	mkdir -p "$ADDON/skin"
+	cp "$SRC"/skin/*.tga "$ADDON/skin/"
+	dim "  скин: $(ls -1 "$SRC"/skin/*.tga | wc -l) текстур"
+else
+	red "  нет папки skin/ — запусти python3 tools/gen_textures.py"
+	exit 1
+fi
+
 # убрать служебное, если попадёт
 rm -f "$ADDON"/*.bak "$ADDON"/*.orig 2>/dev/null || true
 

@@ -248,8 +248,42 @@ function M:UnregisterEvent(e) if self.__events then self.__events[e] = nil end e
 function M:UnregisterAllEvents() self.__events = {} end
 function M:IsEventRegistered(e) return self.__events and self.__events[e] or false end
 
-function M:SetText(t) self.__text = t end
+function M:SetText(t)
+	self.__text = t
+	-- как в игре: OnTextChanged с userInput=false
+	local fn = self.__scripts and self.__scripts.OnTextChanged
+	if fn and self.__kind == "EditBox" then fn(self, false) end
+end
 function M:GetText() return self.__text end
+
+-- Шрифты: аддон берёт уже установленный шрифт и меняет только размер
+function M:GetFont()
+	return self.__fontFile or "Fonts\\FRIZQT__.TTF", self.__fontSize or 12, self.__fontFlags or ""
+end
+function M:SetFont(file, size, flags)
+	self.__fontFile = file
+	self.__fontSize = size
+	self.__fontFlags = flags
+	if STUB.fontError then return false end
+	return true
+end
+function M:GetFontString()
+	if not self.__fontString then
+		self.__fontString = NewWidget("FontString", nil, self, "GameFontNormal")
+	end
+	return self.__fontString
+end
+function M:SetParent(parent)
+	if self.__parent and self.__parent.__children then
+		for i, c in ipairs(self.__parent.__children) do
+			if c == self then table.remove(self.__parent.__children, i) break end
+		end
+	end
+	self.__parent = parent
+	if parent and parent.__children then table.insert(parent.__children, self) end
+	self.__rect = nil
+	return self
+end
 function M:SetJustifyH(j) self.__justifyH = j end
 function M:SetJustifyV(j) self.__justifyV = j end
 function M:SetAutoFocus(v) self.__autoFocus = v end
@@ -284,7 +318,23 @@ function M:SetAllPoints(f) if f then self:SetPoint("TOPLEFT", f, "TOPLEFT") self
 
 function M:SetChecked(v) self.__checked = v and true or false end
 function M:GetChecked() return self.__checked end
-function M:SetHighlightTexture(t) self.__highlight = t end
+function M:SetHighlightTexture(t)
+	self.__highlight = t
+	if not self.__highlightWidget then
+		self.__highlightWidget = NewWidget("Texture", nil, self, nil)
+	end
+	return self.__highlightWidget
+end
+function M:GetHighlightTexture()
+	if not self.__highlightWidget then
+		self.__highlightWidget = NewWidget("Texture", nil, self, nil)
+	end
+	return self.__highlightWidget
+end
+function M:SetNormalTexture(t) self.__normalTexture = t end
+function M:SetPushedTexture(t) self.__pushedTexture = t end
+function M:SetDisabledTexture(t) self.__disabledTexture = t end
+function M:GetNormalTexture() return self.__normalTexture end
 function M:LockHighlight() self.__locked = true end
 function M:UnlockHighlight() self.__locked = false end
 function M:RegisterForClicks(...) self.__clicks = { ... } end
@@ -337,7 +387,13 @@ function M:AddDoubleLine(...) end
 function M:ClearLines() self.__lines = {} end
 function M:NumLines() return #(self.__lines or {}) end
 function M:GetLine(i) return "line" end
-function M:SetTextColor(...) end
+function M:SetTextColor(r, g, b, a)
+	self.__textColor = { r, g, b, a }
+end
+function M:GetTextColor()
+	local c = self.__textColor or { 1, 1, 1, 1 }
+	return c[1], c[2], c[3], c[4]
+end
 
 --===========================================================================
 -- CreateFrame
@@ -366,6 +422,16 @@ function SendChatMessage(msg, channel)
 end
 
 function UnitFactionGroup(unit) return STUB.faction end
+function IsShiftKeyDown() return STUB.shift and true or false end
+function IsControlKeyDown() return false end
+function IsAltKeyDown() return false end
+function GetAddOnMemoryUsage(name) return STUB.memoryKB or 864 end
+
+-- профайлер: как в игре, растёт с каждым вызовом
+function debugprofilestop()
+	STUB.clock = (STUB.clock or 0) + 0.5
+	return STUB.clock
+end
 function UnitName(unit) return "TestPlayer" end
 function ReloadUI() STUB.reloads = STUB.reloads + 1 end
 function GetLocale() return STUB.locale end
@@ -373,6 +439,23 @@ function GetTime() return 0 end
 
 UISpecialFrames = {}
 SlashCmdList = {}
+
+-- Клик по ссылке в чате (ники, предметы) и хуки
+STUB.hooks = {}
+function SetItemRef(link, text, button) end
+function hooksecurefunc(nameOrFunc, fn)
+	local key = type(nameOrFunc) == "string" and nameOrFunc or "func"
+	STUB.hooks[key] = STUB.hooks[key] or {}
+	table.insert(STUB.hooks[key], fn)
+end
+
+-- Вызвать хук как в игре: hooksecurefunc("SetItemRef", fn) → после SetItemRef
+function STUB.CallHook(name, ...)
+	local list = STUB.hooks[name]
+	if not list then return 0 end
+	for _, fn in ipairs(list) do pcall(fn, ...) end
+	return #list
+end
 
 --===========================================================================
 -- Попапы
@@ -555,6 +638,19 @@ function STUB.FireAll(event, ...)
 end
 
 function STUB.ClearSent() STUB.sent = {} end
+
+-- Ввод текста пользователем (OnTextChanged с userInput=true)
+function STUB.Type(widget, text)
+	widget.__text = text
+	local fn = widget.__scripts and widget.__scripts.OnTextChanged
+	if fn then pcall(fn, widget, true) end
+end
+
+function STUB.Focus(widget)
+	local fn = widget.__scripts and widget.__scripts.OnEditFocusGained
+	if fn then pcall(fn, widget) end
+	STUB.focused = widget
+end
 function STUB.LastCommand()
 	local last = STUB.sent[#STUB.sent]
 	return last and last.msg or nil

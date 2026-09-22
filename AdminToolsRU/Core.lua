@@ -1,6 +1,6 @@
 --===========================================================================
 -- Admin Tools RU — Core.lua
--- Ядро аддона: тема, виджеты, запуск GM-команд, реестр вкладок, прокрутка.
+-- Ядро аддона: скин, шрифты, виджеты, реестр вкладок, прокрутка, избранное.
 --
 -- ВАЖНО: этот файл создаёт главное окно (AT.frame) ДО того, как вкладки
 -- зарегистрируются. Поэтому Core.lua обязан идти первым в .toc.
@@ -9,8 +9,8 @@
 AT = AT or {}
 
 AT.ADDON_NAME = "AdminToolsRU"
-AT.VERSION    = "5.0.0"
-AT.PREFIX     = "|cff33ff99[AT-RU]|r "
+AT.VERSION    = "5.1.0"
+AT.PREFIX     = "|cff2fd6ff[AT-RU]|r "
 
 local floor, ceil, min, max = math.floor, math.ceil, math.min, math.max
 AT.floor, AT.ceil = floor, ceil
@@ -19,27 +19,23 @@ AT.floor, AT.ceil = floor, ceil
 -- Утилиты
 --===========================================================================
 
--- Свой trim: не зависим от глобального strtrim (его нет в обычном Lua,
--- а в игре он есть — но так модуль тестируется вне игры).
 function AT.trim(s)
 	if type(s) ~= "string" then return "" end
 	return (s:gsub("^%s+", ""):gsub("%s+$", ""))
 end
 
--- Сообщение в чат (всегда).
 function AT.Print(msg)
 	if not DEFAULT_CHAT_FRAME then return end
 	DEFAULT_CHAT_FRAME:AddMessage(AT.PREFIX .. tostring(msg))
 end
 
--- Сообщение об ошибке.
 function AT.PrintErr(msg)
 	if not DEFAULT_CHAT_FRAME then return end
 	DEFAULT_CHAT_FRAME:AddMessage(AT.PREFIX .. "|cffff5555" .. tostring(msg) .. "|r")
 end
 
 --===========================================================================
--- Уровни доступа (GM security level)
+-- Уровни доступа
 --===========================================================================
 AT.SEC_NAMES = {
 	[0] = "Игрок",
@@ -48,25 +44,30 @@ AT.SEC_NAMES = {
 	[3] = "Администратор",
 }
 
-AT.SEC_COLORS = {
-	[0] = "|cff9d9d9d",
-	[1] = "|cff33ff33",
-	[2] = "|cffffff33",
-	[3] = "|cffff3333",
+AT.SEC_RGB = {
+	[0] = { 0.66, 0.66, 0.66 },
+	[1] = { 0.30, 1.00, 0.40 },
+	[2] = { 1.00, 0.90, 0.25 },
+	[3] = { 1.00, 0.35, 0.35 },
+}
+
+AT.SEC_HEX = {
+	[0] = "|cffa0a0a0",
+	[1] = "|cff33ff66",
+	[2] = "|cffffe640",
+	[3] = "|cffff5555",
 }
 
 function AT.SecName(sec)
 	local name = AT.SEC_NAMES[sec or 0] or "?"
-	return (AT.SEC_COLORS[sec or 0] or "") .. name .. "|r"
+	return (AT.SEC_HEX[sec or 0] or "") .. name .. "|r"
 end
 
--- Мой уровень доступа (настраивается во вкладке «Настройки»).
 function AT.GetMySec()
 	if AdminToolsDB and AdminToolsDB.mySec then return AdminToolsDB.mySec end
 	return 3
 end
 
--- Заблокирована ли кнопка для текущего уровня доступа.
 function AT.IsLocked(sec)
 	if not sec then return false end
 	if not (AdminToolsDB and AdminToolsDB.restrictBySec) then return false end
@@ -74,25 +75,79 @@ function AT.IsLocked(sec)
 end
 
 --===========================================================================
--- Тема
+-- Скин: текстуры, цвета, шрифты
+-- Файлы skin/*.tga лежат в папке аддона (см. tools/gen_textures.py).
 --===========================================================================
-AT.THEME = {
-	bg      = { 0.06, 0.07, 0.10, 0.96 },
-	border  = { 0.25, 0.25, 0.30, 1.00 },
-	accent  = { 0.40, 0.70, 1.00, 1.00 },
-	text    = { 0.92, 0.92, 0.96, 1.00 },
-	textDim = { 0.60, 0.60, 0.65, 1.00 },
+AT.SKIN_PATH = "Interface\\AddOns\\" .. AT.ADDON_NAME .. "\\skin\\"
+
+AT.SKIN = {
+	btnNormal = AT.SKIN_PATH .. "btn-normal",
+	btnHover  = AT.SKIN_PATH .. "btn-hover",
+	btnPushed = AT.SKIN_PATH .. "btn-pushed",
+	panel     = AT.SKIN_PATH .. "panel",
+	glow      = AT.SKIN_PATH .. "glow",
+	line      = AT.SKIN_PATH .. "line",
 }
 
-AT.WIN_W, AT.WIN_H = 660, 600
+AT.THEME = {
+	bg      = { 0.045, 0.055, 0.075, 0.97 },
+	border  = { 0.16, 0.18, 0.24, 1.00 },
+	accent  = { 0.18, 0.84, 1.00, 1.00 },   -- голубой акцент (стиль FenUI/Anima)
+	accent2 = { 0.55, 0.40, 1.00, 1.00 },   -- фиолетовый (для градиентов)
+	text    = { 0.90, 0.92, 0.96, 1.00 },
+	textDim = { 0.55, 0.58, 0.66, 1.00 },
+	danger  = { 1.00, 0.35, 0.35, 1.00 },
+}
+
+AT.WIN_W, AT.WIN_H = 880, 620
 AT.BTN_W, AT.BTN_H, AT.PAD = 142, 22, 6
-AT.FLOW_COLS = 4          -- колонок в AT.FlowButtons
-AT.TELE_COLS = 3          -- колонок в AT.TeleSection
-AT.PAGE_TOP, AT.PAGE_BOTTOM = -72, 48
-AT.PAGE_PAD = 16
+AT.TAB_W, AT.TAB_H, AT.TAB_STEP = 132, 24, 26
+AT.FLOW_COLS = 4
+AT.TELE_COLS = 3
+AT.PAGE_PAD_L, AT.PAGE_PAD_R = 160, 16
+AT.PAGE_TOP, AT.PAGE_BOTTOM = -118, 60
+
+-----------------------------------------------------------------------------
+-- Шрифты.
+-- Не задаём пути к .ttf вручную: берём тот шрифт, который уже стоит у
+-- виджета (клиент подставляет локализованный, с кириллицей). Меняем только
+-- размер и обводку — так русский текст гарантированно отображается и на
+-- ruRU, и на enUS клиенте.
+-----------------------------------------------------------------------------
+AT.fontRegistry = {}
+AT.FontSizeDelta = 0
+
+function AT.RegisterFont(fs)
+	if not fs then return end
+	local file, size, flags = fs:GetFont()
+	if not file then return end
+	AT.fontRegistry[fs] = { file = file, size = size, flags = flags }
+	if AT.FontSizeDelta ~= 0 then
+		fs:SetFont(file, size + AT.FontSizeDelta, flags)
+	end
+end
+
+function AT.SetFontSizeDelta(delta)
+	delta = tonumber(delta) or 0
+	if delta < -2 then delta = -2 end
+	if delta > 4 then delta = 4 end
+	AT.FontSizeDelta = delta
+	if AdminToolsDB then AdminToolsDB.fontSize = delta end
+
+	for fs, info in pairs(AT.fontRegistry) do
+		local size = info.size + delta
+		if size < 6 then size = 6 end
+		fs:SetFont(info.file, size, info.flags)
+	end
+end
+
+function AT.GetFontSizeDelta()
+	if AdminToolsDB and AdminToolsDB.fontSize then return AdminToolsDB.fontSize end
+	return 0
+end
 
 --===========================================================================
--- Главное окно (создаётся здесь — вкладки подключаются к нему сразу)
+-- Главное окно
 --===========================================================================
 local frame = CreateFrame("Frame", "AdminToolsRUFrame", UIParent)
 AT.frame = frame
@@ -121,16 +176,34 @@ end)
 frame:Hide()
 tinsert(UISpecialFrames, "AdminToolsRUFrame")
 
-AT.pages = {}         -- [имя вкладки] = прокручиваемый контейнер (scroll child)
-AT.scrolls = {}       -- [имя вкладки] = сам ScrollFrame
-AT.tabButtons = {}    -- [имя вкладки] = кнопка вкладки
-AT.TABS = {}          -- порядок вкладок
-AT.pageBottom = {}    -- [page] = самая нижняя занятая Y (отрицательная)
+-- мягкое свечение сверху (стиль FenUI: акцент в шапке)
+local glow = frame:CreateTexture(nil, "BACKGROUND")
+glow:SetTexture(AT.SKIN.glow)
+glow:SetPoint("TOPLEFT", frame, "TOPLEFT", 1, -1)
+glow:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -1, -1)
+glow:SetHeight(150)
+glow:SetVertexColor(AT.THEME.accent[1], AT.THEME.accent[2], AT.THEME.accent[3], 0.13)
+
+-- вертикальная колонка вкладок: подложка
+local tabBg = frame:CreateTexture(nil, "BACKGROUND")
+tabBg:SetTexture(AT.SKIN.panel)
+tabBg:SetVertexColor(0.05, 0.06, 0.09, 0.55)
+tabBg:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, -84)
+tabBg:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 8, 56)
+tabBg:SetWidth(AT.TAB_W + 14)
+
+AT.pages = {}
+AT.scrolls = {}
+AT.tabButtons = {}
+AT.TABS = {}
+AT.pageBottom = {}
+AT.scrollOfPage = {}
+AT.allButtons = {}       -- все кнопки-команды (для подсветки блокировки)
+AT.favoriteButtons = {}
 
 --===========================================================================
 -- Запуск команд
 --===========================================================================
-
 AT.HISTORY_MAX = 30
 AT.history = {}
 
@@ -160,15 +233,109 @@ function AT.RunCmd(cmd)
 	if #cmd > 255 then cmd = cmd:sub(1, 255) end
 	SendChatMessage(cmd, "SAY")
 	AT.PushHistory(cmd)
-	if AT.EchoEnabled() then
-		if DEFAULT_CHAT_FRAME then
-			DEFAULT_CHAT_FRAME:AddMessage(AT.PREFIX .. "|cff888888>|r |cff33ff99" .. cmd .. "|r")
-		end
+	if AT.EchoEnabled() and DEFAULT_CHAT_FRAME then
+		DEFAULT_CHAT_FRAME:AddMessage(AT.PREFIX .. "|cff666666>|r |cff2fd6ff" .. cmd .. "|r")
 	end
 end
 
 --===========================================================================
--- Подтверждения (StaticPopup)
+-- Избранное: Shift+ЛКМ по любой кнопке-команде добавляет её в шапку
+--===========================================================================
+AT.FAVORITES_MAX = 12
+
+function AT.GetFavorites()
+	AdminToolsDB = AdminToolsDB or {}
+	if type(AdminToolsDB.favorites) ~= "table" then AdminToolsDB.favorites = {} end
+	return AdminToolsDB.favorites
+end
+
+function AT.IsFavorite(cmd)
+	for _, f in ipairs(AT.GetFavorites()) do
+		if f.cmd == cmd then return true end
+	end
+	return false
+end
+
+function AT.ToggleFavorite(label, cmd)
+	if type(cmd) ~= "string" or cmd == "" then return end
+	local list = AT.GetFavorites()
+
+	for i, f in ipairs(list) do
+		if f.cmd == cmd then
+			table.remove(list, i)
+			AT.Print("Убрано из избранного: " .. label)
+			AT.RefreshFavorites()
+			return
+		end
+	end
+
+	if #list >= AT.FAVORITES_MAX then
+		AT.PrintErr("Избранное заполнено (" .. AT.FAVORITES_MAX .. "). Убери что-нибудь.")
+		return
+	end
+
+	table.insert(list, { label = label, cmd = cmd })
+	AT.Print("В избранном: |cff2fd6ff" .. label .. "|r")
+	AT.RefreshFavorites()
+end
+
+function AT.RefreshFavorites()
+	local row = AT.favoritesRow
+	if not row then return end
+	-- куда вешать кнопки: Main.lua задаёт AT.favoritesAnchor (область справа от подписи)
+	local anchor = AT.favoritesAnchor or row
+
+	for _, b in ipairs(AT.favoriteButtons) do b:Hide() end
+
+	local list = AT.GetFavorites()
+	if #list == 0 then
+		if row.hint then row.hint:Show() end
+		return
+	end
+	if row.hint then row.hint:Hide() end
+
+	for i, fav in ipairs(list) do
+		local b = AT.favoriteButtons[i]
+		if not b then
+			b = CreateFrame("Button", nil, anchor)
+			b:SetSize(104, 18)
+			b:SetScript("OnClick", function(self, mouse)
+				local f = AT.GetFavorites()[self.__index]
+				if not f then return end
+				if mouse == "RightButton" or IsShiftKeyDown() then
+					AT.ToggleFavorite(f.label, f.cmd)
+				else
+					AT.RunCmd(f.cmd)
+				end
+			end)
+			b:SetScript("OnEnter", function(self)
+				local f = AT.GetFavorites()[self.__index]
+				if not f then return end
+				GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+				GameTooltip:SetText(f.label, 1, 1, 1)
+				GameTooltip:AddLine("Команда: |cff2fd6ff" .. f.cmd .. "|r", 0.7, 0.7, 0.7)
+				GameTooltip:AddLine("ЛКМ — выполнить, Shift+ЛКМ — убрать", 0.5, 0.5, 0.5)
+				GameTooltip:Show()
+			end)
+			b:SetScript("OnLeave", function() GameTooltip:Hide() end)
+			AT.favoriteButtons[i] = b
+		end
+
+		b.__index = i
+		local text = fav.label or fav.cmd
+		if #text > 15 then text = text:sub(1, 14) .. "…" end
+		b:SetText(text)
+
+		local col = (i - 1) % 7
+		local rowIdx = floor((i - 1) / 7)
+		b:ClearAllPoints()
+		b:SetPoint("TOPLEFT", anchor, "TOPLEFT", (col) * 110, -rowIdx * 20)
+		b:Show()
+	end
+end
+
+--===========================================================================
+-- Подтверждения
 --===========================================================================
 AT.POPUP_CONFIRM   = "ADMINTOOLS_CONFIRM"
 AT.POPUP_ENEMYCITY = "ADMINTOOLS_ENEMYCITY"
@@ -213,7 +380,6 @@ StaticPopupDialogs[AT.POPUP_DELCUSTOM] = {
 	preferredIndex = 3,
 }
 
--- Диалог подтверждения. cmd — команда, text — своя формулировка (необязательно).
 function AT.ConfirmCmd(cmd, text)
 	local dialog = StaticPopup_Show(AT.POPUP_CONFIRM, text or cmd)
 	if dialog then dialog.data = cmd end
@@ -223,21 +389,89 @@ end
 --===========================================================================
 -- Виджеты
 --===========================================================================
+
+-- Применить к кнопке наше оформление (текстуры + шрифт).
+local function SkinButton(btn)
+	btn:SetNormalTexture(AT.SKIN.btnNormal)
+	btn:SetPushedTexture(AT.SKIN.btnPushed)
+
+	local hl = btn:GetHighlightTexture()
+	if hl then
+		hl:SetTexture(AT.SKIN.btnHover)
+		hl:SetBlendMode("ADD")
+	end
+
+	local fs = btn:GetFontString()
+	if fs then
+		AT.RegisterFont(fs)
+		fs:SetJustifyH("CENTER")
+	end
+end
+AT.SkinButton = SkinButton
+
+-- Пересчитать цвета текста кнопок с учётом уровня доступа
+function AT.RefreshLocks()
+	for _, item in ipairs(AT.allButtons) do
+		local btn, sec = item[1], item[2]
+		local fs = btn.GetFontString and btn:GetFontString()
+		if fs then
+			if AT.IsLocked(sec) then
+				fs:SetTextColor(0.42, 0.44, 0.48)
+			else
+				local rgb = AT.SEC_RGB[sec or 0] or AT.SEC_RGB[0]
+				fs:SetTextColor(rgb[1], rgb[2], rgb[3])
+			end
+		end
+	end
+end
+
 function AT.MakeButton(parent, text, w, action, sec, tooltip)
 	local b = CreateFrame("Button", nil, parent, "UIPanelButtonTemplate")
 	b:SetSize(w or AT.BTN_W, AT.BTN_H)
+	b:SetText(text)
+	SkinButton(b)
 
-	if sec and AT.SEC_COLORS[sec] then
-		b:SetText(AT.SEC_COLORS[sec] .. text .. "|r")
-	else
-		b:SetText(text)
+	b.sec = sec
+	if sec then
+		local rgb = AT.SEC_RGB[sec] or AT.SEC_RGB[0]
+		local fs = b:GetFontString()
+		if fs then fs:SetTextColor(rgb[1], rgb[2], rgb[3]) end
 	end
 
-	b:SetScript("OnClick", function(self)
-		if AT.IsLocked(sec) then
-			AT.PrintErr("Недостаточно прав: нужно «" .. (AT.SEC_NAMES[sec] or "?") .. "».")
+	-- запоминаем для общей перекраски при смене уровня доступа
+	if sec then
+		table.insert(AT.allButtons, { b, sec })
+		if not text or text == "" then
+			-- кнопки без подписи (например, счётчики) не учитываем
+			table.remove(AT.allButtons)
+		end
+	end
+
+	-- ПКМ по кнопке-команде копирует команду в поле ввода (не выполняя её)
+	if type(action) == "string" then
+		b:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+	end
+
+	b:SetScript("OnClick", function(self, mouse)
+		if mouse == "RightButton" and type(action) == "string" then
+			if AT.SetCommandBox then
+				AT.SetCommandBox(action)
+				AT.Print("Команда в поле ввода: |cff2fd6ff" .. action .. "|r")
+			end
 			return
 		end
+
+		if AT.IsLocked(sec) then
+			AT.PrintErr("Недоступно: нужен уровень «" .. (AT.SEC_NAMES[sec] or "?") .. "».")
+			return
+		end
+
+		-- Shift+ЛКМ — добавить/убрать из избранного
+		if type(action) == "string" and IsShiftKeyDown() then
+			AT.ToggleFavorite(text, action)
+			return
+		end
+
 		if type(action) == "function" then
 			action(self)
 		else
@@ -245,17 +479,23 @@ function AT.MakeButton(parent, text, w, action, sec, tooltip)
 		end
 	end)
 
-	if tooltip then
+	if tooltip or sec or type(action) == "string" then
 		b:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-			GameTooltip:SetText(tooltip, 1, 1, 1)
+			GameTooltip:SetText(tooltip or text or "?", 1, 1, 1)
+
 			if sec then
-				GameTooltip:AddLine("Уровень доступа: " .. AT.SecName(sec), 0.6, 0.8, 1)
+				local lockNote = AT.IsLocked(sec) and "  |cffff5555(заблокировано)|r" or ""
+				GameTooltip:AddLine("Уровень: " .. AT.SecName(sec) .. lockNote, 0.6, 0.8, 1)
 			end
+
 			if type(action) == "string" then
 				GameTooltip:AddLine(" ")
-				GameTooltip:AddLine("Команда: |cff33ff99" .. action .. "|r", 0.7, 0.7, 0.7)
+				GameTooltip:AddLine("Команда: |cff2fd6ff" .. action .. "|r", 0.7, 0.7, 0.7)
+				local fav = AT.IsFavorite(action) and "|cffffd100в избранном|r" or "Shift+ЛКМ — в избранное"
+				GameTooltip:AddLine("ПКМ — в поле ввода · " .. fav, 0.5, 0.5, 0.5)
 			end
+
 			GameTooltip:Show()
 		end)
 		b:SetScript("OnLeave", function() GameTooltip:Hide() end)
@@ -276,17 +516,27 @@ end
 function AT.MakeLabel(parent, text, template)
 	local fs = parent:CreateFontString(nil, "ARTWORK", template or "GameFontNormalSmall")
 	fs:SetText(text)
+	AT.RegisterFont(fs)
 	return fs
 end
 
--- Учёт нижней границы контента страницы (для авто-высоты прокрутки).
+-- Декоративная линия-разделитель (текстура skin/line.tga)
+function AT.MakeLine(parent, y, left, right)
+	local line = parent:CreateTexture(nil, "ARTWORK")
+	line:SetTexture(AT.SKIN.line)
+	line:SetVertexColor(AT.THEME.accent[1], AT.THEME.accent[2], AT.THEME.accent[3], 0.45)
+	line:SetHeight(8)
+	line:SetPoint("TOPLEFT", parent, "TOPLEFT", left or 6, y + 3)
+	line:SetPoint("TOPRIGHT", parent, "TOPRIGHT", right or -8, y + 3)
+	return line
+end
+
 function AT.NoteY(page, y)
 	if type(y) ~= "number" then return end
 	local cur = AT.pageBottom[page]
 	if not cur or y < cur then AT.pageBottom[page] = y end
 end
 
--- Пересчитать высоту страницы: по учтённым Y + по фактическому низу виджетов.
 function AT.FitPage(page)
 	local lowest = AT.pageBottom[page]
 
@@ -304,8 +554,8 @@ function AT.FitPage(page)
 	end
 
 	local height = -(lowest or 0) + 24
-	local scroll = AT.scrollOfPage and AT.scrollOfPage[page]
-	if scroll and scroll.GetHeight and scroll:GetHeight() and height < scroll:GetHeight() then
+	local scroll = AT.scrollOfPage[page]
+	if scroll and scroll:GetHeight() and height < scroll:GetHeight() then
 		height = scroll:GetHeight()
 	end
 	if height < 1 then height = 1 end
@@ -318,29 +568,34 @@ function AT.MakeSection(page, title, y)
 	header:SetPoint("TOPLEFT", page, "TOPLEFT", 6, y)
 
 	local line = page:CreateTexture(nil, "ARTWORK")
-	line:SetTexture(AT.THEME.accent[1], AT.THEME.accent[2], AT.THEME.accent[3], 0.35)
-	line:SetHeight(1)
-	line:SetPoint("TOPLEFT", header, "BOTTOMLEFT", 0, -2)
+	line:SetTexture(AT.SKIN.line)
+	line:SetVertexColor(AT.THEME.accent[1], AT.THEME.accent[2], AT.THEME.accent[3], 0.40)
+	line:SetHeight(8)
+	line:SetPoint("TOPLEFT", header, "BOTTOMLEFT", -1, -1)
 	line:SetPoint("RIGHT", page, "RIGHT", -10, 0)
 
 	AT.NoteY(page, y - 20)
 	return y - 20
 end
 
--- Сетка кнопок. defs = { {текст, действие, ширина, уровень доступа, подсказка}, ... }
--- Возвращает Y для следующего блока.
+-- Сетка кнопок. defs = { {текст, действие, ширина, уровень, подсказка}, ... }
 function AT.FlowButtons(page, defs, startY, cols)
 	if type(defs) ~= "table" or #defs == 0 then return startY end
 	cols = cols or AT.FLOW_COLS
 
-	local pageW = page:GetWidth() or 598
-	if pageW <= 0 then pageW = 598 end
+	local pageW = page:GetWidth() or 660
+	if pageW <= 0 then pageW = 660 end
+
+	-- ширина может быть не задана или задана не числом — не падаем
+	local function widthOf(d)
+		if type(d[3]) == "number" and d[3] > 0 then return d[3] end
+		return AT.BTN_W
+	end
 
 	local cellW = AT.BTN_W
 	for _, d in ipairs(defs) do
-		if (d[3] or AT.BTN_W) > cellW then cellW = d[3] or AT.BTN_W end
+		if widthOf(d) > cellW then cellW = widthOf(d) end
 	end
-	-- не даём колонкам вылезти за пределы страницы
 	local fit = floor((pageW - 4 + AT.PAD) / (cellW + AT.PAD))
 	if fit < 1 then fit = 1 end
 	if cols > fit then cols = fit end
@@ -348,7 +603,11 @@ function AT.FlowButtons(page, defs, startY, cols)
 	for i, d in ipairs(defs) do
 		local col = (i - 1) % cols
 		local row = floor((i - 1) / cols)
-		local b = AT.MakeButton(page, d[1], d[3] or AT.BTN_W, d[2], d[4], d[5])
+		-- d[2] может быть подсказкой, если передан «плоский» список {название, команда, tip}
+		local sec = type(d[4]) == "number" and d[4] or nil
+		local tip = d[5]
+		if tip == nil and type(d[3]) == "string" then tip = d[3] end
+		local b = AT.MakeButton(page, d[1], widthOf(d), d[2], sec, tip)
 		b:SetPoint("TOPLEFT", page, "TOPLEFT",
 			4 + col * (cellW + AT.PAD),
 			startY - row * (AT.BTN_H + AT.PAD))
@@ -360,13 +619,12 @@ function AT.FlowButtons(page, defs, startY, cols)
 	return newY
 end
 
--- Строка формы: подпись + поле + кнопка «OK». builder(text) -> команда.
 function AT.FormRow(page, y, labelText, builder, width)
 	local lbl = AT.MakeLabel(page, labelText)
 	lbl:SetPoint("TOPLEFT", page, "TOPLEFT", 6, y - 5)
 
 	local edit = AT.MakeEdit(page, width or 240)
-	edit:SetPoint("TOPLEFT", page, "TOPLEFT", 150, y)
+	edit:SetPoint("TOPLEFT", page, "TOPLEFT", 190, y)
 
 	local function fire()
 		local text = AT.trim(edit:GetText())
@@ -385,13 +643,12 @@ function AT.FormRow(page, y, labelText, builder, width)
 	return y - 26, edit
 end
 
--- Строка формы с двумя полями. builder(a, b) -> команда.
 function AT.FormRow2(page, y, labelText, builder)
 	local lbl = AT.MakeLabel(page, labelText)
 	lbl:SetPoint("TOPLEFT", page, "TOPLEFT", 6, y - 5)
 
 	local e1 = AT.MakeEdit(page, 140)
-	e1:SetPoint("TOPLEFT", page, "TOPLEFT", 150, y)
+	e1:SetPoint("TOPLEFT", page, "TOPLEFT", 190, y)
 	local e2 = AT.MakeEdit(page, 70)
 	e2:SetPoint("LEFT", e1, "RIGHT", 6, 0)
 
@@ -415,6 +672,70 @@ function AT.FormRow2(page, y, labelText, builder)
 end
 
 --===========================================================================
+-- Фильтр: мгновенный поиск кнопок на странице
+--===========================================================================
+function AT.AttachFilter(page, hint)
+	local name = "AdminToolsRUFilter" .. (page:GetName() or "")
+	local box = CreateFrame("EditBox", nil, frame, "InputBoxTemplate")
+	box:SetSize(220, 20)
+	box:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -30, AT.PAGE_TOP + 20)
+	box:SetAutoFocus(false)
+	box:SetText(hint or "поиск…")
+	box:SetTextColor(0.55, 0.58, 0.66)
+	box.__empty = true
+	box.__page = page
+
+	local function apply(self)
+		local q = AT.trim(self:GetText():lower())
+		local empty = (self.__empty or q == "")
+		if self.__empty then q = "" end
+
+		for _, child in ipairs(page:GetChildren()) do
+			if child.__kind == "Button" and child.GetText then
+				local t = (child:GetText() or ""):lower()
+				if empty or t:find(q, 1, true) then
+					child:Show()
+				else
+					child:Hide()
+				end
+			end
+		end
+		AT.FitPage(page)
+	end
+
+	box:SetScript("OnTextChanged", function(self, userInput)
+		if self.__empty and userInput then
+			self.__empty = false
+			self:SetTextColor(0.90, 0.92, 0.96)
+		end
+		apply(self)
+	end)
+
+	box:SetScript("OnEditFocusGained", function(self)
+		if self.__empty then self:SetText("") self.__empty = false self:SetTextColor(0.9, 0.92, 0.96) end
+	end)
+
+	box:SetScript("OnEscapePressed", function(self)
+		self:SetText("")
+		self.__empty = true
+		self:SetTextColor(0.55, 0.58, 0.66)
+		self:ClearFocus()
+		apply(self)
+	end)
+
+	AT.filters = AT.filters or {}
+	table.insert(AT.filters, box)
+	return box
+end
+
+-- Показать только фильтр нужной вкладки
+function AT.ShowFiltersFor(page)
+	for _, box in ipairs(AT.filters or {}) do
+		if box.__page == page then box:Show() else box:Hide() end
+	end
+end
+
+--===========================================================================
 -- Телепорт-кнопки и секции
 --===========================================================================
 function AT.MakeTeleButton(parent, label, teleName, cityFaction)
@@ -430,7 +751,6 @@ function AT.MakeTeleButton(parent, label, teleName, cityFaction)
 	end, nil, "Телепорт в " .. label .. "\n|cff888888.tele " .. teleName .. "|r")
 end
 
--- list = { {подпись, имя телепорта, фракция}, ... }
 function AT.TeleSection(page, y, header, list)
 	local h = AT.MakeLabel(page, header, "GameFontNormal")
 	h:SetPoint("TOPLEFT", page, "TOPLEFT", 6, y)
@@ -453,33 +773,65 @@ end
 
 --===========================================================================
 -- Регистрация вкладок
--- Каждая вкладка получает прокручиваемую страницу и рисует в неё.
 --===========================================================================
-AT.scrollOfPage = {}
-
 function AT.RegisterTab(name)
 	table.insert(AT.TABS, name)
 	local index = #AT.TABS
 
-	-- Кнопка вкладки
-	local b = CreateFrame("Button", "AdminToolsRUTab" .. index, frame, "UIPanelButtonTemplate")
-	b:SetSize(62, 22)
-	b:SetText(name)
+	-- кнопка вкладки (вертикальная колонка слева)
+	local b = CreateFrame("Button", "AdminToolsRUTab" .. index, frame)
+	b:SetSize(AT.TAB_W, AT.TAB_H)
+
+	local bg = b:CreateTexture(nil, "BACKGROUND")
+	bg:SetAllPoints(b)
+	bg:SetTexture(AT.SKIN.btnNormal)
+	b.__bg = bg
+
+	local marker = b:CreateTexture(nil, "OVERLAY")
+	marker:SetTexture(AT.SKIN.line)
+	marker:SetVertexColor(AT.THEME.accent[1], AT.THEME.accent[2], AT.THEME.accent[3], 1)
+	marker:SetHeight(8)
+	marker:SetWidth(4)
+	marker:SetPoint("TOPLEFT", b, "TOPLEFT", 0, 0)
+	marker:SetPoint("BOTTOMLEFT", b, "BOTTOMLEFT", 0, 0)
+	marker:Hide()
+	b.__marker = marker
+
+	local label = b:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+	label:SetPoint("LEFT", b, "LEFT", 12, 0)
+	label:SetText(name)
+	label:SetJustifyH("LEFT")
+	AT.RegisterFont(label)
+	b.__label = label
+
+	local hl = b:CreateTexture(nil, "HIGHLIGHT")
+	hl:SetAllPoints(b)
+	hl:SetTexture(AT.SKIN.btnHover)
+	hl:SetBlendMode("ADD")
+
 	b:SetScript("OnClick", function() AT.ShowPage(name) end)
 	b:SetScript("OnEnter", function(self)
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-		GameTooltip:SetText("Вкладка «" .. name .. "»", 1, 1, 1)
+		GameTooltip:SetText(name, 1, 1, 1)
+		GameTooltip:AddLine("Показать вкладку", 0.6, 0.6, 0.6)
 		GameTooltip:Show()
 	end)
 	b:SetScript("OnLeave", function() GameTooltip:Hide() end)
+
 	AT.tabButtons[name] = b
 
-	-- Страница (видимая область)
+	-- страница (видимая область справа от колонки вкладок)
 	local page = CreateFrame("Frame", "AdminToolsRUPage" .. index, frame)
-	page:SetPoint("TOPLEFT", frame, "TOPLEFT", AT.PAGE_PAD, AT.PAGE_TOP)
-	page:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -AT.PAGE_PAD, AT.PAGE_BOTTOM)
+	page:SetPoint("TOPLEFT", frame, "TOPLEFT", AT.PAGE_PAD_L, AT.PAGE_TOP)
+	page:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -AT.PAGE_PAD_R, AT.PAGE_BOTTOM)
 
-	-- Прокрутка
+	-- заголовок активной вкладки
+	local title = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+	title:SetPoint("TOPLEFT", frame, "TOPLEFT", AT.PAGE_PAD_L, AT.PAGE_TOP + 26)
+	title:SetText(name)
+	AT.RegisterFont(title)
+	page.__title = title
+
 	local scroll = CreateFrame("ScrollFrame", "AdminToolsRUScroll" .. index, page, "UIPanelScrollFrameTemplate")
 	scroll:SetPoint("TOPLEFT", page, "TOPLEFT", 0, 0)
 	scroll:SetPoint("BOTTOMRIGHT", page, "BOTTOMRIGHT", -4, 0)
@@ -488,7 +840,7 @@ function AT.RegisterTab(name)
 
 	local child = CreateFrame("Frame", "AdminToolsRUContent" .. index, scroll)
 	child:SetPoint("TOPLEFT", scroll, "TOPLEFT", 0, 0)
-	child:SetSize(scroll:GetWidth() or 598, 480)
+	child:SetSize(scroll:GetWidth() or 660, 480)
 	scroll:SetScrollChild(child)
 
 	local scrollBar = _G[scroll:GetName() .. "ScrollBar"]
@@ -503,6 +855,21 @@ function AT.RegisterTab(name)
 			scroll:SetVerticalScroll(value or 0)
 			syncing = false
 		end)
+
+		-- лёгкий скин полосы прокрутки
+		local sbName = scrollBar:GetName()
+		local thumb = sbName and _G[sbName .. "ThumbTexture"]
+		if thumb then
+			thumb:SetTexture(AT.SKIN.panel)
+			thumb:SetVertexColor(AT.THEME.accent[1], AT.THEME.accent[2], AT.THEME.accent[3], 0.55)
+			thumb:SetWidth(6)
+		end
+		if sbName then
+			local up = _G[sbName .. "ScrollUpButton"]
+			local down = _G[sbName .. "ScrollDownButton"]
+			if up then up:Hide() end
+			if down then down:Hide() end
+		end
 	end
 
 	scroll:SetScript("OnVerticalScroll", function(self, offset)
@@ -546,6 +913,24 @@ function AT.RegisterTab(name)
 	return child
 end
 
+-- Подсветка активной вкладки
+function AT.SetTabActive(name, active)
+	local b = AT.tabButtons[name]
+	if not b then return end
+
+	if active then
+		b.__bg:SetTexture(AT.SKIN.btnHover)
+		b.__bg:SetVertexColor(AT.THEME.accent[1], AT.THEME.accent[2], AT.THEME.accent[3], 0.55)
+		b.__label:SetTextColor(1, 1, 1)
+		b.__marker:Show()
+	else
+		b.__bg:SetTexture(AT.SKIN.btnNormal)
+		b.__bg:SetVertexColor(1, 1, 1, 1)
+		b.__label:SetTextColor(AT.THEME.textDim[1], AT.THEME.textDim[2], AT.THEME.textDim[3])
+		b.__marker:Hide()
+	end
+end
+
 function AT.ShowPage(name)
 	if not name then return end
 	if not AT.IsTabVisible(name) then return end
@@ -554,17 +939,22 @@ function AT.ShowPage(name)
 	for n, p in pairs(AT.pages) do
 		local holder = AT.scrolls[n] and AT.scrolls[n]:GetParent()
 		if holder then
-			if n == name then holder:Show() else holder:Hide() end
+			if n == name then
+				holder:Show()
+				if p.__title then p.__title:Show() end
+				AT.ShowFiltersFor(p)
+			else
+				holder:Hide()
+				if p.__title then p.__title:Hide() end
+			end
 		end
 	end
 
-	for n, b in pairs(AT.tabButtons) do
-		if n == name then b:LockHighlight() else b:UnlockHighlight() end
+	for n in pairs(AT.tabButtons) do
+		AT.SetTabActive(n, n == name)
 	end
 
-	-- только сейчас, когда страница уже видима, считаем высоту контента
 	if AT.pages[name] then AT.FitPage(AT.pages[name]) end
-
 	if AdminToolsDB then AdminToolsDB.tab = name end
 end
 
@@ -580,8 +970,6 @@ end
 
 --===========================================================================
 -- Выпадающие меню
--- Данные: { { "Заголовок", { {"Пункт", "команда"}, ... } }, ... }
--- Возвращает функцию open(anchor) — открыть меню.
 --===========================================================================
 function AT.BuildMenu(globalName, dataTable)
 	local menu = CreateFrame("Frame", globalName, UIParent, "UIDropDownMenuTemplate")
@@ -632,6 +1020,8 @@ AT.DEFAULT_TAB_VISIBILITY = {
 	["Путешествие"] = true,
 	["Боты"]        = true,
 	["NPC"]         = true,
+	["Модули"]      = true,
+	["Мир"]         = true,
 	["Себя"]        = true,
 	["Персонаж"]    = true,
 	["Группа"]      = true,
@@ -642,7 +1032,6 @@ AT.DEFAULT_TAB_VISIBILITY = {
 
 function AT.IsTabVisible(name)
 	local fallback = AT.DEFAULT_TAB_VISIBILITY[name] ~= false
-	-- «Настройки» не скрываем никогда, иначе не вернуть остальные вкладки
 	if name == "Настройки" then return true end
 	if not AdminToolsDB or type(AdminToolsDB.tabVisibility) ~= "table" then return fallback end
 	local v = AdminToolsDB.tabVisibility[name]
@@ -661,7 +1050,6 @@ function AT.SetTabVisible(name, visible)
 		if visible then b:Show() else b:Hide() end
 	end
 
-	-- если текущая вкладка стала скрытой — переключаемся на первую доступную
 	if not visible and AT.currentTab == name then
 		for _, n in ipairs(AT.TABS) do
 			if AT.IsTabVisible(n) then
@@ -679,7 +1067,7 @@ function AT.ApplyTabVisibility()
 		if b then
 			if AT.IsTabVisible(name) then
 				b:ClearAllPoints()
-				b:SetPoint("TOPLEFT", frame, "TOPLEFT", 8 + offset * 66, -42)
+				b:SetPoint("TOPLEFT", frame, "TOPLEFT", 14, -90 - offset * AT.TAB_STEP)
 				b:Show()
 				offset = offset + 1
 			else
@@ -690,7 +1078,7 @@ function AT.ApplyTabVisibility()
 end
 
 --===========================================================================
--- Масштаб окна
+-- Масштаб
 --===========================================================================
 function AT.SetScale(scale)
 	scale = tonumber(scale) or 1

@@ -174,3 +174,90 @@ AT.DATA.npcbotClasses = "Классы: 1-Воин, 2-Паладин, 3-Охот�
 AT.DATA.npcbotSpeccs = "Спеки: blood, frost, unholy, arms, fury, protection, holy, discipline,\n"
 	.. "shadow, assassination, combat, subtlety, elemental, enhancement, restoration,\n"
 	.. "balance, feral, marksmanship, beastmastery, survival, destruction, affliction, demonology."
+
+--===========================================================================
+-- NPCBots: классы и служебные списки
+-- (модуль npcbot — trickerer/NPCBots либо форк netweaver/NPCBots)
+--===========================================================================
+AT.DATA.botClasses = {
+	{ "Воин",          1 },
+	{ "Паладин",       2 },
+	{ "Охотник",       3 },
+	{ "Разбойник",     4 },
+	{ "Жрец",          5 },
+	{ "Рыцарь смерти", 6 },
+	{ "Шаман",         7 },
+	{ "Маг",           8 },
+	{ "Чернокнижник",  9 },
+	{ "Друид",         11 },
+}
+
+-- Героические классы: только если сервер их собрал (по умолчанию выключены)
+AT.DATA.botHeroClasses = {
+	{ "Blademaster",    12 },
+	{ "Sphynx",         13 },
+	{ "Archmage",       14 },
+	{ "Dreadlord",      15 },
+	{ "Spellbreaker",   16 },
+	{ "Dark Ranger",    17 },
+	{ "Necromancer",    18 },
+	{ "Sea Witch",      19 },
+	{ "Crypt Lord",     20 },
+}
+
+AT.DATA.botFactions = {
+	{ "Альянс",  "a" },
+	{ "Орда",    "h" },
+	{ "Монстр",  "m" },
+	{ "Дружелюб.", "f" },
+}
+
+AT.DATA.botTips = "Команды ботов требуют модуль NPCBots. Если сервер отвечает «неизвестная\n"
+	.. "команда» — модуль выключен или класс/ID не найден. Спеки бота: число 1-30\n"
+	.. "(.npcbot set spec 2 — например Fury для воина)."
+
+--===========================================================================
+-- Модули и Extras твоей сборки (RageZone repack: NPCBots + Eluna + Extras)
+--► Это команды СОЗДАНИЯ NPC-услуг, а не управления ботами.
+--  Часть из них включается в worldserver.conf — см. AT.DATA.repackConfig.
+--===========================================================================
+AT.DATA.repackNpcSpawns = {
+	{ "Портал-мастер",      190000, "Portal Master (все порталы)",            ".npc add 190000" },
+	{ "Трансмог",           190010, "Трансмогрификация",                       ".npc add 190010" },
+	{ "Энчантер",           60011,  "NPC Enchanter из сборки",                 ".npc add 60011" },
+	{ "Hardcore NPC",       90000,  "NPC Hardcore Mode",                       ".npc add 90000" },
+	{ "Hire Bot",           0,      "Найм NPC-бота (.hirebot)",                ".hirebot" },
+	{ "Арена 1х1",          0,      "Установить NPC арены 1х1 (.npcarena)",    ".npcarena" },
+	{ "Обмен эмблем",       0,      "Emblem Transfer (.npcemblem)",            ".npcemblem" },
+	{ "Сброс инстансов",    0,      "Instance Reset NPC (.npcreset)",          ".npcreset" },
+	{ "Beastmaster",        0,      "Управление питомцами (.npcbeast)",        ".npcbeast" },
+	{ "Бесплатные профы",   0,      "Free Professions (.npcfreepro)",          ".npcfreepro" },
+	{ "Визуал оружия",      0,      "Weapon Visual (.npcvweapon)",             ".npcvweapon" },
+	{ "Все маунты",         0,      "All Mounts NPC (.npcallmount)",           ".npcallmount" },
+	{ "Буфер",              0,      "Баффы (.npcbuff)",                        ".npcbuff" },
+	{ "Зачарование",        0,      "Enchant NPC (.npcenchant)",               ".npcenchant" },
+	{ "Лотерея",            0,      "Gambler (.npclottery)",                   ".npclottery" },
+	{ "Гильд-хаус",         0,      "Guild House (.npcguild)",                 ".npcguild" },
+	{ "Шаблоны талантов",   0,      "Talent Template (.npctalent)",            ".npctalent" },
+	{ "Расовые способности",0,      "Racial Trait Swap (.npcracial)",          ".npcracial" },
+	{ "Банк реагентов",     0,      "Reagent Bank (.npcbank)",                 ".npcbank" },
+}
+
+AT.DATA.repackUtilities = {
+	{ "Банк",           ".bank",      "Открыть банк в любом месте" },
+	{ "Баффы",          ".buff",      "Наложить баффы на себя" },
+	{ "Починить всё",   ".repairall", "Починить всю экипировку" },
+	{ "Сброс КД инстов",".resetid",   "Сбросить привязки к подземельям" },
+	{ "Ставки добычи",  ".ga",        "Показать/настроить gather rates" },
+	{ "Автосохранение", ".save",      "Сохранить персонажа" },
+	{ "Воскресить",     ".revive",    "Воскресить себя" },
+	{ "Снять бой",      ".combatstop","Выйти из боя" },
+}
+
+AT.DATA.repackConfig = "Что включается в worldserver.conf сборки:\n"
+	.. "NpcBot.WanderingBots.BG.Enable — боты на поле боя\n"
+	.. "NpcBot.DungeonBots — боты в подземельях/LFG\n"
+	.. "DkStartdeathgate — скип стартовой зоны ДК (для Custom Races)\n"
+	.. "Плюс блоки: Autosave, Bank(.bank), Buff(.buff), Gather Rates(.ga),\n"
+	.. "Login Announcer, Potions Cooldowns, Repair(.repairall), Reset(.resetid),\n"
+	.. "Unlimited Ammo, WorldChat(.chat), Auto Resurrection."

@@ -64,3 +64,6 @@ note:SetJustifyH("LEFT")
 note:SetPoint("TOPLEFT", p, "TOPLEFT", 4, y)
 
 AT.NoteY(p, y - 34)
+
+-- Мгновенный фильтр по кнопкам вкладки (поиск по подписи)
+AT.AttachFilter(p, "фильтр NPC…")

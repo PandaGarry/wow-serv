@@ -116,6 +116,54 @@ function globalArray(name) {
 }
 
 //---------------------------------------------------------------------------
+// Аудит команд: каждое ".xxx" в исходниках должно быть известно серверу
+// (ядро AzerothCore / модуль NPCBots / Extras репака RageZone)
+//---------------------------------------------------------------------------
+const KNOWN_COMMANDS = new Set([
+	// --- AzerothCore 3.3.5 ---
+	"account", "additem", "additemset", "announce", "appear", "aura", "ban",
+	"character", "cheat", "combatstop", "cooldown", "die", "distance",
+	"explorecheat", "freeze", "gm", "gmchat", "go", "gobject", "gps",
+	"groupsummon", "instance", "kick", "learn", "levelup", "lookup", "maxskill",
+	"modify", "mute", "npc", "pinfo", "recall", "reload", "repairitems", "reset",
+	"revive", "save", "saveall", "send", "server", "setskill", "summon", "tele",
+	"unaura", "unban", "unmute", "unlearn", "unfreeze", "who",
+	// --- модуль NPCBots (trickerer / netweaver) ---
+	"npcbot",
+	// --- Extras твоего репака (RageZone: NPCBots + Eluna + Extras) ---
+	"bank", "buff", "ga", "repairall", "resetid", "chat", "hirebot",
+	"npcarena", "npcemblem", "npcreset", "npcbeast", "npcfreepro",
+	"npcvweapon", "npcallmount", "npcbuff", "npcenchant", "npclottery",
+	"npcguild", "npctalent", "npcracial", "npcbank",
+]);
+
+function auditCommands() {
+	const files = fs.readdirSync(ADDON_DIR).filter((f) => f.endsWith(".lua"));
+	const found = new Map(); // команда -> [файлы]
+
+	for (const file of files) {
+		let src = fs.readFileSync(path.join(ADDON_DIR, file), "utf8");
+		src = src.replace(/--[^\n]*/g, ""); // без комментариев
+		const re = /"([.#])([a-zA-Z_]+)/g;
+		let m;
+		while ((m = re.exec(src)) !== null) {
+			const cmd = m[1] + m[2];
+			if (!found.has(cmd)) found.set(cmd, new Set());
+			found.get(cmd).add(file);
+		}
+	}
+
+	const unknown = [];
+	for (const [cmd, where] of found) {
+		if (cmd.startsWith("#")) continue; // #id телепорта / сниппеты
+		if (!KNOWN_COMMANDS.has(cmd.slice(1))) {
+			unknown.push(`${cmd} (${[...where].join(", ")})`);
+		}
+	}
+	return { total: found.size, unknown };
+}
+
+//---------------------------------------------------------------------------
 // Прогон
 //---------------------------------------------------------------------------
 console.log(`${C.bold}Admin Tools RU — проверка аддона${C.off}`);
@@ -123,6 +171,40 @@ console.log(`${C.dim}Lua: ${lua.LUA_RELEASE} · корень: ${ROOT}${C.off}\n`
 
 const tocFiles = readToc(TOC);
 console.log(`${C.dim}Файлы из .toc (${tocFiles.length}): ${tocFiles.join(", ")}${C.off}`);
+
+// Каждая текстура, на которую ссылается ядро, должна лежать в AdminToolsRU/skin/
+function auditSkin() {
+	const core = fs.readFileSync(path.join(ADDON_DIR, "Core.lua"), "utf8");
+	const skinDir = path.join(ADDON_DIR, "skin");
+	// в Core.lua: btnNormal = AT.SKIN_PATH .. "btn-normal"
+	const refs = [...core.matchAll(/AT\.SKIN_PATH\s*\.\.\s*"([a-zA-Z0-9_-]+)"/g)].map((m) => m[1]);
+	const uniq = [...new Set(refs)];
+	const missing = uniq.filter((name) => !fs.existsSync(path.join(skinDir, name + ".tga")));
+	return { total: uniq.length, missing, files: uniq };
+}
+
+const skin = auditSkin();
+console.log(`${C.dim}Текстур скина: ${skin.total} (${skin.files.join(", ")})${C.off}`);
+if (skin.total === 0) {
+	console.log(`${C.red}${C.bold}Текстуры не найдены в коде — сломан разбор Core.lua${C.off}`);
+	skin.missing.push("<не найдено ни одной ссылки на текстуры>");
+}
+if (skin.missing.length) {
+	console.log(`${C.red}${C.bold}Нет файлов текстур:${C.off} ${skin.missing.join(", ")}`);
+	console.log(`${C.dim}  запусти: python3 tools/gen_textures.py${C.off}`);
+} else {
+	console.log(`${C.green}✓${C.off} все текстуры скина на месте`);
+}
+
+const audit = auditCommands();
+console.log(`${C.dim}Команд в аддоне: ${audit.total}${C.off}`);
+if (audit.unknown.length) {
+	console.log(`${C.red}${C.bold}Неизвестные серверу команды:${C.off}`);
+	for (const u of audit.unknown) console.log(`  ${C.red}✗${C.off} ${u}`);
+} else {
+	console.log(`${C.green}✓${C.off} все команды известны ядру/модулям (опечаток нет)`);
+}
+console.log("");
 
 runFile(path.join(TOOLS, "test", "wow_stub.lua"));
 const missing = [];
@@ -166,4 +248,5 @@ if (eventError) console.log(`${C.yellow}⚠ ошибка в обработчик
 console.log(`${C.bold}Итог:${C.off} ${C.green}${pass} пройдено${C.off}, ` +
 	(fail ? `${C.red}${fail} провалено${C.off}` : `${C.green}0 провалено${C.off}`));
 
-process.exit(fail === 0 ? 0 : 1);
+const failed = fail + audit.unknown.length + skin.missing.length;
+process.exit(failed === 0 ? 0 : 1);

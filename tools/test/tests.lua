@@ -64,11 +64,11 @@ end
 --===========================================================================
 eq(type(AT), "table", "AT создан при загрузке Core.lua")
 eq(type(AT.frame), "table", "главное окно AT.frame создано")
-eq(#AT.TABS, 10, "зарегистрировано 10 вкладок")
+eq(#AT.TABS, 12, "зарегистрировано 12 вкладок")
 
 local EXPECTED_TABS = {
-	"Телепорт", "Путешествие", "Боты", "NPC", "Себя",
-	"Персонаж", "Группа", "Сервер", "Настройки", "Свои",
+	"Мир", "Телепорт", "Путешествие", "Боты", "NPC", "Модули",
+	"Себя", "Персонаж", "Группа", "Сервер", "Настройки", "Свои",
 }
 for i, name in ipairs(EXPECTED_TABS) do
 	eq(AT.TABS[i], name, "порядок вкладок: " .. name)
@@ -141,6 +141,7 @@ end
 
 -- Масштаб не по умолчанию, чтобы кнопки «-», «+» и сброс были заметны
 AT.SetScale(1.2)
+STUB.shift = false
 
 for _, tabName in ipairs(AT.TABS) do
 	if tabName ~= "Свои" then
@@ -153,6 +154,7 @@ for _, tabName in ipairs(AT.TABS) do
 			local chatBefore = #STUB.chat
 			local menusBefore = #STUB.dropdownOpened
 			local scaleBefore = AT.GetScale()
+			local fontBefore = AT.GetFontSizeDelta()
 
 			if label == "OK" then FillFormRow(btn, page) end
 
@@ -173,6 +175,8 @@ for _, tabName in ipairs(AT.TABS) do
 					or (#STUB.chat > chatBefore)
 					or (#STUB.dropdownOpened > menusBefore)
 					or (AT.GetScale() ~= scaleBefore)
+					or (STUB.focused ~= nil)              -- кнопка перевела фокус в поле
+					or (AT.GetFontSizeDelta() ~= fontBefore)
 				ok(effect, "кнопка что-то делает (команда, попап, меню или сообщение): "
 					.. tabName .. " / " .. label)
 				if STUB.visiblePopup then
@@ -284,16 +288,39 @@ ok(not AT.IsTabVisible("Боты"), "вкладку «Боты» можно ск
 ok(not AT.tabButtons["Боты"]:IsShown(), "кнопка скрытой вкладки не показана")
 
 AT.ApplyTabVisibility()
-local xs = {}
-local overlaps = 0
+
+-- вкладки идут вертикальной колонкой: проверяем пересечение прямоугольников
+local function RectsOverlap(a, b)
+	return not (a.right <= b.left or b.right <= a.left or a.bottom >= b.top or b.bottom >= a.top)
+end
+
+local shown = {}
 for _, name in ipairs(AT.TABS) do
 	local b = AT.tabButtons[name]
 	if b and b:IsShown() then
-		if xs[b:GetLeft()] then overlaps = overlaps + 1 end
-		xs[b:GetLeft()] = true
+		table.insert(shown, {
+			name = name,
+			left = b:GetLeft(), right = b:GetRight(),
+			top = b:GetTop(), bottom = b:GetBottom(),
+		})
+	end
+end
+local overlaps = 0
+for i = 1, #shown do
+	for j = i + 1, #shown do
+		if RectsOverlap(shown[i], shown[j]) then overlaps = overlaps + 1 end
 	end
 end
 eq(overlaps, 0, "кнопки видимых вкладок не накладываются друг на друга")
+ok(#shown >= 10, "видимых вкладок не меньше 10 (" .. #shown .. ")")
+
+-- колонка вкладок должна помещаться в окно по высоте
+local frameBottom = AT.frame:GetBottom()
+local lowest = nil
+for _, r in ipairs(shown) do
+	if not lowest or r.bottom < lowest then lowest = r.bottom end
+end
+ok(lowest >= frameBottom, "колонка вкладок не вылезает за нижний край окна")
 
 AT.SetTabVisible("Настройки", false)
 ok(AT.IsTabVisible("Настройки"), "вкладку «Настройки» нельзя скрыть (иначе не вернуть остальные)")
@@ -500,7 +527,13 @@ AT.refreshCustom()
 --===========================================================================
 -- 13. Меню настроек построены
 --===========================================================================
-eq(#STUB.menus, 5, "создано 5 выпадающих меню (4 в путешествии + меню своих кнопок)")
+-- меню: подземелья, рейды, 2 места кача, классы ботов, свои кнопки
+ok(#STUB.menus >= 6, "создано не меньше 6 выпадающих меню (" .. #STUB.menus .. ")")
+local menuErr = 0
+for _, m in ipairs(STUB.menus) do
+	if m.initError then menuErr = menuErr + 1 end
+end
+eq(menuErr, 0, "ни одно меню не падает при построении")
 
 --===========================================================================
 -- 14. Данные сервера консистентны
@@ -546,5 +579,227 @@ local chatBefore = #STUB.chat
 AT.PrintErr("проверка")
 ok(#STUB.chat == chatBefore + 1, "PrintErr пишет в чат")
 ok(STUB.chat[#STUB.chat]:find("проверка"), "сообщение дошло целиком")
+
+--===========================================================================
+-- 16. Избранное (Shift+ЛКМ)
+--===========================================================================
+AdminToolsDB.favorites = {}
+AdminToolsDB.restrictBySec = false
+AdminToolsDB.mySec = 3
+AT.RefreshFavorites()
+
+AT.ShowPage("Боты")
+local followBtn = FindButton("Боты", "Следовать")
+ok(followBtn ~= nil, "найдена кнопка «Следовать» для проверки избранного")
+if followBtn then
+	STUB.ClearSent()
+	STUB.shift = true
+	STUB.Click(followBtn)
+	STUB.shift = false
+
+	eq(#STUB.sent, 0, "Shift+ЛКМ не выполняет команду")
+	eq(#AT.GetFavorites(), 1, "Shift+ЛКМ добавляет кнопку в избранное")
+	eq(AT.GetFavorites()[1] and AT.GetFavorites()[1].cmd, ".npcbot command follow",
+		"в избранное попала нужная команда")
+	ok(AT.IsFavorite(".npcbot command follow"), "AT.IsFavorite видит команду")
+
+	local favBtn = AT.favoriteButtons[1]
+	ok(favBtn ~= nil and favBtn:IsShown(), "кнопка избранного показана в шапке")
+
+	if favBtn then
+		STUB.ClearSent()
+		STUB.Click(favBtn)
+		eq(STUB.LastCommand(), ".npcbot command follow", "клик по избранному выполняет команду")
+	end
+
+	-- повторный Shift+ЛКМ убирает
+	STUB.shift = true
+	STUB.Click(followBtn)
+	STUB.shift = false
+	eq(#AT.GetFavorites(), 0, "повторный Shift+ЛКМ убирает из избранного")
+
+	-- лимит избранного
+	for i = 1, 20 do AT.ToggleFavorite("кнопка " .. i, ".gps " .. i) end
+	ok(#AT.GetFavorites() <= AT.FAVORITES_MAX,
+		"избранное не превышает лимит " .. AT.FAVORITES_MAX)
+	AdminToolsDB.favorites = {}
+	AT.RefreshFavorites()
+end
+
+--===========================================================================
+-- 17. ПКМ по кнопке — команда в поле ввода
+--===========================================================================
+AT.ShowPage("Мир")
+local gpsBtn = FindButton("Мир", "GPS")
+ok(gpsBtn ~= nil, "найдена кнопка «GPS»")
+if gpsBtn then
+	STUB.ClearSent()
+	STUB.Click(gpsBtn, "RightButton")
+	eq(AT.GetCommandBox():GetText(), ".gps", "ПКМ кладёт команду в поле ввода")
+	eq(#STUB.sent, 0, "при этом команда не выполняется")
+end
+
+--===========================================================================
+-- 18. Фильтр кнопок на вкладке
+--===========================================================================
+local filter
+for _, box in ipairs(AT.filters or {}) do
+	if box.__page == AT.pages["Телепорт"] then filter = box end
+end
+ok(filter ~= nil, "на вкладке «Телепорт» есть фильтр")
+
+if filter then
+	local function VisibleCount()
+		local n = 0
+		for _, c in ipairs(AT.pages["Телепорт"]:GetChildren()) do
+			if c.__kind == "Button" and c:IsShown() then n = n + 1 end
+		end
+		return n
+	end
+
+	AT.ShowPage("Телепорт")
+	local total = VisibleCount()
+	ok(total > 10, "до фильтра видно много кнопок (" .. total .. ")")
+
+	STUB.Focus(filter)
+	STUB.Type(filter, "Шторм")
+	local after = VisibleCount()
+	ok(after > 0, "фильтр что-то оставил (" .. after .. ")")
+	ok(after < total, "фильтр скрыл лишние кнопки (" .. after .. " из " .. total .. ")")
+
+	local stormShown = false
+	for _, c in ipairs(AT.pages["Телепорт"]:GetChildren()) do
+		if c.__kind == "Button" and c:IsShown()
+			and (c:GetText() or ""):find("Штормград") then stormShown = true end
+	end
+	ok(stormShown, "подходящая кнопка «Штормград» осталась видимой")
+
+	-- Esc очищает фильтр
+	local esc = filter:GetScript("OnEscapePressed")
+	if esc then
+		esc(filter)
+		eq(VisibleCount(), total, "после Esc снова видны все кнопки")
+	end
+end
+
+--===========================================================================
+-- 19. Шрифт: меняется размер, но не подменяется файл (кириллица из клиента)
+--===========================================================================
+local fontsBefore = {}
+for fs in pairs(AT.fontRegistry) do
+	fontsBefore[fs] = select(2, fs:GetFont())
+end
+ok(#STUB.chat > 0, "фонтан сообщений есть")  -- заглушка для порядка
+
+local fontChangedAll = true
+local fontCount = 0
+AT.SetFontSizeDelta(2)
+for fs, size in pairs(fontsBefore) do
+	fontCount = fontCount + 1
+	local _, newSize = fs:GetFont()
+	if newSize ~= size + 2 then fontChangedAll = false end
+end
+ok(fontCount > 20, "в реестре шрифтов больше 20 элементов (" .. fontCount .. ")")
+ok(fontChangedAll, "размер шрифта вырос на 2 пт у всех элементов")
+
+local fontFileOk = true
+for fs in pairs(AT.fontRegistry) do
+	local file = fs:GetFont()
+	if type(file) ~= "string" or file:find("AdminToolsRU", 1, true) then fontFileOk = false end
+end
+ok(fontFileOk, "аддон не подменяет файл шрифта (русский текст остаётся корректным)")
+
+AT.SetFontSizeDelta(0)
+local fontBackAll = true
+for fs, size in pairs(fontsBefore) do
+	local _, newSize = fs:GetFont()
+	if newSize ~= size then fontBackAll = false end
+end
+ok(fontBackAll, "после сброса размеры шрифтов вернулись")
+eq(AT.GetFontSizeDelta(), 0, "смещение размера сброшено в 0")
+
+--===========================================================================
+-- 20. Перекраска кнопок по уровню доступа
+--===========================================================================
+AT.ShowPage("NPC")
+local npcDelBtn = FindButton("NPC", "Удалить выбранного NPC")
+ok(npcDelBtn ~= nil, "найдена кнопка уровня 3 на вкладке «NPC»")
+
+if npcDelBtn then
+	local fs = npcDelBtn:GetFontString()
+
+	-- уровень 3 = красный (r >> g), заблокированная кнопка = серая (r ≈ g)
+	AdminToolsDB.restrictBySec = true
+	AdminToolsDB.mySec = 1
+	AT.RefreshLocks()
+	local r1, g1 = fs:GetTextColor()
+	ok(math.abs(r1 - g1) < 0.12,
+		"на уровне 1 кнопка уровня 3 выглядит серой (r=" .. string.format("%.2f", r1)
+		.. ", g=" .. string.format("%.2f", g1) .. ")")
+
+	AdminToolsDB.mySec = 3
+	AT.RefreshLocks()
+	local r2, g2 = fs:GetTextColor()
+	ok(r2 - g2 > 0.4,
+		"на уровне 3 та же кнопка окрашена как «администратор» (r=" .. string.format("%.2f", r2)
+		.. ", g=" .. string.format("%.2f", g2) .. ")")
+
+	AdminToolsDB.restrictBySec = false
+	AdminToolsDB.mySec = 3
+	AT.RefreshLocks()
+end
+
+--===========================================================================
+-- 21. Встроенный замер производительности
+--===========================================================================
+local chatBefore = #STUB.chat
+AT.Bench()
+ok(#STUB.chat > chatBefore, "/atbench печатает отчёт (" .. (#STUB.chat - chatBefore) .. " строк)")
+local benchFound = false
+for i = chatBefore + 1, #STUB.chat do
+	if tostring(STUB.chat[i]):find("Производительность") then benchFound = true end
+end
+ok(benchFound, "в отчёте есть строка о производительности")
+
+--===========================================================================
+-- 21b. Shift+клик по нику в чате → в поле ввода команды
+--===========================================================================
+ok(STUB.CallHook("SetItemRef", "player:Тестер", "[Тестер]", "LeftButton") > 0,
+	"аддон подписан на клики по ссылкам в чате")
+
+local box = AT.GetCommandBox()
+box:SetText("")
+
+STUB.shift = true
+STUB.CallHook("SetItemRef", "player:Тестер", "[Тестер]", "LeftButton")
+STUB.shift = false
+eq(box:GetText(), "Тестер", "Shift+клик по нику кладёт имя в поле ввода")
+
+STUB.shift = true
+STUB.CallHook("SetItemRef", "player:Второй", "[Второй]", "LeftButton")
+STUB.shift = false
+eq(box:GetText(), "Тестер Второй", "второе имя добавляется через пробел")
+
+-- без Shift имя не подставляется
+box:SetText("")
+STUB.CallHook("SetItemRef", "player:Тестер", "[Тестер]", "LeftButton")
+eq(box:GetText(), "", "без Shift имя в поле не попадает")
+
+-- клик по предмету не трогает поле ввода
+box:SetText("")
+STUB.shift = true
+STUB.CallHook("SetItemRef", "item:19019:0:0:0:0:0:0:0", "[Thunderfury]", "LeftButton")
+STUB.shift = false
+eq(box:GetText(), "", "клик по предмету поле ввода не меняет")
+
+box:SetText("")
+
+--===========================================================================
+-- 22. Файлы скина на месте
+--===========================================================================
+for _, key in ipairs({ "btnNormal", "btnHover", "btnPushed", "panel", "glow", "line" }) do
+	ok(type(AT.SKIN[key]) == "string" and AT.SKIN[key]:find("skin", 1, true),
+		"текстура скина задана: " .. key)
+end
 
 return T

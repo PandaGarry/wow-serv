@@ -1,45 +1,86 @@
 --===========================================================================
 -- Admin Tools RU — Main.lua
--- Заголовок окна, нижняя панель команд, кнопка на миникарте,
+-- Шапка окна, строка «Избранное», нижняя панель команд, кнопка на миникарте,
 -- слэш-команды и обработка событий.
 -- Загружается ПОСЛЕДНИМ (см. .toc): только здесь все вкладки уже созданы.
 --===========================================================================
 
--- Заголовок для окна назначения клавиш (используется в Bindings.xml)
 ADMINTOOLSRU_BINDING_HEADER = "Admin Tools RU"
 
 local frame = AT.frame
 
---===========================================================================
--- Заголовок и кнопка закрытия
---===========================================================================
-local title = AT.MakeLabel(frame, "Admin Tools RU v" .. AT.VERSION, "GameFontHighlightLarge")
-title:SetPoint("TOP", 0, -14)
+-- профайлер: в игре есть debugprofilestop(), в тестах — GetTime()
+local profiler = debugprofilestop or function()
+	return (GetTime and GetTime() or 0) * 1000
+end
 
-local subtitle = AT.MakeLabel(frame, "GM-панель · AzerothCore 3.3.5", "GameFontDisableSmall")
-subtitle:SetPoint("TOP", title, "BOTTOM", 0, -2)
+--===========================================================================
+-- Шапка
+--===========================================================================
+local title = AT.MakeLabel(frame, "Admin Tools RU", "GameFontHighlightLarge")
+title:SetPoint("TOPLEFT", frame, "TOPLEFT", 18, -12)
+
+local version = AT.MakeLabel(frame, "v" .. AT.VERSION, "GameFontDisableSmall")
+version:SetPoint("BOTTOMLEFT", title, "BOTTOMRIGHT", 8, 2)
+
+local subtitle = AT.MakeLabel(frame, "AzerothCore · NPCBots + Extras · Custom Races", "GameFontDisableSmall")
+subtitle:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -2)
 
 local close = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
-close:SetPoint("TOPRIGHT", -6, -6)
+close:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -6, -6)
+close:SetScale(0.9)
 
--- Разделитель под вкладками
-local sep = frame:CreateTexture(nil, "ARTWORK")
-sep:SetTexture(AT.THEME.border[1], AT.THEME.border[2], AT.THEME.border[3], 0.6)
-sep:SetHeight(1)
-sep:SetPoint("TOPLEFT", frame, "TOPLEFT", 12, -70)
-sep:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -12, -70)
+--===========================================================================
+-- Строка избранного (Shift+ЛКМ по любой кнопке-команде)
+--===========================================================================
+local favRow = CreateFrame("Frame", nil, frame)
+favRow:SetPoint("TOPLEFT", frame, "TOPLEFT", 18, -46)
+favRow:SetSize(AT.WIN_W - 60, 42)
+AT.favoritesRow = favRow
+
+local favTitle = AT.MakeLabel(favRow, "Избранное:", "GameFontNormalSmall")
+favTitle:SetPoint("TOPLEFT", favRow, "TOPLEFT", 0, -2)
+
+local favArea = CreateFrame("Frame", nil, favRow)
+favArea:SetPoint("TOPLEFT", favRow, "TOPLEFT", 88, 0)
+favArea:SetSize(AT.WIN_W - 140, 42)
+favRow.hint = AT.MakeLabel(favArea, "пусто — наведи на кнопку и нажми Shift+ЛКМ, чтобы добавить",
+	"GameFontDisableSmall")
+favRow.hint:SetPoint("TOPLEFT", favArea, "TOPLEFT", 0, -2)
+
+-- кнопки избранного создаются в AT.RefreshFavorites() внутри этой области
+AT.favoritesAnchor = favArea
+
+--===========================================================================
+-- Разделители и заголовок раздела
+--===========================================================================
+AT.MakeLine(frame, -82, 14, -14)
 
 --===========================================================================
 -- Нижняя панель: быстрый ввод команды + история
 --===========================================================================
-local cmdLabel = AT.MakeLabel(frame, "Команда:")
+-- линия над панелью команд (PAGE_BOTTOM отсчитывается от низа окна)
+AT.MakeLine(frame, -(AT.WIN_H - AT.PAGE_BOTTOM) + 2, 14, -14)
+
+local cmdLabel = AT.MakeLabel(frame, "Команда:", "GameFontNormalSmall")
 cmdLabel:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 20, 20)
 
 local cmdBox = CreateFrame("EditBox", "AdminToolsRUCmdBox", frame, "InputBoxTemplate")
-cmdBox:SetSize(380, 20)
+cmdBox:SetSize(430, 20)
 cmdBox:SetPoint("LEFT", cmdLabel, "RIGHT", 10, 0)
 cmdBox:SetAutoFocus(false)
 cmdBox:SetScript("OnEscapePressed", function(self) self:ClearFocus() end)
+
+function AT.SetCommandBox(text)
+	if not cmdBox then return end
+	cmdBox:SetText(text or "")
+	cmdBox:SetFocus()
+	cmdBox:HighlightText()
+end
+
+function AT.GetCommandBox()
+	return cmdBox
+end
 
 local histIndex = 0
 
@@ -66,8 +107,6 @@ cmdBox:SetScript("OnEnterPressed", function(self)
 	self:ClearFocus()
 end)
 
--- Стрелки вверх/вниз для истории: OnArrowPressed поддержан не всеми сборками
--- клиента, поэтому оборачиваем в pcall и дублируем кнопками ▲/▼.
 pcall(function()
 	cmdBox:SetScript("OnArrowPressed", function(self, key)
 		if key == "UP" then NavigateHistory(1)
@@ -78,15 +117,12 @@ end)
 local runBtn = AT.MakeButton(frame, "Выполнить", 90, RunFromBox, nil, "Выполнить команду из поля ввода")
 runBtn:SetPoint("LEFT", cmdBox, "RIGHT", 8, 0)
 
-local upBtn = AT.MakeButton(frame, "▲", 26, function() NavigateHistory(1) end, nil,
-	"Предыдущая команда")
+local upBtn = AT.MakeButton(frame, "▲", 26, function() NavigateHistory(1) end, nil, "Предыдущая команда")
 upBtn:SetPoint("LEFT", runBtn, "RIGHT", 8, 0)
 
-local downBtn = AT.MakeButton(frame, "▼", 26, function() NavigateHistory(-1) end, nil,
-	"Следующая команда")
+local downBtn = AT.MakeButton(frame, "▼", 26, function() NavigateHistory(-1) end, nil, "Следующая команда")
 downBtn:SetPoint("LEFT", upBtn, "RIGHT", 4, 0)
 
--- Счётчик истории (обновляем текст только при изменении длины)
 local histLabel = AT.MakeLabel(frame, "", "GameFontDisableSmall")
 histLabel:SetPoint("LEFT", downBtn, "RIGHT", 8, 0)
 local histShown = -1
@@ -97,6 +133,31 @@ histLabel:SetScript("OnUpdate", function(self)
 		self:SetText(count > 0 and ("история: " .. count) or "")
 	end
 end)
+
+--===========================================================================
+-- Shift+ЛКМ по нику игрока в чате → имя попадает в поле ввода команды
+-- (удобно для .kick, .summon, .ban — не надо набирать ник руками)
+--===========================================================================
+local function OnChatLinkClick(link, text, button)
+	if not IsShiftKeyDown() then return end
+	if type(link) ~= "string" or not link:find("player:", 1, true) then return end
+
+	local name = text and text:match("%[(.-)%]")
+	if not name or name == "" then return end
+
+	local box = AT.GetCommandBox and AT.GetCommandBox()
+	if not box then return end
+
+	local current = AT.trim(box:GetText() or "")
+	box:SetText(current == "" and name or (current .. " " .. name))
+	box:SetFocus()
+	box:HighlightText()
+	AT.Print("Имя в поле ввода: |cff2fd6ff" .. name .. "|r")
+end
+
+if SetItemRef and hooksecurefunc then
+	hooksecurefunc("SetItemRef", OnChatLinkClick)
+end
 
 --===========================================================================
 -- Кнопка на миникарте
@@ -162,17 +223,59 @@ function AT.RestoreMinimapPos()
 end
 
 --===========================================================================
+-- Диагностика производительности (встроенная, без внешних аддонов)
+--===========================================================================
+function AT.Bench()
+	local lines = {}
+
+	local t0 = profiler()
+	local switches = 0
+	for _, name in ipairs(AT.TABS) do
+		AT.ShowPage(name)
+		switches = switches + 1
+	end
+	local switchMs = profiler() - t0
+
+	t0 = profiler()
+	local buttons = 0
+	local fonts = 0
+	for _, name in ipairs(AT.TABS) do
+		local page = AT.pages[name]
+		if page then
+			AT.FitPage(page)
+			for _, child in ipairs(page:GetChildren()) do
+				if child.__kind == "Button" then buttons = buttons + 1 end
+			end
+		end
+	end
+	local layoutMs = profiler() - t0
+
+	for fs in pairs(AT.fontRegistry) do fonts = fonts + 1 end
+
+	AT.Print("|cffffd100Производительность панели|r")
+	AT.Print(("Переключение %d вкладок: |cff2fd6ff%.2f мс|r (%.2f мс на вкладку)")
+		:format(switches, switchMs, switchMs / math.max(1, switches)))
+	AT.Print(("Пересчёт высоты %d вкладок: |cff2fd6ff%.2f мс|r"):format(#AT.TABS, layoutMs))
+	AT.Print(("Кнопок на всех вкладках: |cff2fd6ff%d|r, шрифтов в реестре: |cff2fd6ff%d|r")
+		:format(buttons, fonts))
+	AT.Print("Память клиента: " .. (GetAddOnMemoryUsage
+		and ("|cff2fd6ff" .. ("%.0f"):format(GetAddOnMemoryUsage(AT.ADDON_NAME)) .. " КБ|r")
+		or "недоступно"))
+
+	if AT.currentTab then AT.ShowPage(AT.currentTab) end
+end
+
+--===========================================================================
 -- Слэш-команды
 --===========================================================================
 local function PrintHelp()
-	AT.Print("|cffffd100Admin Tools RU v" .. AT.VERSION .. "|r — панель GM-команд")
-	AT.Print("|cff33ff99/admin|r — открыть/закрыть панель")
-	AT.Print("|cff33ff99/admin <команда>|r — выполнить команду, напр. |cffaaaaaa/admin tele stormwind|r")
-	AT.Print("|cff33ff99/adt|r — то же, что /admin")
-	AT.Print("|cff33ff99/ath|r — эта справка")
-	AT.Print("|cff33ff99/atecho|r — вкл/выкл эхо выполненных команд")
-	AT.Print("|cff33ff99/atreset|r — сбросить все настройки аддона")
-	AT.Print("Кнопка на миникарте: ЛКМ — панель, ПКМ — телепорт.")
+	AT.Print("|cffffd100Admin Tools RU v" .. AT.VERSION .. "|r — GM-панель для AzerothCore 3.3.5")
+	AT.Print("|cff2fd6ff/admin|r — открыть/закрыть панель")
+	AT.Print("|cff2fd6ff/admin <команда>|r — выполнить команду, напр. |cffaaaaaa/admin tele stormwind|r")
+	AT.Print("|cff2fd6ff/adt|r — то же, что /admin")
+	AT.Print("|cff2fd6ff/ath|r — эта справка, |cff2fd6ff/atbench|r — замер скорости панели")
+	AT.Print("|cff2fd6ff/atecho|r — вкл/выкл эхо команд, |cff2fd6ff/atreset|r — сбросить настройки")
+	AT.Print("В панели: |cffaaaaaaShift+ЛКМ|r по кнопке — в избранное, |cffaaaaaaПКМ|r — команда в поле ввода.")
 end
 
 SLASH_ADMINTOOLSRU1 = "/admin"
@@ -189,6 +292,9 @@ end
 SLASH_ADMINTOOLSRUHELP1 = "/ath"
 SLASH_ADMINTOOLSRUHELP2 = "/adminhelp"
 SlashCmdList["ADMINTOOLSRUHELP"] = function() PrintHelp() end
+
+SLASH_ADMINTOOLSRUBENCH1 = "/atbench"
+SlashCmdList["ADMINTOOLSRUBENCH"] = function() AT.Bench() end
 
 SLASH_ADMINTOOLSRUECHO1 = "/atecho"
 SlashCmdList["ADMINTOOLSRUECHO"] = function()
@@ -211,8 +317,10 @@ local DEFAULTS = {
 	restrictBySec = false,
 	mySec = 3,
 	scale = 1.0,
+	fontSize = 0,
 	tabVisibility = {},
 	custom = {},
+	favorites = {},
 	history = {},
 }
 
@@ -241,7 +349,6 @@ events:SetScript("OnEvent", function(self, event, arg1)
 
 		InitDB()
 
-		-- позиция окна
 		if AdminToolsDB.pos then
 			local p = AdminToolsDB.pos
 			if p[1] and p[2] then
@@ -251,16 +358,15 @@ events:SetScript("OnEvent", function(self, event, arg1)
 		end
 
 		AT.SetScale(AdminToolsDB.scale)
+		AT.SetFontSizeDelta(AdminToolsDB.fontSize or 0)
 		AT.RestoreMinimapPos()
 
-		-- кнопка на миникарте могла быть скрыта в настройках
-		if AdminToolsDB.minimapHidden and mmBtn then
-			mmBtn:Hide()
-		end
+		if AdminToolsDB.minimapHidden and mmBtn then mmBtn:Hide() end
 
-		-- перечитать сохранённые настройки в элементы вкладок
 		if AT.refreshCustom then AT.refreshCustom() end
 		if AT.RefreshSettings then AT.RefreshSettings() end
+		AT.RefreshFavorites()
+		AT.RefreshLocks()
 
 		self:UnregisterEvent("ADDON_LOADED")
 		return
@@ -269,7 +375,6 @@ events:SetScript("OnEvent", function(self, event, arg1)
 	if event == "PLAYER_LOGIN" then
 		AT.ApplyTabVisibility()
 
-		-- высота прокрутки каждой вкладки (в этот момент координаты уже верны)
 		for _, name in ipairs(AT.TABS) do
 			if AT.pages[name] then AT.FitPage(AT.pages[name]) end
 		end
@@ -281,8 +386,9 @@ events:SetScript("OnEvent", function(self, event, arg1)
 			end
 		end
 		AT.ShowPage(startTab or "Телепорт")
+		AT.RefreshFavorites()
 
-		AT.Print("v" .. AT.VERSION .. " загружен. |cffaaaaaa/admin|r — панель, |cffaaaaaa/ath|r — справка.")
+		AT.Print("v" .. AT.VERSION .. " готов. |cffaaaaaa/admin|r — панель, |cffaaaaaa/ath|r — справка.")
 		self:UnregisterEvent("PLAYER_LOGIN")
 	end
 end)
