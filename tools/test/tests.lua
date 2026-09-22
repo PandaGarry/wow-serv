@@ -1104,4 +1104,162 @@ AT.SetMinimapAngle(-1)
 
 AT.ShowPage("Телепорт")
 
+--===========================================================================
+-- 31. Акцентный цвет
+--===========================================================================
+ok(#AT.ACCENTS >= 6, "готовых акцентов не меньше шести (" .. #AT.ACCENTS .. ")")
+
+AT.SetAccent("theme")
+local themeAccent = { AT.THEME.accent[1], AT.THEME.accent[2], AT.THEME.accent[3] }
+eq(AT.GetAccentEntry(), nil, "акцент «как в теме» — без переопределения")
+
+AT.SetAccent("gold")
+local gold = AT.GetAccentEntry()
+ok(gold ~= nil and gold.key == "gold", "акцент «золотой» выбран")
+ok(math.abs(AT.THEME.accent[1] - 1.0) < 0.01 and AT.THEME.accent[3] < 0.5,
+	"палитра приняла акцент (жёлтый: много красного, мало синего)")
+eq(AdminToolsDB.accent, "gold", "акцент сохраняется в настройках")
+
+-- акцент перекрашивает элементы интерфейса
+local themed = AT.themed[1]
+if themed then
+	local r, g, b = themed.region:GetVertexColor()
+	ok(math.abs(g - AT.THEME.accent[2]) < 0.01, "элементы перекрасились в новый акцент")
+end
+
+AT.SetAccent("theme")
+ok(math.abs(AT.THEME.accent[1] - themeAccent[1]) < 0.01,
+	"возврат к акценту темы работает")
+
+--===========================================================================
+-- 32. Стиль кнопок: плоский и скруглённый
+--===========================================================================
+AdminToolsDB.buttonStyle = nil   -- проверяем именно значение по умолчанию
+ok(AT.ButtonStyle() == "flat", "по умолчанию стиль плоский")
+AT.SetButtonStyle("flat")
+ok(#(AT.skinnedButtons or {}) > 100, "стиль применяется ко всем кнопкам ("
+	.. #(AT.skinnedButtons or {}) .. ")")
+
+local probe = FindButton("Мир", "GPS")
+ok(probe ~= nil and probe.__parts ~= nil, "у кнопки есть три части для скруглённого стиля")
+
+if probe then
+	AT.SetButtonStyle("rounded")
+	eq(AT.ButtonStyle(), "rounded", "стиль переключился на скруглённый")
+	eq(AdminToolsDB.buttonStyle, "rounded", "стиль сохраняется в настройках")
+	ok(probe.__parts.left:IsShown(), "торцевые текстуры показаны")
+	ok(probe.__parts.right:IsShown(), "правый торец показан")
+	eq(probe.__parts.left:GetWidth(), 16, "торец рисуется в натуральную ширину")
+
+	local lx = probe.__parts.left:GetLeft()
+	local rx = probe.__parts.right:GetLeft()
+	ok(lx and rx and lx < rx, "торцы стоят по краям кнопки")
+
+	AT.SetButtonStyle("flat")
+	ok(not probe.__parts.left:IsShown(), "в плоском стиле торцы скрыты")
+end
+
+--===========================================================================
+-- 33. Звук
+--===========================================================================
+AT.SetSoundEnabled(false)
+ok(not AT.SoundEnabled(), "звук выключен")
+STUB.sounds = {}
+AT.RunCmd(".gps")
+eq(#STUB.sounds, 0, "при выключенном звуке клиент не получает сигнал")
+
+AT.SetSoundEnabled(true)
+STUB.sounds = {}
+AT.RunCmd(".gps")
+ok(#STUB.sounds >= 1, "при включённом звуке есть сигнал (" .. #STUB.sounds .. ")")
+eq(STUB.sounds[#STUB.sounds], AT.SOUNDS.ok, "играет звук «ок»")
+AT.SetSoundEnabled(false)
+
+--===========================================================================
+-- 34. Горячие клавиши
+--===========================================================================
+ok(#AT.HOTKEY_ACTIONS >= 5, "действий для горячих клавиш: " .. #AT.HOTKEY_ACTIONS)
+
+local hkTest = "ADMINTOOLSRU_TOGGLE"
+STUB.bindings = {}
+eq(AT.HotkeyText(hkTest), "не назначена", "без назначения показывается «не назначена»")
+
+AT.StartCapture(hkTest, nil)
+ok(AT.captureAction == hkTest, "аддон ждёт клавишу")
+ok(AT.captureFrame ~= nil and AT.captureFrame:IsShown(), "окно ловли клавиши показано")
+ok(AT.captureFrame:GetKeyboardEnabled(), "окно ловли клавиши принимает клавиатуру")
+
+local onKeyDown = AT.captureFrame:GetScript("OnKeyDown")
+ok(type(onKeyDown) == "function", "обработчик клавиши установлен")
+
+-- модификаторы сами по себе не считаются клавишей
+onKeyDown(AT.captureFrame, "LSHIFT")
+ok(AT.captureAction == hkTest, "одиночный Shift не завершает назначение")
+
+STUB.shift = true
+onKeyDown(AT.captureFrame, "F8")
+STUB.shift = false
+
+eq(STUB.bindings[hkTest], "SHIFT-F8", "назначена комбинация SHIFT-F8")
+ok((STUB.bindingsSaved or 0) > 0, "привязки сохранены (SaveBindings)")
+eq(AT.HotkeyText(hkTest), "SHIFT-F8", "панель показывает назначенную клавишу")
+ok(AT.captureAction == nil, "после назначения захват прекращён")
+
+-- отмена по Esc
+AT.StartCapture(hkTest, nil)
+onKeyDown(AT.captureFrame, "ESCAPE")
+ok(AT.captureAction == nil, "Esc отменяет захват")
+ok(not AT.captureFrame:IsShown(), "окно ловли клавиши скрыто после отмены")
+
+-- снятие клавиши
+AT.ClearHotkey(hkTest)
+eq(STUB.bindings[hkTest], nil, "клавиша снята")
+eq(AT.HotkeyText(hkTest), "не назначена", "панель снова показывает «не назначена»")
+
+--===========================================================================
+-- 35. Экспорт и импорт настроек
+--===========================================================================
+AT.ApplyTheme("rose", true)
+AT.SetAccent("pink")
+AT.SetButtonStyle("rounded")
+AT.SetScale(1.2)
+AT.GetFavorites()
+AdminToolsDB.favorites = { { label = "Банк", cmd = ".bank" } }
+
+local exported = AT.BuildExportString()
+ok(type(exported) == "string" and #exported > 40, "строка экспорта собрана ("
+	.. #exported .. " символов)")
+ok(exported:find("theme|rose", 1, true) ~= nil, "в экспорте есть тема")
+ok(exported:find("accent|pink", 1, true) ~= nil, "в экспорте есть акцент")
+ok(exported:find("fav|Банк|.bank", 1, true) ~= nil, "в экспорте есть избранное")
+
+-- ломаем настройки и восстанавливаем из строки
+AT.ApplyTheme("cyan", true)
+AT.SetAccent("theme")
+AT.SetButtonStyle("flat")
+AdminToolsDB.favorites = {}
+
+local applied, msg = AT.ImportString(exported)
+ok(applied >= 10, "импорт применил строки (" .. tostring(applied) .. ")")
+eq(AT.GetThemeKey(), "rose", "тема восстановлена из строки")
+eq(AdminToolsDB.accent, "pink", "акцент восстановлен")
+eq(AT.ButtonStyle(), "rounded", "стиль кнопок восстановлен")
+eq(#AT.GetFavorites(), 1, "избранное восстановлено")
+eq(AT.GetFavorites()[1].cmd, ".bank", "команда избранного верна")
+
+-- мусор не ломает импорт
+local junkApplied = AT.ImportString("чепуха\nещё|мусор")
+eq(junkApplied, 0, "непонятный текст не применяется")
+local emptyApplied, emptyMsg = AT.ImportString("")
+eq(emptyApplied, 0, "пустая строка не применяется")
+ok(type(emptyMsg) == "string" and #emptyMsg > 0, "на пустой ввод есть сообщение")
+
+-- возвращаем настройки к рабочему виду
+AdminToolsDB.favorites = {}
+AT.ApplyTheme("cyan", true)
+AT.SetAccent("theme")
+AT.SetButtonStyle("flat")
+AT.SetScale(1)
+AT.RefreshFavorites()
+
 return T

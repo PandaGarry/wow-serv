@@ -112,6 +112,39 @@ def tex_glow(size=128):
     return out
 
 
+def tex_cap(alpha_top, alpha_bottom, w=16, h=22, radius=5):
+    """Торцевая «шапка» кнопки: левая половина со скруглённым углом,
+    правая — ровная (стыкуется с серединой кнопки).
+
+    Почему отдельная текстура в натуральную высоту кнопки: в 3.3.5 нет
+    9-slice, поэтому растягивание одной текстуры превратило бы скругление
+    в эллипс. Здесь скругление рисуется 1:1 и вертикально не искажается.
+    Правая шапка получается зеркальным SetTexCoord.
+    """
+    out = []
+    for y in range(h):
+        row = []
+        t = y / (h - 1)
+        a = alpha_top + (alpha_bottom - alpha_top) * t
+        if t < 0.06:
+            a = min(1.0, a + 26 / 255.0)
+        for x in range(w):
+            alpha = a
+            if x < w // 2:
+                # расстояние до скруглённого прямоугольника
+                cx = max(radius - x, 0)
+                cy = max(radius - min(y, h - 1 - y), 0)
+                if cx or cy:
+                    d = (cx * cx + cy * cy) ** 0.5
+                    if d > radius:
+                        alpha = 0.0
+                    elif d > radius - 1:
+                        alpha = a * (radius - d)
+            row.append((255, 255, 255, int(round(max(0.0, min(1.0, alpha)) * 255))))
+        out.append(row)
+    return out
+
+
 def tex_line(size=64):
     """Горизонтальная линия с растворяющимися краями — подчёркивание вкладки."""
     out = []
@@ -140,6 +173,10 @@ def main():
         "panel":      tex_panel(),
         "glow":       tex_glow(),
         "line":       tex_line(),
+        # торцы для скруглённого стиля кнопок (16x22 = натуральная высота кнопки)
+        "cap-normal": tex_cap(0.20, 0.07),
+        "cap-hover":  tex_cap(0.42, 0.18),
+        "cap-pushed": tex_cap(0.04, 0.12),
     }
 
     for name, pixels in textures.items():
@@ -150,11 +187,16 @@ def main():
     # Превью: лист с образцами на тёмном фоне, как в игре
     scale, pad = 3, 8
     tiles = []
-    for name in ("btn-normal", "btn-hover", "btn-pushed", "panel", "glow", "line"):
+    for name in ("btn-normal", "btn-hover", "btn-pushed", "panel", "glow", "line",
+                 "cap-normal", "cap-hover", "cap-pushed"):
         pixels = textures[name]
+        k = 6 if name.startswith("cap-") else scale
         up = []
         for row in pixels:
-            up.extend([row] * scale)
+            wide = []
+            for px in row:
+                wide.extend([px] * k)
+            up.extend([wide] * k)
         tiles.append(up)
 
     W = max(len(t[0]) for t in tiles) + pad * 2

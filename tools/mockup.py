@@ -88,7 +88,8 @@ def comp(canvas, img, xy, color, alpha=1.0):
 class Panel:
     """Рисует окно панели: шапка, избранное, колонка вкладок, содержимое."""
 
-    def __init__(self, theme_key, tabs, active, w=W, h=H, scale=1.0):
+    def __init__(self, theme_key, tabs, active, w=W, h=H, scale=1.0, style="flat"):
+        self.style = style
         self.t = THEMES[theme_key]
         self.w, self.h, self.scale = w, h, scale
         self.s = scale
@@ -105,6 +106,26 @@ class Panel:
         """Наложить текстуру скина, растянутую в矩形 w×h."""
         self.canvas.alpha_composite(tint(stretch(img, self.px(w), self.px(h)), color, alpha),
                                     (int(self.px(x)), int(self.px(y))))
+
+    def native(self, name, x, y, color, alpha=1.0):
+        """Текстура в натуральную величину (умноженную на масштаб макета)."""
+        img = load(name)
+        scaled = tint(img.resize((max(1, int(img.width * self.s)),
+                                  max(1, int(img.height * self.s))), Image.BILINEAR),
+                      color, alpha)
+        self.canvas.alpha_composite(scaled, (int(self.px(x)), int(self.px(y))))
+        return scaled
+
+    def btn(self, x, y, w, h, state="normal", color=(255, 255, 255), alpha=1.0):
+        """Кнопка с учётом стиля: плоская — одна текстура, скруглённая — три."""
+        if self.style == "rounded":
+            # торцы рисуются 1:1 (как в игре), середина тянется
+            cap = self.native("cap-" + state, x, y, color, alpha)
+            self.canvas.alpha_composite(cap.transpose(Image.FLIP_LEFT_RIGHT),
+                                       (int(self.px(x + w - 16)), int(self.px(y))))
+            self.full(load("btn-" + state), x + 6, y, w - 12, h, color, alpha)
+        else:
+            self.full(load("btn-" + state), x, y, w, h, color, alpha)
 
     def text(self, x, y, s, size=10, color=None, bold=False, anchor="la"):
         self.d.text((self.px(x), self.px(y)), s, font=self.fs(size, bold),
@@ -139,11 +160,11 @@ class Panel:
             y = 90 + i * TAB_STEP
             active = (name == self.active)
             if active:
-                self.full(load("btn-hover"), 14, y, TAB_W, TAB_H, self.t["accent"], 0.55)
+                self.btn(14, y, TAB_W, TAB_H, "hover", self.t["accent"], 0.55)
                 self.full(load("line"), 14, y, 4, TAB_H, self.t["accent"], 1.0)
                 color = (255, 255, 255)
             else:
-                self.full(load("btn-normal"), 14, y, TAB_W, TAB_H, (255, 255, 255), 1.0)
+                self.btn(14, y, TAB_W, TAB_H, "normal", (255, 255, 255), 1.0)
                 color = self.t["dim"]
             self.text(26, y + TAB_H / 2 - 5, name, 12, color)
 
@@ -165,7 +186,7 @@ class Panel:
             if hover_row is not None and row == hover_row:
                 self.full(load("panel"), x - 2, by - 2, cell + 4, BTN_H + 4,
                           self.t["accent"], 0.10)
-            self.full(load("btn-normal"), x, by, cell, BTN_H, (255, 255, 255), 1.0)
+            self.btn(x, by, cell, BTN_H, "normal", (255, 255, 255), 1.0)
             self.text(x + cell / 2, by + 6, label, 10, SEC_RGB.get(sec, self.t["text"]), anchor="ma")
         rows = (len(items) + cols - 1) // cols
         return y + rows * (BTN_H + PAD) + PAD
@@ -348,12 +369,103 @@ def draw_themes():
     print("  ", os.path.relpath(path, ROOT))
 
 
+def draw_interface_settings(theme_key="cyan", path="panel-interface-settings.png"):
+    """Нижняя часть вкладки «Интерфейс»: акценты, стиль, звук, клавиши, экспорт."""
+    p = Panel(theme_key, TABS, "Интерфейс", style="rounded")
+    p.header()
+    p.tab_column()
+    p.filter_box()
+
+    y = PAGE_TOP
+    y = p.section(y, "Акцентный цвет")
+    accents = [("Как в теме", None), ("Голубой", THEMES["cyan"]["accent"]),
+               ("Зелёный", (89, 242, 115)), ("Золотой", (255, 204, 77)),
+               ("Красный", (255, 107, 107)), ("Сиреневый", (184, 128, 255)),
+               ("Розовый", (255, 128, 184)), ("Белый", (235, 240, 250))]
+    for i, (name, color) in enumerate(accents):
+        col, row = i % 4, i // 4
+        x = PAGE_L + 4 + col * 146
+        by = y + row * 26
+        p.btn(x, by, 140, BTN_H, "normal", (255, 255, 255), 1.0)
+        if color:
+            p.full(load("panel"), x + 6, by + 6, 10, 10, color, 0.9)
+        p.text(x + (22 if color else 70), by + 6, name, 10)
+    y += 2 * 26 + 4
+
+    y = p.section(y, "Стиль кнопок")
+    p.btn(PAGE_L + 4, y, 140, BTN_H, "hover", p.t["accent"], 0.55)
+    p.text(PAGE_L + 74, y + 6, "Плоский", 10, p.t["dim"], anchor="ma")
+    p.btn(PAGE_L + 150, y, 140, BTN_H, "hover", (255, 255, 255), 1.0)
+    p.text(PAGE_L + 220, y + 6, "Скруглённый", 10, (255, 255, 255), anchor="ma")
+    y += 26
+
+    y = p.section(y, "Звук")
+    y = p.checkbox(y, "Звук при выполнении команды", False)
+
+    y = p.section(y, "Горячие клавиши")
+    hotkeys = [("Открыть панель", "CTRL-F8"), ("Вкладка «Телепорт»", "не назначена"),
+               ("Вкладка «Боты»", "не назначена"), ("Команда .bank", "ALT-B")]
+    for i, (name, key) in enumerate(hotkeys):
+        rowY = y + i * 26
+        p.text(PAGE_L + 6, rowY + 5, name, 10)
+        p.text(PAGE_L + 170, rowY + 5, key, 10, p.t["dim"])
+        p.btn(PAGE_L + 300, rowY, 100, BTN_H, "normal", (255, 255, 255), 1.0)
+        p.text(PAGE_L + 350, rowY + 6, "Назначить", 10, anchor="ma")
+        p.btn(PAGE_L + 406, rowY, 70, BTN_H, "normal", (255, 255, 255), 1.0)
+        p.text(PAGE_L + 441, rowY + 6, "Сброс", 10, anchor="ma")
+    y += len(hotkeys) * 26 + 4
+
+    y = p.section(y, "Экспорт и импорт настроек")
+    p.text(PAGE_L + 6, y, "Скопируй строку в буфер (Ctrl+C) и вставь на другом персонаже (Ctrl+V),", 10, p.t["dim"])
+    p.text(PAGE_L + 6, y + 14, "затем нажми «Импорт из поля». Переносятся тема, акценты, избранное и свои кнопки.", 10, p.t["dim"])
+    y += 34
+    p.d.rectangle([p.px(PAGE_L + 6), p.px(y), p.px(PAGE_L + 526), p.px(y + 64)],
+                  outline=(70, 76, 96), width=1)
+    for i, line in enumerate(["-- Admin Tools RU: настройки v1", "theme|cyan",
+                              "accent|gold", "buttonStyle|rounded", "fav|Банк|.bank"]):
+        p.text(PAGE_L + 12, y + 4 + i * 12, line, 9, p.t["accent"] if i == 0 else p.t["text"])
+
+    y += 96
+    for i, name in enumerate(("Экспорт в поле", "Импорт из поля", "Очистить поле")):
+        w = 150 if i < 2 else 130
+        x = PAGE_L + 4 + (i * 156 if i < 2 else 318)
+        p.btn(x, y, w, BTN_H, "normal", (255, 255, 255), 1.0)
+        p.text(x + w / 2, y + 6, name, 10, anchor="ma")
+
+    p.footer()
+    p.save(os.path.join(OUT, path))
+
+
+def draw_style_comparison():
+    """Плоский и скруглённый стиль рядом, одна и та же тема."""
+    scale = 0.78
+    gap = 16
+    tiles = []
+    for style in ("flat", "rounded"):
+        p = Panel("cyan", TABS, "Боты", scale=scale, style=style)
+        draw_tile_content(p)
+        # подпись стиля поверх шапки
+        p.text(18, -6, "Стиль: " + ("Плоский" if style == "flat" else "Скруглённый"),
+               13, THEMES["cyan"]["accent"], bold=True)
+        tiles.append(p)
+
+    tw, th = tiles[0].canvas.width, tiles[0].canvas.height
+    canvas = Image.new("RGBA", (tw, th * 2 + gap * 3), (14, 16, 22, 255))
+    for i, tile in enumerate(tiles):
+        canvas.alpha_composite(tile.canvas, (gap, gap + i * (th + gap)))
+    path = os.path.join(OUT, "style-comparison.png")
+    canvas.convert("RGB").save(path)
+    print("  ", os.path.relpath(path, ROOT))
+
+
 def main():
     print("Макеты панели:")
     draw_bots()
     draw_interface()
     draw_interface("emerald", "panel-interface-emerald.png")
+    draw_interface_settings()
     draw_themes()
+    draw_style_comparison()
 
 
 if __name__ == "__main__":

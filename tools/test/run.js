@@ -248,6 +248,31 @@ if (skin.missing.length) {
 	console.log(`${C.green}✓${C.off} все текстуры скина на месте`);
 }
 
+// Каждое действие из AT.HOTKEY_ACTIONS должно быть объявлено в Bindings.xml,
+// иначе SetBinding молча ничего не сделает
+function auditBindings() {
+	const core = fs.readFileSync(path.join(ADDON_DIR, "Core.lua"), "utf8");
+	const actions = [...core.matchAll(/"(ADMINTOOLSRU_[A-Z_]+)"/g)].map((m) => m[1]);
+	const uniq = [...new Set(actions)];
+
+	const bindingsPath = path.join(ADDON_DIR, "Bindings.xml");
+	if (!fs.existsSync(bindingsPath)) {
+		return uniq.length ? [`нет файла Bindings.xml, а код ждёт ${uniq.length} действий`] : [];
+	}
+	const xml = fs.readFileSync(bindingsPath, "utf8");
+	const declared = new Set([...xml.matchAll(/name="(ADMINTOOLSRU_[A-Z_]+)"/g)].map((m) => m[1]));
+
+	return uniq.filter((a) => !declared.has(a)).map((a) => `${a} — нет в Bindings.xml`);
+}
+
+const bindingProblems = auditBindings();
+if (bindingProblems.length) {
+	console.log(`${C.red}${C.bold}Горячие клавиши без объявления:${C.off}`);
+	for (const b of bindingProblems) console.log(`  ${C.red}✗${C.off} ${b}`);
+} else {
+	console.log(`${C.green}✓${C.off} все горячие клавиши объявлены в Bindings.xml`);
+}
+
 const regionProblems = auditRegions();
 if (regionProblems.length) {
 	console.log(`${C.red}${C.bold}Методы фреймов вызваны у регионов (FontString/Texture):${C.off}`);
@@ -353,5 +378,5 @@ console.log(`${C.bold}Итог:${C.off} ${C.green}${pass} пройдено${C.of
 	(fail ? `${C.red}${fail} провалено${C.off}` : `${C.green}0 провалено${C.off}`));
 
 const failed = fail + audit.unknown.length + skin.missing.length
-	+ regionProblems.length + glyphs.length;
+	+ regionProblems.length + glyphs.length + bindingProblems.length;
 process.exit(failed === 0 ? 0 : 1);

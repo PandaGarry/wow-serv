@@ -5,6 +5,17 @@
 -- Загружается ПОСЛЕДНИМ (см. .toc): только здесь все вкладки уже созданы.
 --===========================================================================
 
+-- Подписи для меню «Назначение клавиш» (клиент показывает именно их)
+BINDING_HEADER_ADMINTOOLSRU = "Admin Tools RU"
+BINDING_NAME_ADMINTOOLSRU_TOGGLE = "Открыть/закрыть панель"
+BINDING_NAME_ADMINTOOLSRU_TELEPORT = "Вкладка «Телепорт»"
+BINDING_NAME_ADMINTOOLSRU_BOTS = "Вкладка «Боты»"
+BINDING_NAME_ADMINTOOLSRU_MODULES = "Вкладка «Модули»"
+BINDING_NAME_ADMINTOOLSRU_BANK = "Команда .bank"
+BINDING_NAME_ADMINTOOLSRU_REPAIR = "Команда .repairall"
+BINDING_NAME_ADMINTOOLSRU_GPS = "Команда .gps"
+
+-- используется другими частями аддона и внешними скриптами
 ADMINTOOLSRU_BINDING_HEADER = "Admin Tools RU"
 
 local frame = AT.frame

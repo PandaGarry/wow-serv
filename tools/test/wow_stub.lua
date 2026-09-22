@@ -136,6 +136,7 @@ local FRAME_ONLY = {
 	EnableMouse = true, EnableMouseWheel = true,
 	RegisterForClicks = true, RegisterForDrag = true,
 	SetMovable = true, SetClampedToScreen = true, SetToplevel = true,
+	EnableKeyboard = true, GetKeyboardEnabled = true,
 	SetFrameStrata = true, GetFrameStrata = true,
 	SetFrameLevel = true, GetFrameLevel = true,
 	Raise = true, Lower = true, StartMoving = true, StopMovingOrSizing = true,
@@ -331,6 +332,8 @@ function M:GetFontString()
 	end
 	return self.__fontString
 end
+function M:EnableKeyboard(enabled) self.__keyboard = enabled and true or false end
+function M:GetKeyboardEnabled() return self.__keyboard and true or false end
 function M:SetParent(parent)
 	if self.__parent and self.__parent.__children then
 		for i, c in ipairs(self.__parent.__children) do
@@ -395,10 +398,22 @@ function M:GetHighlightTexture()
 	end
 	return self.__highlightWidget
 end
-function M:SetNormalTexture(t) self.__normalTexture = t end
-function M:SetPushedTexture(t) self.__pushedTexture = t end
-function M:SetDisabledTexture(t) self.__disabledTexture = t end
+-- Текстуры состояний кнопки: в игре это объекты-текстуры, у них есть
+-- Hide/SetTexture/SetVertexColor, поэтому заглушка возвращает виджеты.
+local function stateTexture(self, field, path)
+	self[field .. "File"] = path
+	if not self[field] then
+		self[field] = NewWidget("Texture", nil, self, nil)
+	end
+	return self[field]
+end
+
+function M:SetNormalTexture(t) return stateTexture(self, "__normalTexture", t) end
+function M:SetPushedTexture(t) return stateTexture(self, "__pushedTexture", t) end
+function M:SetDisabledTexture(t) return stateTexture(self, "__disabledTexture", t) end
 function M:GetNormalTexture() return self.__normalTexture end
+function M:GetPushedTexture() return self.__pushedTexture end
+function M:GetDisabledTexture() return self.__disabledTexture end
 function M:LockHighlight() self.__locked = true end
 function M:UnlockHighlight() self.__locked = false end
 function M:RegisterForClicks(...) self.__clicks = { ... } end
@@ -487,6 +502,30 @@ end
 
 function UnitFactionGroup(unit) return STUB.faction end
 function IsShiftKeyDown() return STUB.shift and true or false end
+function IsControlKeyDown() return STUB.ctrl and true or false end
+function IsAltKeyDown() return STUB.alt and true or false end
+
+-- Привязки клавиш (как в клиенте)
+STUB.bindings = {}
+function GetBindingKey(action) return STUB.bindings[action] end
+function SetBinding(action, key)
+	STUB.bindings[action] = key
+	STUB.bindingSet = (STUB.bindingSet or 0) + 1
+	return true
+end
+function SaveBindings(which) STUB.bindingsSaved = (STUB.bindingsSaved or 0) + 1; return true end
+function GetCurrentBindingSet() return 1 end
+
+-- Звук: клиент играет по номеру набора, тесты просто записывают вызовы
+STUB.sounds = {}
+function PlaySound(id)
+	table.insert(STUB.sounds, id)
+	return true
+end
+function PlaySoundFile(path)
+	table.insert(STUB.sounds, path)
+	return true
+end
 function IsControlKeyDown() return false end
 function IsAltKeyDown() return false end
 function GetAddOnMemoryUsage(name) return STUB.memoryKB or 864 end

@@ -9,7 +9,7 @@
 AT = AT or {}
 
 AT.ADDON_NAME = "AdminToolsRU"
-AT.VERSION    = "5.2.0"
+AT.VERSION    = "5.3.0"
 AT.PREFIX     = "|cff2fd6ff[AT-RU]|r "
 
 local floor, ceil, min, max = math.floor, math.ceil, math.min, math.max
@@ -30,6 +30,7 @@ function AT.Print(msg)
 end
 
 function AT.PrintErr(msg)
+	AT.PlaySound("error")
 	if not DEFAULT_CHAT_FRAME then return end
 	DEFAULT_CHAT_FRAME:AddMessage(AT.PREFIX .. "|cffff5555" .. tostring(msg) .. "|r")
 end
@@ -84,6 +85,10 @@ AT.SKIN = {
 	btnNormal = AT.SKIN_PATH .. "btn-normal",
 	btnHover  = AT.SKIN_PATH .. "btn-hover",
 	btnPushed = AT.SKIN_PATH .. "btn-pushed",
+	-- торцы для скруглённого стиля (в натуральную высоту кнопки)
+	capNormal = AT.SKIN_PATH .. "cap-normal",
+	capHover  = AT.SKIN_PATH .. "cap-hover",
+	capPushed = AT.SKIN_PATH .. "cap-pushed",
 	panel     = AT.SKIN_PATH .. "panel",
 	glow      = AT.SKIN_PATH .. "glow",
 	line      = AT.SKIN_PATH .. "line",
@@ -144,6 +149,37 @@ AT.Themes = {
 
 AT.THEME_ORDER = { "cyan", "emerald", "violet", "amber", "rose" }
 
+-- Дополнительные акценты: можно взять любой поверх выбранной темы.
+AT.ACCENTS = {
+	{ key = "theme",  name = "Как в теме", color = nil },
+	{ key = "cyan",   name = "Голубой",    color = { 0.18, 0.84, 1.00 } },
+	{ key = "green",  name = "Зелёный",    color = { 0.35, 0.95, 0.45 } },
+	{ key = "gold",   name = "Золотой",    color = { 1.00, 0.80, 0.30 } },
+	{ key = "red",    name = "Красный",    color = { 1.00, 0.42, 0.42 } },
+	{ key = "violet", name = "Сиреневый",  color = { 0.72, 0.50, 1.00 } },
+	{ key = "pink",   name = "Розовый",    color = { 1.00, 0.50, 0.72 } },
+	{ key = "white",  name = "Белый",      color = { 0.92, 0.94, 0.98 } },
+}
+
+function AT.GetAccentEntry()
+	local key = AdminToolsDB and AdminToolsDB.accent
+	if not key or key == "theme" then return nil end
+	for _, a in ipairs(AT.ACCENTS) do
+		if a.key == key and a.color then return a end
+	end
+	return nil
+end
+
+function AT.SetAccent(key)
+	AdminToolsDB = AdminToolsDB or {}
+	AdminToolsDB.accent = key or "theme"
+	-- переприменяем тему: она возьмёт акцент из настроек
+	AT.ApplyTheme(AT.GetThemeKey(), true)
+	AT.RefreshLocks()
+	AT.Print("Акцентный цвет: |cff2fd6ff"
+		.. (AT.GetAccentEntry() and AT.GetAccentEntry().name or "как в теме") .. "|r")
+end
+
 -- Реестр элементов, которые перекрашиваются при смене темы.
 -- role: accent | line | glow | thumb
 AT.themed = {}
@@ -174,6 +210,13 @@ function AT.ApplyTheme(key, silent)
 		theme.accent[1], theme.accent[2], theme.accent[3], theme.accent[4]
 	AT.THEME.accent2[1], AT.THEME.accent2[2], AT.THEME.accent2[3], AT.THEME.accent2[4] =
 		theme.accent2[1], theme.accent2[2], theme.accent2[3], theme.accent2[4]
+
+	-- акцент можно переопределить отдельно от темы
+	local custom = AT.GetAccentEntry()
+	if custom and custom.color then
+		AT.THEME.accent[1], AT.THEME.accent[2], AT.THEME.accent[3], AT.THEME.accent[4] =
+			custom.color[1], custom.color[2], custom.color[3], 1
+	end
 
 	AT.themeKey = key
 	if AdminToolsDB then AdminToolsDB.theme = key end
@@ -208,6 +251,7 @@ function AT.GetThemeKey()
 	return "cyan"
 end
 
+AT.CAP_W = 16                       -- ширина торцевой текстуры (скруглённый стиль)
 AT.WIN_W, AT.WIN_H = 880, 620       -- размер окна по умолчанию; пресеты — во вкладке «Интерфейс»
 AT.BTN_W, AT.BTN_H, AT.PAD = 142, 22, 6
 AT.TAB_W, AT.TAB_H, AT.TAB_STEP = 132, 24, 26
@@ -344,6 +388,7 @@ function AT.RunCmd(cmd)
 	if #cmd > 255 then cmd = cmd:sub(1, 255) end
 	SendChatMessage(cmd, "SAY")
 	AT.PushHistory(cmd)
+	AT.PlaySound("ok")
 	if AT.EchoEnabled() and DEFAULT_CHAT_FRAME then
 		DEFAULT_CHAT_FRAME:AddMessage(AT.PREFIX .. "|cff666666>|r |cff2fd6ff" .. cmd .. "|r")
 	end
@@ -501,16 +546,141 @@ end
 -- Виджеты
 --===========================================================================
 
+--===========================================================================
+-- Стиль кнопок: «плоский» (одна текстура) или «скруглённый» (три части).
+-- В 3.3.5 нет 9-slice, поэтому скругление делается торцевыми текстурами
+-- в натуральную высоту — они не растягиваются, а середина тянется.
+--===========================================================================
+function AT.ButtonStyle()
+	if AdminToolsDB and AdminToolsDB.buttonStyle == "rounded" then return "rounded" end
+	return "flat"
+end
+
+local STATE_FILE = {
+	normal = "btnNormal",
+	hover  = "btnHover",
+	pushed = "btnPushed",
+}
+local STATE_CAP = {
+	normal = "capNormal",
+	hover  = "capHover",
+	pushed = "capPushed",
+}
+
+-- parts = { owner = фрейм, mid = текстура, left = текстура, right = текстура }
+function AT.DrawButtonState(parts, state, tint, alpha)
+	if not parts or not parts.mid then return end
+	state = STATE_FILE[state] and state or "normal"
+
+	local color = tint or { 1, 1, 1 }
+	local a = alpha or 1
+	local file = AT.SKIN[STATE_FILE[state]]
+
+	parts.mid:SetTexture(file)
+	parts.mid:SetVertexColor(color[1], color[2], color[3], a)
+
+	if AT.ButtonStyle() == "rounded" and parts.left and parts.right then
+		local capFile = AT.SKIN[STATE_CAP[state]]
+		parts.left:SetTexture(capFile)
+		parts.left:SetVertexColor(color[1], color[2], color[3], a)
+		parts.right:SetTexture(capFile)
+		parts.right:SetVertexColor(color[1], color[2], color[3], a)
+		parts.left:Show()
+		parts.right:Show()
+
+		parts.mid:ClearAllPoints()
+		parts.mid:SetPoint("TOPLEFT", parts.owner, "TOPLEFT", 6, 0)
+		parts.mid:SetPoint("BOTTOMRIGHT", parts.owner, "BOTTOMRIGHT", -6, 0)
+
+		-- торцы подгоняем под текущую высоту (кнопки бывают выше стандартной)
+		local h = parts.owner:GetHeight() or AT.BTN_H
+		if parts.left:GetHeight() ~= h then
+			parts.left:SetHeight(h)
+			parts.right:SetHeight(h)
+		end
+	else
+		if parts.left then parts.left:Hide() end
+		if parts.right then parts.right:Hide() end
+		parts.mid:ClearAllPoints()
+		parts.mid:SetPoint("TOPLEFT", parts.owner, "TOPLEFT", 0, 0)
+		parts.mid:SetPoint("BOTTOMRIGHT", parts.owner, "BOTTOMRIGHT", 0, 0)
+	end
+end
+
+-- Создать три текстуры фона на кнопке
+local function BuildParts(btn)
+	local mid = btn:CreateTexture(nil, "BACKGROUND")
+	mid:SetAllPoints(btn)
+
+	-- высота торца = высота кнопки: текстура рисуется 1:1, без растяжения
+	local h = btn:GetHeight() or AT.BTN_H
+	local w = AT.CAP_W or 16
+
+	local left = btn:CreateTexture(nil, "BACKGROUND", nil, 1)
+	left:SetSize(w, h)
+	left:SetPoint("TOPLEFT", btn, "TOPLEFT", 0, 0)
+	left:Hide()
+
+	local right = btn:CreateTexture(nil, "BACKGROUND", nil, 1)
+	right:SetSize(w, h)
+	right:SetPoint("TOPRIGHT", btn, "TOPRIGHT", 0, 0)
+	-- зеркалим по горизонтали: скругление уходит на правый край
+	right:SetTexCoord(1, 0, 0, 1)
+	right:Hide()
+
+	local parts = { owner = btn, mid = mid, left = left, right = right }
+	btn.__parts = parts
+	return parts
+end
+
+function AT.SetButtonState(btn, state)
+	if not btn or not btn.__parts then return end
+	btn.__state = state
+	AT.DrawButtonState(btn.__parts, state, btn.__skinTint or { 1, 1, 1 },
+		btn.__skinAlpha or 1)
+end
+
+-- Пересобрать вид всех кнопок (после смены стиля)
+function AT.RefreshButtonStyles()
+	for _, btn in ipairs(AT.skinnedButtons or {}) do
+		AT.SetButtonState(btn, btn.__state or "normal")
+		if btn.__hlParts then
+			AT.DrawButtonState(btn.__hlParts, btn.__state or "normal",
+				btn.__skinTint or { 1, 1, 1 }, btn.__skinAlpha or 1)
+		end
+	end
+	if AT.currentTab then AT.SetTabActive(AT.currentTab, true) end
+end
+
+function AT.SetButtonStyle(style)
+	AdminToolsDB = AdminToolsDB or {}
+	AdminToolsDB.buttonStyle = (style == "rounded") and "rounded" or "flat"
+	AT.RefreshButtonStyles()
+	AT.Print(AdminToolsDB.buttonStyle == "rounded"
+		and "Стиль кнопок: скруглённый." or "Стиль кнопок: плоский.")
+end
+
 -- Применить к кнопке наше оформление (текстуры + шрифт).
 local function SkinButton(btn)
-	btn:SetNormalTexture(AT.SKIN.btnNormal)
-	btn:SetPushedTexture(AT.SKIN.btnPushed)
+	-- текстуры шаблона гасим: рисуем своими (иначе в скруглённом стиле
+	-- из-под скруглённых торцов торчали бы прямоугольные углы)
+	btn:SetNormalTexture("Interface\\Buttons\\WHITE8x8")
+	btn:SetPushedTexture("Interface\\Buttons\\WHITE8x8")
+	local nt, pt = btn:GetNormalTexture(), btn:GetPushedTexture()
+	if nt then nt:Hide() end
+	if pt then pt:Hide() end
 
 	local hl = btn:GetHighlightTexture()
 	if hl then
-		hl:SetTexture(AT.SKIN.btnHover)
-		hl:SetBlendMode("ADD")
+		-- подсветку рисуем сами (сменой состояния), шаблонную прячем
+		hl:Hide()
 	end
+
+	BuildParts(btn)
+	AT.SetButtonState(btn, "normal")
+
+	AT.skinnedButtons = AT.skinnedButtons or {}
+	table.insert(AT.skinnedButtons, btn)
 
 	local fs = btn:GetFontString()
 	if fs then
@@ -519,6 +689,33 @@ local function SkinButton(btn)
 	end
 end
 AT.SkinButton = SkinButton
+
+--===========================================================================
+-- Звуки интерфейса.
+-- 856 и 857 — стандартные UI-звуки клиента 3.3.5 («включено» и «выключено»).
+-- Если на твоём клиенте они звучат иначе — поменяй номера здесь.
+--===========================================================================
+AT.SOUNDS = {
+	ok    = 856,
+	off   = 857,
+	error = 857,
+}
+
+function AT.SoundEnabled()
+	return (AdminToolsDB and AdminToolsDB.soundOn) and true or false
+end
+
+function AT.PlaySound(kind)
+	if not AT.SoundEnabled() then return end
+	local id = AT.SOUNDS[kind or "ok"]
+	if id and PlaySound then PlaySound(id) end
+end
+
+function AT.SetSoundEnabled(enabled)
+	AdminToolsDB = AdminToolsDB or {}
+	AdminToolsDB.soundOn = enabled and true or false
+	if enabled then AT.PlaySound("ok") end
+end
 
 -- Пересчитать цвета текста кнопок с учётом уровня доступа
 function AT.RefreshLocks()
@@ -590,7 +787,19 @@ function AT.MakeButton(parent, text, w, action, sec, tooltip)
 		end
 	end)
 
+	b:SetScript("OnMouseDown", function(self, mouse)
+		if mouse == "LeftButton" then
+			AT.SetButtonState(self, "pushed")
+		end
+	end)
+	b:SetScript("OnMouseUp", function(self, mouse)
+		if mouse == "LeftButton" then
+			AT.SetButtonState(self, "hover")
+		end
+	end)
+
 	b:SetScript("OnEnter", function(self)
+		AT.SetButtonState(self, "hover")
 		AT.ShowRowHighlight(self)
 		if not AT.TooltipsEnabled() then return end
 		if not (tooltip or sec or type(action) == "string") then return end
@@ -613,6 +822,7 @@ function AT.MakeButton(parent, text, w, action, sec, tooltip)
 		GameTooltip:Show()
 	end)
 	b:SetScript("OnLeave", function(self)
+		AT.SetButtonState(self, "normal")
 		AT.HideRowHighlight(self)
 		GameTooltip:Hide()
 	end)
@@ -926,6 +1136,294 @@ function AT.SetFiltersEnabled(enabled)
 end
 
 --===========================================================================
+-- Горячие клавиши: назначение прямо из панели.
+-- Сами действия объявлены в Bindings.xml (ADMINTOOLSRU_*), поэтому они
+-- одновременно доступны и в штатном меню «Назначение клавиш».
+--===========================================================================
+AT.HOTKEY_ACTIONS = {
+	{ "Открыть панель",        "ADMINTOOLSRU_TOGGLE" },
+	{ "Вкладка «Телепорт»",    "ADMINTOOLSRU_TELEPORT" },
+	{ "Вкладка «Боты»",        "ADMINTOOLSRU_BOTS" },
+	{ "Вкладка «Модули»",      "ADMINTOOLSRU_MODULES" },
+	{ "Команда .bank",         "ADMINTOOLSRU_BANK" },
+	{ "Команда .repairall",    "ADMINTOOLSRU_REPAIR" },
+	{ "Команда .gps",          "ADMINTOOLSRU_GPS" },
+}
+
+-- Открыть панель сразу на нужной вкладке
+function AT.OpenTab(name)
+	if not AT.frame then return end
+	AT.frame:Show()
+	if name and AT.pages[name] and AT.IsTabVisible(name) then
+		AT.ShowPage(name)
+	elseif AT.currentTab then
+		AT.ShowPage(AT.currentTab)
+	end
+end
+
+AT.captureFrame = nil
+AT.captureAction = nil
+AT.captureLabel = nil
+
+local MODIFIER_KEYS = {
+	LSHIFT = true, RSHIFT = true, LCTRL = true, RCTRL = true,
+	LALT = true, RALT = true,
+}
+
+function AT.HotkeyText(action)
+	local key = GetBindingKey and GetBindingKey(action)
+	if key and key ~= "" then return key end
+	return "не назначена"
+end
+
+function AT.ClearHotkey(action)
+	if SetBinding then SetBinding(action, nil) end
+	if SaveBindings and GetCurrentBindingSet then
+		SaveBindings(GetCurrentBindingSet())
+	end
+	AT.Print("Горячая клавиша снята.")
+end
+
+function AT.SetHotkey(action, key)
+	if not SetBinding then return end
+	SetBinding(action, key)
+	if SaveBindings and GetCurrentBindingSet then
+		SaveBindings(GetCurrentBindingSet())
+	end
+	AT.Print("Назначено: " .. action .. " = |cff2fd6ff" .. key .. "|r")
+end
+
+function AT.CancelCapture()
+	AT.captureAction = nil
+	if AT.captureFrame then AT.captureFrame:Hide() end
+	if AT.captureLabel then
+		AT.captureLabel:SetText("Нажми «Назначить», затем нужную клавишу.")
+	end
+	if AT.RefreshInterfaceSettings then AT.RefreshInterfaceSettings() end
+end
+
+-- Начать «ловлю» клавиши для действия
+function AT.StartCapture(action, label)
+	AT.captureFrame = AT.captureFrame or CreateFrame("Frame", "AdminToolsRUCaptureKey",
+		UIParent)
+	local f = AT.captureFrame
+	f:SetSize(300, 60)
+	f:SetPoint("CENTER")
+	f:EnableKeyboard(true)
+	f:SetFrameStrata("DIALOG")
+
+	if not f.__hooked then
+		f.__hooked = true
+		f:SetScript("OnKeyDown", function(_, key)
+			if not AT.captureAction then return end
+
+			if key == "ESCAPE" then
+				AT.CancelCapture()
+				return
+			end
+			if MODIFIER_KEYS[key] then return end   -- ждём саму клавишу
+
+			local combo = ""
+			if IsShiftKeyDown() then combo = combo .. "SHIFT-" end
+			if IsControlKeyDown() then combo = combo .. "CTRL-" end
+			if IsAltKeyDown() then combo = combo .. "ALT-" end
+			combo = combo .. key
+
+			local action = AT.captureAction
+			AT.captureAction = nil
+			f:Hide()
+			AT.SetHotkey(action, combo)
+			if AT.captureLabel then
+				AT.captureLabel:SetText("Нажми «Назначить», затем нужную клавишу.")
+			end
+			if AT.RefreshInterfaceSettings then AT.RefreshInterfaceSettings() end
+		end)
+		f:SetScript("OnHide", function() AT.captureAction = nil end)
+	end
+
+	AT.captureAction = action
+	AT.captureLabel = label
+	if label then
+		label:SetText("Нажми клавишу для «" .. action .. "» (Esc — отмена)")
+	end
+	f:Show()
+	AT.Print("Жду клавишу… (Esc — отмена)")
+end
+
+--===========================================================================
+-- Экспорт и импорт настроек: перенос раскладки между персонажами.
+-- Формат текстовый и человекочитаемый: строки «ключ|значение».
+--===========================================================================
+AT.EXPORT_VERSION = 1
+
+local FUNCTION_KEYS = {
+	"theme", "accent", "buttonStyle", "scale", "fontSize", "windowSize",
+	"minimapAngle", "minimapHidden", "echo", "tooltips", "rowHighlight",
+	"filters", "soundOn", "restrictBySec", "mySec",
+}
+
+local function boolToStr(v) return v and "1" or "0" end
+
+function AT.BuildExportString()
+	local db = AdminToolsDB or {}
+	local out = {}
+
+	table.insert(out, "-- Admin Tools RU: настройки v" .. AT.EXPORT_VERSION)
+	table.insert(out, "theme|" .. tostring(db.theme or "cyan"))
+	table.insert(out, "accent|" .. tostring(db.accent or "theme"))
+	table.insert(out, "buttonStyle|" .. AT.ButtonStyle())
+	table.insert(out, "scale|" .. tostring(db.scale or 1))
+	table.insert(out, "fontSize|" .. tostring(db.fontSize or 0))
+	table.insert(out, "windowSize|" .. tostring(AT.GetWindowSize()))
+	table.insert(out, "minimapAngle|" .. tostring(AT.GetMinimapAngle()))
+	table.insert(out, "minimapHidden|" .. boolToStr(db.minimapHidden))
+	table.insert(out, "echo|" .. boolToStr(db.echo ~= false))
+	table.insert(out, "tooltips|" .. boolToStr(AT.TooltipsEnabled()))
+	table.insert(out, "rowHighlight|" .. boolToStr(AT.RowHighlightEnabled()))
+	table.insert(out, "filters|" .. boolToStr(AT.FiltersEnabled()))
+	table.insert(out, "soundOn|" .. boolToStr(db.soundOn))
+	table.insert(out, "restrictBySec|" .. boolToStr(db.restrictBySec))
+	table.insert(out, "mySec|" .. tostring(db.mySec or 3))
+
+	if db.pos then
+		table.insert(out, "pos|" .. table.concat({
+			tostring(db.pos[1]), tostring(db.pos[2]),
+			tostring(db.pos[3] or 0), tostring(db.pos[4] or 0),
+		}, "|"))
+	end
+
+	for name, visible in pairs(db.tabVisibility or {}) do
+		table.insert(out, "tab|" .. tostring(name) .. "|" .. boolToStr(visible))
+	end
+
+	for _, fav in ipairs(db.favorites or {}) do
+		table.insert(out, "fav|" .. tostring(fav.label or "") .. "|" .. tostring(fav.cmd or ""))
+	end
+
+	for _, item in ipairs(db.custom or {}) do
+		table.insert(out, "custom|" .. tostring(item.label or "")
+			.. "|" .. tostring(item.cmd or "")
+			.. "|" .. tostring(item.tip or item.tooltip or ""))
+	end
+
+	return table.concat(out, "\n")
+end
+
+local function strToBool(s) return s == "1" or s == "true" end
+
+-- Применить строку настроек. Возвращает: сколько строк применено, сообщение
+function AT.ImportString(text)
+	if type(text) ~= "string" or AT.trim(text) == "" then
+		return 0, "Пусто: вставь строку настроек в поле."
+	end
+
+	local db = AdminToolsDB or {}
+	local applied, skipped = 0, 0
+
+	for line in tostring(text):gmatch("[^\n]+") do
+		line = AT.trim(line)
+		if line ~= "" and line:sub(1, 2) ~= "--" then
+			local parts = {}
+			for piece in (line .. "|"):gmatch("([^|]*)|") do
+				table.insert(parts, piece)
+			end
+
+			local key = parts[1]
+			local v = parts[2]
+			local handled = true
+
+			if key == "theme" then
+				db.theme = (AT.Themes[v] and v) or "cyan"
+			elseif key == "accent" then
+				db.accent = v
+			elseif key == "buttonStyle" then
+				db.buttonStyle = (v == "rounded") and "rounded" or "flat"
+			elseif key == "scale" then
+				db.scale = tonumber(v) or 1
+			elseif key == "fontSize" then
+				db.fontSize = tonumber(v) or 0
+			elseif key == "windowSize" then
+				db.windowSize = tonumber(v) or 2
+			elseif key == "minimapAngle" then
+				db.minimapAngle = tonumber(v)
+			elseif key == "minimapHidden" then
+				db.minimapHidden = strToBool(v)
+			elseif key == "echo" then
+				db.echo = strToBool(v)
+			elseif key == "tooltips" then
+				db.tooltips = strToBool(v)
+			elseif key == "rowHighlight" then
+				db.rowHighlight = strToBool(v)
+			elseif key == "filters" then
+				db.filters = strToBool(v)
+			elseif key == "soundOn" then
+				db.soundOn = strToBool(v)
+			elseif key == "restrictBySec" then
+				db.restrictBySec = strToBool(v)
+			elseif key == "mySec" then
+				db.mySec = tonumber(v) or 3
+			elseif key == "pos" and parts[3] then
+				db.pos = { parts[2], parts[3], tonumber(parts[4]) or 0, tonumber(parts[5]) or 0 }
+			elseif key == "tab" and parts[2] then
+				db.tabVisibility = db.tabVisibility or {}
+				db.tabVisibility[parts[2]] = strToBool(parts[3])
+			elseif key == "fav" and parts[2] then
+				db.favorites = db.favorites or {}
+				table.insert(db.favorites, { label = parts[2], cmd = parts[3] or "" })
+			elseif key == "custom" and parts[2] then
+				db.custom = db.custom or {}
+				table.insert(db.custom, {
+					label = parts[2], cmd = parts[3] or "", tip = parts[4] or "",
+				})
+			else
+				handled = false
+			end
+
+			if handled then applied = applied + 1 else skipped = skipped + 1 end
+		end
+	end
+
+	if applied == 0 then
+		return 0, "Не распознал ни одной строки настроек."
+	end
+
+	-- применяем всё сразу
+	AT.ApplyTheme(AT.GetThemeKey(), true)
+	AT.SetScale(AT.GetScale())
+	AT.SetFontSizeDelta(AT.GetFontSizeDelta())
+	AT.SetWindowSize(AT.GetWindowSize())
+	AT.SetMinimapAngle(AT.GetMinimapAngle())
+	if AT.minimapButton then
+		if AT.IsMinimapShown() then AT.minimapButton:Show() else AT.minimapButton:Hide() end
+	end
+	if AT.ApplyTabVisibility then AT.ApplyTabVisibility() end
+	if AT.refreshCustom then AT.refreshCustom() end
+	AT.RefreshFavorites()
+	AT.RefreshLocks()
+	if AT.RefreshSettings then AT.RefreshSettings() end
+	if AT.RefreshInterfaceSettings then AT.RefreshInterfaceSettings() end
+	if db.pos and AT.frame then
+		AT.frame:ClearAllPoints()
+		AT.frame:SetPoint(db.pos[1], UIParent, db.pos[2], db.pos[3] or 0, db.pos[4] or 0)
+	end
+
+	local msg = "Применено строк: " .. applied
+	if skipped > 0 then msg = msg .. ", пропущено: " .. skipped end
+	return applied, msg
+end
+
+-- Многострочное поле: удобно вставлять и копировать длинную строку настроек
+function AT.MakeMultiEdit(parent, w, h)
+	local e = CreateFrame("EditBox", nil, parent, "InputBoxTemplate")
+	e:SetMultiLine(true)
+	e:SetSize(w, h)
+	e:SetAutoFocus(false)
+	e:SetMaxLetters(0)
+	e:SetScript("OnEscapePressed", function(self) self:ClearFocus() end)
+	return e
+end
+
+--===========================================================================
 -- Размер окна
 --===========================================================================
 AT.WINDOW_SIZES = {
@@ -1152,6 +1650,21 @@ function AT.RegisterTab(name)
 	bg:SetTexture(AT.SKIN.btnNormal)
 	b.__bg = bg
 
+	-- для скруглённого стиля вкладке тоже нужны торцы
+	local bgL = b:CreateTexture(nil, "BACKGROUND", nil, 1)
+	bgL:SetSize(AT.CAP_W or 16, AT.TAB_H)
+	bgL:SetPoint("TOPLEFT", b, "TOPLEFT", 0, 0)
+	bgL:Hide()
+	local bgR = b:CreateTexture(nil, "BACKGROUND", nil, 1)
+	bgR:SetSize(AT.CAP_W or 16, AT.TAB_H)
+	bgR:SetPoint("TOPRIGHT", b, "TOPRIGHT", 0, 0)
+	bgR:SetTexCoord(1, 0, 0, 1)
+	bgR:Hide()
+
+	b.__parts = { owner = b, mid = bg, left = bgL, right = bgR }
+	AT.skinnedButtons = AT.skinnedButtons or {}
+	table.insert(AT.skinnedButtons, b)
+
 	local marker = b:CreateTexture(nil, "OVERLAY")
 	marker:SetTexture(AT.SKIN.line)
 	AT.RegisterThemed(marker, "accent", 1)
@@ -1169,13 +1682,19 @@ function AT.RegisterTab(name)
 	AT.RegisterFont(label)
 	b.__label = label
 
-	local hl = b:CreateTexture(nil, "HIGHLIGHT")
-	hl:SetAllPoints(b)
-	hl:SetTexture(AT.SKIN.btnHover)
-	hl:SetBlendMode("ADD")
+	-- подсветку не используем: состояние меняем сами (см. SetTabActive)
+	b:SetScript("OnEnter", function(self)
+		if self.__active then return end
+		AT.DrawButtonState(self.__parts, "hover", { 1, 1, 1 }, 0.75)
+	end)
+	b:SetScript("OnLeave", function(self)
+		if self.__active then return end
+		AT.DrawButtonState(self.__parts, "normal", { 1, 1, 1 }, 1)
+	end)
 
 	b:SetScript("OnClick", function() AT.ShowPage(name) end)
 	b:SetScript("OnEnter", function(self)
+		if not AT.TooltipsEnabled() then return end
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 		GameTooltip:SetText(name, 1, 1, 1)
 		GameTooltip:AddLine("Показать вкладку", 0.6, 0.6, 0.6)
@@ -1284,13 +1803,14 @@ function AT.SetTabActive(name, active)
 	if not b then return end
 
 	if active then
-		b.__bg:SetTexture(AT.SKIN.btnHover)
-		b.__bg:SetVertexColor(AT.THEME.accent[1], AT.THEME.accent[2], AT.THEME.accent[3], 0.55)
+		b.__active = true
+		local a = AT.THEME.accent
+		AT.DrawButtonState(b.__parts, "hover", { a[1], a[2], a[3] }, 0.55)
 		b.__label:SetTextColor(1, 1, 1)
 		b.__marker:Show()
 	else
-		b.__bg:SetTexture(AT.SKIN.btnNormal)
-		b.__bg:SetVertexColor(1, 1, 1, 1)
+		b.__active = false
+		AT.DrawButtonState(b.__parts, "normal", { 1, 1, 1 }, 1)
 		b.__label:SetTextColor(AT.THEME.textDim[1], AT.THEME.textDim[2], AT.THEME.textDim[3])
 		b.__marker:Hide()
 	end
