@@ -164,6 +164,58 @@ function auditCommands() {
 }
 
 //---------------------------------------------------------------------------
+// Статический анализ: FontString/Texture — не фреймы.
+// У них нет SetScript, RegisterEvent, CreateFontString и т.п. Такие вызовы
+// ломали загрузку аддона в игре (Main.lua:129), поэтому проверяем и статикой,
+// а не только прогоном: это ловит пути, до которых тесты не доходят.
+//---------------------------------------------------------------------------
+const FRAME_ONLY = new Set([
+	"SetScript", "GetScript", "HookScript", "RegisterEvent", "UnregisterEvent",
+	"UnregisterAllEvents", "IsEventRegistered", "CreateFontString", "CreateTexture",
+	"CreateFont", "GetChildren", "GetRegions", "GetNumChildren", "SetBackdrop",
+	"SetBackdropColor", "SetBackdropBorderColor", "EnableMouse", "EnableMouseWheel",
+	"RegisterForClicks", "RegisterForDrag", "SetMovable", "SetClampedToScreen",
+	"SetToplevel", "SetFrameStrata", "GetFrameStrata", "SetFrameLevel", "GetFrameLevel",
+	"Raise", "Lower", "StartMoving", "StopMovingOrSizing", "SetScrollChild",
+	"GetScrollChild", "SetVerticalScroll", "GetVerticalScroll", "SetMinMaxValues",
+	"SetValue", "GetValue", "SetOwner", "AddLine",
+]);
+
+function auditRegions() {
+	const problems = [];
+	const files = fs.readdirSync(ADDON_DIR).filter((f) => f.endsWith(".lua"));
+
+	for (const file of files) {
+		const lines = fs.readFileSync(path.join(ADDON_DIR, file), "utf8").split(/\r?\n/);
+		const regionVars = new Map(); // имя -> строка определения
+
+		lines.forEach((line, idx) => {
+			const code = line.replace(/--.*$/, ""); // без комментариев
+
+			// «local x = AT.MakeLabel(...)» / «a.b = AT.MakeLine(...)» / «= ...:CreateFontString(»
+			const assignRe = /(?:local\s+)?([A-Za-z_][\w.]*)\s*=\s*(?:AT\.Make(?:Label|Line)|[\w.:]+:Create(?:FontString|Texture))\s*\(/g;
+			let m;
+			while ((m = assignRe.exec(code)) !== null) {
+				regionVars.set(m[1].split(".").pop(), idx + 1);
+			}
+
+			// вызов фреймового метода у региона
+			for (const [name, defLine] of regionVars) {
+				const callRe = new RegExp("\\b" + name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") +
+					"\\s*:\\s*([A-Za-z_][\\w]*)\\s*\\(");
+				const c = callRe.exec(code);
+				if (c && FRAME_ONLY.has(c[1])) {
+					problems.push(`${file}:${idx + 1} — ${name}:${c[1]}() ` +
+						`(у ${name} — региона, определён в строке ${defLine}): ` +
+						`такого метода в API 3.3.5 нет`);
+				}
+			}
+		});
+	}
+	return problems;
+}
+
+//---------------------------------------------------------------------------
 // Прогон
 //---------------------------------------------------------------------------
 console.log(`${C.bold}Admin Tools RU — проверка аддона${C.off}`);
@@ -194,6 +246,15 @@ if (skin.missing.length) {
 	console.log(`${C.dim}  запусти: python3 tools/gen_textures.py${C.off}`);
 } else {
 	console.log(`${C.green}✓${C.off} все текстуры скина на месте`);
+}
+
+const regionProblems = auditRegions();
+if (regionProblems.length) {
+	console.log(`${C.red}${C.bold}Методы фреймов вызваны у регионов (FontString/Texture):${C.off}`);
+	for (const p of regionProblems) console.log(`  ${C.red}✗${C.off} ${p}`);
+	console.log(`${C.dim}  такие вызовы обрывают загрузку файла в игре${C.off}`);
+} else {
+	console.log(`${C.green}✓${C.off} регионы (FontString/Texture) используют только свои методы`);
 }
 
 const audit = auditCommands();
@@ -248,5 +309,5 @@ if (eventError) console.log(`${C.yellow}⚠ ошибка в обработчик
 console.log(`${C.bold}Итог:${C.off} ${C.green}${pass} пройдено${C.off}, ` +
 	(fail ? `${C.red}${fail} провалено${C.off}` : `${C.green}0 провалено${C.off}`));
 
-const failed = fail + audit.unknown.length + skin.missing.length;
+const failed = fail + audit.unknown.length + skin.missing.length + regionProblems.length;
 process.exit(failed === 0 ? 0 : 1);

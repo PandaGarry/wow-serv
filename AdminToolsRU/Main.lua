@@ -123,16 +123,19 @@ upBtn:SetPoint("LEFT", runBtn, "RIGHT", 8, 0)
 local downBtn = AT.MakeButton(frame, "▼", 26, function() NavigateHistory(-1) end, nil, "Следующая команда")
 downBtn:SetPoint("LEFT", upBtn, "RIGHT", 4, 0)
 
+-- Счётчик истории.
+-- ВАЖНО: MakeLabel возвращает FontString, а у FontString в WoW нет SetScript
+-- (скрипты есть только у фреймов). Поэтому счётчик обновляется по событию —
+-- при изменении истории вызывается AT.UpdateHistoryLabel() из Core.PushHistory.
 local histLabel = AT.MakeLabel(frame, "", "GameFontDisableSmall")
 histLabel:SetPoint("LEFT", downBtn, "RIGHT", 8, 0)
-local histShown = -1
-histLabel:SetScript("OnUpdate", function(self)
+AT.histLabel = histLabel
+
+function AT.UpdateHistoryLabel()
+	if not AT.histLabel then return end
 	local count = #AT.history
-	if count ~= histShown then
-		histShown = count
-		self:SetText(count > 0 and ("история: " .. count) or "")
-	end
-end)
+	AT.histLabel:SetText(count > 0 and ("история: " .. count) or "")
+end
 
 --===========================================================================
 -- Shift+ЛКМ по нику игрока в чате → имя попадает в поле ввода команды
@@ -392,3 +395,7 @@ events:SetScript("OnEvent", function(self, event, arg1)
 		self:UnregisterEvent("PLAYER_LOGIN")
 	end
 end)
+
+-- Флаг для автотестов: Main.lua выполнился до конца (значит, слэш-команды,
+-- кнопка миникарты и панель команд созданы).
+AT.loaded = true

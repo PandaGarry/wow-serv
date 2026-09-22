@@ -9,7 +9,7 @@
 AT = AT or {}
 
 AT.ADDON_NAME = "AdminToolsRU"
-AT.VERSION    = "5.1.0"
+AT.VERSION    = "5.1.1"
 AT.PREFIX     = "|cff2fd6ff[AT-RU]|r "
 
 local floor, ceil, min, max = math.floor, math.ceil, math.min, math.max
@@ -215,6 +215,8 @@ function AT.PushHistory(cmd)
 	table.insert(AT.history, 1, cmd)
 	while #AT.history > AT.HISTORY_MAX do table.remove(AT.history) end
 	if AdminToolsDB then AdminToolsDB.history = AT.history end
+	-- счётчик в нижней панели обновляем по событию, а не каждый кадр
+	if AT.UpdateHistoryLabel then AT.UpdateHistoryLabel() end
 end
 
 function AT.EchoEnabled()

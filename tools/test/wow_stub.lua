@@ -120,20 +120,78 @@ end
 --===========================================================================
 local M = {}   -- таблица методов виджетов (заполняется ниже)
 
+-- FontString и Texture — это «регионы»: у них НЕТ скриптов, событий и дочерних
+-- объектов. Именно на этом спотыкался реальный клиент (Main.lua:129 —
+-- SetScript у FontString), поэтому заглушка ведёт себя так же: метода нет →
+-- вызов падает с "attempt to call method ... (a nil value)".
+local REGION_KINDS = { FontString = true, Texture = true }
+
+local FRAME_ONLY = {
+	SetScript = true, GetScript = true, HookScript = true,
+	RegisterEvent = true, UnregisterEvent = true, UnregisterAllEvents = true,
+	IsEventRegistered = true,
+	CreateFontString = true, CreateTexture = true, CreateFont = true,
+	GetChildren = true, GetRegions = true, GetNumChildren = true,
+	SetBackdrop = true, SetBackdropColor = true, SetBackdropBorderColor = true,
+	EnableMouse = true, EnableMouseWheel = true,
+	RegisterForClicks = true, RegisterForDrag = true,
+	SetMovable = true, SetClampedToScreen = true, SetToplevel = true,
+	SetFrameStrata = true, GetFrameStrata = true,
+	SetFrameLevel = true, GetFrameLevel = true,
+	Raise = true, Lower = true, StartMoving = true, StopMovingOrSizing = true,
+	SetScrollChild = true, GetScrollChild = true,
+	SetVerticalScroll = true, GetVerticalScroll = true,
+	SetHorizontalScroll = true, GetHorizontalScroll = true,
+	UpdateScrollChildRect = true,
+	SetMinMaxValues = true, GetMinMaxValues = true,
+	SetValue = true, GetValue = true, SetOrientation = true,
+	SetOwner = true, AddLine = true, AddDoubleLine = true, ClearLines = true,
+	NumLines = true, GetLine = true,
+	SetID = true, GetID = true,
+}
+
+-- Методы, которые есть в API 3.3.5, но для тестов не важны: тихо игнорируем.
+local KNOWN_NOOP = {
+	SetHitRectInsets = true, SetNormalFontObject = true, SetDisabledFontObject = true,
+	SetHighlightFontObject = true, SetPushedTextOffset = true, SetFontObject = true,
+	GetFontObject = true, SetNonSpaceWrap = true, SetWordWrap = true,
+	SetIndentedWordWrap = true, SetShadowColor = true, SetShadowOffset = true,
+	SetSpacing = true, SetDrawLayer = true,
+	SetGradient = true, SetGradientAlpha = true, SetTexCoord = true,
+	SetDesaturated = true, SetHorizTile = true, SetVertTile = true,
+	SetRotation = true, SetSnapToPixelGrid = true, SetTexelSnappingBias = true,
+	SetIgnoreParentAlpha = true, SetIgnoreParentScale = true,
+	SetMouseMotionEnabled = true, SetMouseWheelEnabled = true,
+	SetPropagateMouseClicks = true, SetPropagateMouseMotion = true,
+	SetMaxLetters = true, SetNumeric = true, SetAltArrowKeyMode = true,
+	SetMultiLine = true, SetObeyDragClick = true,
+	SetMotionScriptsWhileDisabled = true,
+}
+
 local widgetMeta = {
 	__index = function(t, k)
-		-- 1. реальные методы виджета
+		-- 1. регион не имеет фреймовых методов — как в настоящем клиенте
+		if REGION_KINDS[t.__kind] and FRAME_ONLY[k] then
+			return nil
+		end
+
+		-- 2. реализованный метод
 		local real = M[k]
 		if real ~= nil then return real end
-		-- 2. всё остальное: no-op + учёт в отчёте (чтобы тесты не падали
-		--    на методах, которых нет в заглушке)
+
+		-- 3. известный безвредный метод API — заглушка
+		if KNOWN_NOOP[k] then
+			return function() end
+		end
+
+		-- 4. всё остальное: записываем и НЕ подменяем.
+		--    Вызов упадёт так же, как в игре — тест это поймает.
 		if type(k) == "string" and k:match("^%u") then
 			if not STUB.unknownMethods[k] then
 				STUB.unknownMethods[k] = 0
 				table.insert(STUB.unknownNames, k)
 			end
 			STUB.unknownMethods[k] = STUB.unknownMethods[k] + 1
-			return function() end
 		end
 		return nil
 	end,

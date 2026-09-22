@@ -802,4 +802,69 @@ for _, key in ipairs({ "btnNormal", "btnHover", "btnPushed", "panel", "glow", "l
 		"текстура скина задана: " .. key)
 end
 
+--===========================================================================
+-- 23. Полнота загрузки Main.lua (регрессия: ошибка обрывала файл,
+--     из-за чего не работали /admin и кнопка на миникарте)
+--===========================================================================
+ok(AT.loaded == true, "Main.lua выполнился до конца (AT.loaded)")
+
+ok(type(AT.GetCommandBox) == "function", "панель команд создана (AT.GetCommandBox)")
+ok(AT.GetCommandBox() ~= nil, "поле ввода команды существует")
+ok(type(AT.Bench) == "function", "/atbench доступен")
+ok(type(AT.Toggle) == "function", "AT.Toggle доступен")
+ok(_G["AdminToolsRUMMBtn"] ~= nil, "кнопка на миникарте создана")
+
+-- слэш-команды: именно этого не было при обрыве Main.lua
+eq(SLASH_ADMINTOOLSRU1, "/admin", "зарегистрирован /admin")
+eq(SLASH_ADMINTOOLSRU2, "/adt", "зарегистрирован /adt")
+eq(SLASH_ADMINTOOLSRUHELP1, "/ath", "зарегистрирован /ath")
+eq(SLASH_ADMINTOOLSRUBENCH1, "/atbench", "зарегистрирован /atbench")
+eq(SLASH_ADMINTOOLSRUECHO1, "/atecho", "зарегистрирован /atecho")
+eq(SLASH_ADMINTOOLSRURESET1, "/atreset", "зарегистрирован /atreset")
+
+for _, handler in ipairs({
+	"ADMINTOOLSRU", "ADMINTOOLSRUHELP", "ADMINTOOLSRUBENCH",
+	"ADMINTOOLSRUECHO", "ADMINTOOLSRURESET",
+}) do
+	ok(type(SlashCmdList[handler]) == "function", "обработчик команды на месте: " .. handler)
+end
+
+-- все зарегистрированные SLASH_* имеют обработчик (иначе клиент пишет
+-- «введите /помощь для списка команд»)
+local slashCount, slashOk = 0, 0
+for k in pairs(_G) do
+	if type(k) == "string" and k:match("^SLASH_ADMINTOOLSRU") then
+		slashCount = slashCount + 1
+		local key = k:gsub("^SLASH_", ""):gsub("%d+$", "")
+		if type(SlashCmdList[key]) == "function" then slashOk = slashOk + 1 end
+	end
+end
+ok(slashCount >= 7, "зарегистрировано слэш-команд: " .. slashCount)
+eq(slashOk, slashCount, "у каждой слэш-команды есть рабочий обработчик")
+
+--===========================================================================
+-- 24. Счётчик истории обновляется по событию (без OnUpdate на FontString)
+--===========================================================================
+ok(AT.histLabel ~= nil, "счётчик истории создан")
+if AT.histLabel then
+	ok(type(AT.histLabel.__kind) == "string" and AT.histLabel.__kind == "FontString",
+		"счётчик истории — FontString (у него нет SetScript, обновляем по событию)")
+
+	AT.history = {}
+	AT.RunCmd(".gps")
+	ok((AT.histLabel:GetText() or ""):find("1"), "после 1 команды счётчик показывает 1")
+	AT.RunCmd(".gps 2")
+	ok((AT.histLabel:GetText() or ""):find("2"), "после 2 команд счётчик показывает 2")
+	AT.history = {}
+	AT.UpdateHistoryLabel()
+	eq(AT.histLabel:GetText(), "", "пустая история — пустой счётчик")
+end
+
+--===========================================================================
+-- 25. Методов, которых нет в API 3.3.5, аддон не вызывает
+--===========================================================================
+local unknownCount = 0
+for _ in pairs(STUB.unknownMethods) do unknownCount = unknownCount + 1 end
+eq(unknownCount, 0, "нет вызовов неизвестных методов API")
+
 return T
