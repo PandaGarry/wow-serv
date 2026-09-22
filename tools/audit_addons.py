@@ -46,6 +46,11 @@ def detect_encoding(path):
         return "unknown"
 
 
+# Помощники локализации: если аддон их вызывает, они должны быть объявлены.
+# Такие опечатки не видны при проверке синтаксиса (Lua компилируется), но
+# ломают интерфейс в игре: "attempt to call global 'ABL' (a nil value)".
+LOCALE_HELPERS = ("ABL", "MBL")
+
 CYR_RE = re.compile("[\u0400-\u04ff]")
 
 
@@ -221,10 +226,30 @@ def check_addon(addon_dir):
                 result["xml_files"] += 1
                 if has_cyrillic(os.path.join(root, f)):
                     result["ru_text_files"].append(rel)
+
                 try:
                     ET.parse(os.path.join(root, f))
                 except ET.ParseError as exc:
                     result["xml_errors"].append("%s: %s" % (rel, exc))
+
+    # ---- помощники локализации: вызов без объявления ----
+    used, defined = set(), set()
+    for root2, _dirs, files2 in os.walk(addon_dir):
+        for f in files2:
+            if not f.lower().endswith(".lua"):
+                continue
+            try:
+                txt = open(os.path.join(root2, f), encoding="utf-8", errors="replace").read()
+            except OSError:
+                continue
+            for helper in LOCALE_HELPERS:
+                if re.search(r"(?<![A-Za-z0-9_])%s\s*\(" % helper, txt):
+                    used.add(helper)
+                if re.search(r"function\s+%s\s*\(" % helper, txt):
+                    defined.add(helper)
+    for helper in sorted(used - defined):
+        result["lua_errors"].append(
+            "вызывается %s(), но функция нигде не объявлена — в игре будет ошибка" % helper)
 
     return result
 

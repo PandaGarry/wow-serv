@@ -321,7 +321,7 @@ function CreateBotRoster()
         item.text:SetHeight(22)
         item.text:SetFont("Fonts/FRIZQT__.TTF", 11, "OUTLINE")
         item.text:SetJustifyH("LEFT")
-        item.text:SetText(L("Click!"))
+        item.text:SetText(MBL("Click!"))
 
         local cls = CreateFrame("Button", "BotRoster_ItemHeader" .. i .. "Image", item)
         cls:SetPoint("TOPLEFT", item, "TOPLEFT", 3, -3)
@@ -334,7 +334,7 @@ function CreateBotRoster()
         cls.texture:SetAllPoints()
         cls:SetScript("OnEnter", function(self)
           GameTooltip:SetOwner(item, "ANCHOR_TOPLEFT", 0, -item:GetHeight() - 40)
-          GameTooltip:SetText(L("Bot Control Panel"))
+          GameTooltip:SetText(MBL("Bot Control Panel"))
           GameTooltip:Show()
         end)
         cls:SetScript("OnLeave", function(self)
@@ -994,7 +994,7 @@ function CreateSelectedBotPanel()
     frame.header.text:SetHeight(22)
     frame.header.text:SetFont("Fonts/FRIZQT__.TTF", 11, "OUTLINE")
     frame.header.text:SetJustifyH("LEFT")
-    frame.header.text:SetText(L("Click!"))
+    frame.header.text:SetText(MBL("Click!"))
 
     frame.header.role = CreateFrame("Frame", "SelectedBotPanelHeaderRole", frame.header)
     frame.header.role:SetPoint("TOPLEFT", frame, "TOPLEFT", 3, -3)
@@ -2599,7 +2599,7 @@ function CreateBotDebugPanel()
     frame.header.text:SetHeight(22)
     frame.header.text:SetFont("Fonts/FRIZQT__.TTF", 11, "OUTLINE")
     frame.header.text:SetJustifyH("LEFT")
-    frame.header.text:SetText(L("Debug Info"))
+    frame.header.text:SetText(MBL("Debug Info"))
 
     local lineSize = 12
     for i = 1,MaxDebugLines do
@@ -2635,7 +2635,7 @@ function UpdateBotDebugPanel(message, sender)
     end
     
     length = tablelength(filtered)
-    BotDebugPanel.header.text:SetText(L("Debug Info").." "..length..", "..L("Filter")..": "..BotDebugFilter)
+    BotDebugPanel.header.text:SetText(MBL("Debug Info").." "..length..", "..MBL("Filter")..": "..BotDebugFilter)
     
     if (length > MaxDebugLines) then length = MaxDebugLines end
 
