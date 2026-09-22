@@ -1,0 +1,13 @@
+## Interface: 30300
+## Title: OmniCC Config
+## Title-ruRU: OmniCC: настройки
+## Notes: OmniCC's configuration menu
+## Notes-ruRU: Меню настройки OmniCC
+## Notes-koKR: OmniCC의 설정 메뉴
+## Author: Tuller
+## Dependencies: OmniCC
+## LoadOnDemand: 1
+embeds.xml
+localization.xml
+widgets.xml
+panels.xml

@@ -1,0 +1,12 @@
+## Interface: 30300
+## Title: Bagnon Guild Bank
+## Title-ruRU: Bagnon: банк гильдии
+## Author: Tuller
+## Notes: Single window display for your guild bank
+## Notes-ruRU: Единое окно для банка гильдии
+## Version: 1.0.0
+## RequiredDeps: Bagnon
+## LoadOnDemand: 1
+## DefaultState: disabled 
+main.lua
+components.xml

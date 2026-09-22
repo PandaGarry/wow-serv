@@ -1,0 +1,31 @@
+<Bindings>
+	<!--
+		Горячие клавиши панели. Появляются в меню «Назначение клавиш»
+		(категория «Admin Tools RU») — их можно назначить и там, и прямо
+		во вкладке «Интерфейс».
+
+		Файл загружается клиентом автоматически, в .toc его указывать НЕ нужно.
+		Если горячие клавиши не нужны — просто удали этот файл.
+	-->
+	<Binding name="ADMINTOOLSRU_TOGGLE" header="ADMINTOOLSRU" runOnUp="false">
+		if AT and AT.Toggle then AT.Toggle() end
+	</Binding>
+	<Binding name="ADMINTOOLSRU_TELEPORT" header="ADMINTOOLSRU" runOnUp="false">
+		if AT and AT.OpenTab then AT.OpenTab("Телепорт") end
+	</Binding>
+	<Binding name="ADMINTOOLSRU_BOTS" header="ADMINTOOLSRU" runOnUp="false">
+		if AT and AT.OpenTab then AT.OpenTab("Боты") end
+	</Binding>
+	<Binding name="ADMINTOOLSRU_MODULES" header="ADMINTOOLSRU" runOnUp="false">
+		if AT and AT.OpenTab then AT.OpenTab("Модули") end
+	</Binding>
+	<Binding name="ADMINTOOLSRU_BANK" header="ADMINTOOLSRU" runOnUp="false">
+		if AT and AT.RunCmd then AT.RunCmd(".bank") end
+	</Binding>
+	<Binding name="ADMINTOOLSRU_REPAIR" header="ADMINTOOLSRU" runOnUp="false">
+		if AT and AT.RunCmd then AT.RunCmd(".repairall") end
+	</Binding>
+	<Binding name="ADMINTOOLSRU_GPS" header="ADMINTOOLSRU" runOnUp="false">
+		if AT and AT.RunCmd then AT.RunCmd(".gps") end
+	</Binding>
+</Bindings>

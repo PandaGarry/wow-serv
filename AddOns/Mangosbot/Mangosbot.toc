@@ -1,0 +1,11 @@
+## Interface: 30300
+## Title: MangosBot
+## Title-ruRU: MangosBot
+## Author: ike3
+## Notes: MangosBot UI
+## Notes-ruRU: Панель ботов MaNGOS (ike3). ВНИМАНИЕ: для NPCBots не подходит
+## DefaultState: Enabled
+## LoadOnDemand: 0
+## SavedVariables: frameopts, mangosbot_options
+Mangosbot.lua
+Mangosbot.xml

@@ -1,0 +1,11 @@
+## Interface: 30300
+## Title: Bagnon Config
+## Title-ruRU: Bagnon: настройки
+## Notes: GUI based configuration for Bagnon
+## Notes-ruRU: Графическая настройка Bagnon
+## Author: Tuller
+## Dependencies: Bagnon
+## LoadOnDemand: 1
+localization.xml
+widgets.xml
+panels.xml

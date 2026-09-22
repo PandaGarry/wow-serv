@@ -1,0 +1,449 @@
+------------------------------------------------------------------------
+r1177 | gagorian | 2009-12-30 06:28:34 +0000 (Wed, 30 Dec 2009) | 1 line
+Changed paths:
+   A /tags/1.7.3_beta-1 (from /trunk:1176)
+
+Tagging as 1.7.3_beta-1
+------------------------------------------------------------------------
+r1176 | gagorian | 2009-12-30 06:12:58 +0000 (Wed, 30 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/Hunter.lua
+
+- Fixed Ranged Weapon Specialization applying incorrectly to a few abilities
+------------------------------------------------------------------------
+r1175 | gagorian | 2009-12-30 05:30:52 +0000 (Wed, 30 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/Paladin.lua
+   M /trunk/Melee.lua
+
+- Corrected an error with Death Knight and possibly warrior Two-Handed Weapon Specialization as they seem to behave different than the pally one on some abilities
+------------------------------------------------------------------------
+r1174 | gagorian | 2009-12-30 00:37:38 +0000 (Wed, 30 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/Druid.lua
+
+- Rend and Tear now correctly applies crit chance instead of damage to Ferocious Bite
+------------------------------------------------------------------------
+r1173 | gagorian | 2009-12-26 19:15:29 +0000 (Sat, 26 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/DeathKnight.lua
+   M /trunk/DrDamage.lua
+
+- Bloody Strikes now correctly applies 15% per level to Heart Strike instead of 5%
+------------------------------------------------------------------------
+r1172 | gagorian | 2009-12-14 00:07:30 +0000 (Mon, 14 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Caster.lua
+   M /trunk/Data/DeathKnight.lua
+   M /trunk/Data/Hunter.lua
+   M /trunk/Data/Mage.lua
+   M /trunk/DrDamage.lua
+   M /trunk/Melee.lua
+
+- Merged some aura calculation logic into the core from the modules to simplify future additions
+------------------------------------------------------------------------
+r1171 | gagorian | 2009-12-13 23:47:05 +0000 (Sun, 13 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/DrDamage.lua
+
+- The actionbar tooltip of auto attack doesn't need caching
+------------------------------------------------------------------------
+r1170 | gagorian | 2009-12-13 23:21:40 +0000 (Sun, 13 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/DrDamage.lua
+
+- Now caches the tooltip of Auto Attack since Blizzard updates it way too often. This does not make me happy.
+------------------------------------------------------------------------
+r1169 | gagorian | 2009-12-13 22:06:52 +0000 (Sun, 13 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/DeathKnight.lua
+
+- Added Black Ice effects to Scourge Strike shadow portion
+------------------------------------------------------------------------
+r1168 | gagorian | 2009-12-13 15:35:12 +0000 (Sun, 13 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/DeathKnight.lua
+
+- Manually enabled Scourge Strike now counts as a disease
+------------------------------------------------------------------------
+r1167 | gagorian | 2009-12-13 14:45:53 +0000 (Sun, 13 Dec 2009) | 2 lines
+Changed paths:
+   M /trunk/Caster.lua
+   M /trunk/Data/DeathKnight.lua
+   M /trunk/Data/Druid.lua
+   M /trunk/Data/Hunter.lua
+   M /trunk/Data/Mage.lua
+   M /trunk/Data/Paladin.lua
+   M /trunk/Data/Priest.lua
+   M /trunk/Data/Rogue.lua
+   M /trunk/Data/Shaman.lua
+   M /trunk/Data/Warlock.lua
+   M /trunk/Data/Warrior.lua
+   M /trunk/DrDamage.lua
+   M /trunk/Melee.lua
+
+- Added DrDamage:GetModifier(school) to get school related damage and crit modifiers. This enables support of partial elemental damage in physical type abilities. For example now Flametongue, Frostbrand, Scourge Strike and Necrosis gets the correct school modifier for the magical part
+- Fixed Ebon Plague not applying modifier for Death Knights
+------------------------------------------------------------------------
+r1166 | gagorian | 2009-12-12 15:26:55 +0000 (Sat, 12 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Melee.lua
+
+- Added additional check to see that GetInventoryItemLink is not nil (it seems that in some rare case GratuityLib:SetInventoryItem returned a non-nil value even when GetInventoryItemLink is nil)
+------------------------------------------------------------------------
+r1165 | gagorian | 2009-12-11 21:13:15 +0000 (Fri, 11 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/Paladin.lua
+
+- Added mana gained calculation for Divine Plea
+------------------------------------------------------------------------
+r1164 | gagorian | 2009-12-11 21:00:52 +0000 (Fri, 11 Dec 2009) | 2 lines
+Changed paths:
+   M /trunk/Data/Hunter.lua
+   M /trunk/Data/Paladin.lua
+   M /trunk/Data/Rogue.lua
+   M /trunk/Data/Warrior.lua
+   M /trunk/DrDamage.lua
+   M /trunk/Melee.lua
+
+- Renamed a few variables to match between melee and caster modules for simplicity (fingers crossed I changed everything)
+- Cleaned up buff calculation a bit, added a parameter to easily exclude single abilities from being affected by certain buffs/debuffs
+------------------------------------------------------------------------
+r1163 | gagorian | 2009-12-11 20:11:11 +0000 (Fri, 11 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/Paladin.lua
+
+- Divine Plea now correctly only applies to holy shock, holy light and flash of light
+------------------------------------------------------------------------
+r1161 | gagorian | 2009-12-08 14:42:03 +0000 (Tue, 08 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/Shaman.lua
+   M /trunk/Data/Warrior.lua
+
+- Fixed Dazed to use proper icon in warrior module
+------------------------------------------------------------------------
+r1160 | gagorian | 2009-12-08 14:36:15 +0000 (Tue, 08 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/Mage.lua
+   M /trunk/Data/Priest.lua
+   M /trunk/Data/Rogue.lua
+   M /trunk/Data/Shaman.lua
+   M /trunk/Data/Warrior.lua
+   M /trunk/DrDamage.lua
+
+- Added all remaining unadded buff/debuff icons. Buff options screen is now shiny.
+------------------------------------------------------------------------
+r1159 | gagorian | 2009-12-08 05:09:05 +0000 (Tue, 08 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Aura.lua
+   M /trunk/Data/Druid.lua
+
+- Fixed error in Aura.lua on live
+------------------------------------------------------------------------
+r1158 | gagorian | 2009-12-07 23:19:47 +0000 (Mon, 07 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/DeathKnight.lua
+   M /trunk/Data/Druid.lua
+   M /trunk/Data/Hunter.lua
+   M /trunk/Data/Warlock.lua
+
+- Added full set of buff/debuff icons to Death Knights, Druids, Hunters and Warlocks
+------------------------------------------------------------------------
+r1157 | gagorian | 2009-12-07 22:50:47 +0000 (Mon, 07 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Aura.lua
+   M /trunk/Data/Paladin.lua
+   M /trunk/DrDamage.lua
+
+- Added more icons to the buff/debuff menu
+------------------------------------------------------------------------
+r1156 | gagorian | 2009-12-07 21:53:37 +0000 (Mon, 07 Dec 2009) | 2 lines
+Changed paths:
+   M /trunk/DrDamage.lua
+
+- Added icons into talent selection menu, also added talent tree headers for clarification
+- Partially added icons to buff/debuff selection, only works for a part your own buffs/debuffs due to restrictions of getting textures by spellname
+------------------------------------------------------------------------
+r1155 | gagorian | 2009-12-07 20:22:55 +0000 (Mon, 07 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Aura.lua
+   M /trunk/Data/Paladin.lua
+
+- Removed a few buffs/debuffs from paladin manual selection to clear up the menu slightly
+------------------------------------------------------------------------
+r1154 | gagorian | 2009-12-07 19:47:21 +0000 (Mon, 07 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Aura.lua
+   M /trunk/Data/Paladin.lua
+   M /trunk/DrDamage.lua
+
+- Added some healing buffs and debuffs
+------------------------------------------------------------------------
+r1152 | gagorian | 2009-12-06 23:25:04 +0000 (Sun, 06 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/Hunter.lua
+   M /trunk/Data/Paladin.lua
+   M /trunk/Melee.lua
+
+- Divine Storm is not normalized
+------------------------------------------------------------------------
+r1151 | gagorian | 2009-12-06 21:52:32 +0000 (Sun, 06 Dec 2009) | 2 lines
+Changed paths:
+   M /trunk/Data/Hunter.lua
+
+- Fixed Black Arrow, the AP coefficient seems to be 0.117 RAP instead of 0.1 like Blizzard tooltip claims. Also Black Arrow 6% damage increase doesn't seem to apply to black arrow itself
+- Volley & Careful Aim is even weirder than I thought, in fact it seems Careful Aim removes 31.5 base damage from Volley?
+------------------------------------------------------------------------
+r1150 | gagorian | 2009-12-06 20:19:06 +0000 (Sun, 06 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/Warlock.lua
+
+- Added backdraft effects to instant cast spells: Shadowfury, Shadowburn, Shadowflame, Conflagrate
+------------------------------------------------------------------------
+r1149 | gagorian | 2009-12-06 19:39:16 +0000 (Sun, 06 Dec 2009) | 3 lines
+Changed paths:
+   M /trunk/Data/Warlock.lua
+
+- Fixed Haunt to apply the Soul Sipphon effect
+- Haunt now also properly applies to Drain Life and Drain Soul
+- Fixed Unstable Affliction to properly have 5 ticks instead of 6 (Why didn't anyone tell me this was wrong!)
+------------------------------------------------------------------------
+r1148 | gagorian | 2009-12-06 19:15:34 +0000 (Sun, 06 Dec 2009) | 5 lines
+Changed paths:
+   M /trunk/Data/Hunter.lua
+   M /trunk/Data/Warlock.lua
+   M /trunk/Melee.lua
+
+- Several fixes to firestone and spellstone calculations
+- Fixed Soul Siphon
+- Fixed Shadow Embrace to apply to Drain Life and Drain Soul
+- Fixed Siphon Life talent
+- Added haste effects to Volley damage calculation
+------------------------------------------------------------------------
+r1147 | gagorian | 2009-12-06 04:25:58 +0000 (Sun, 06 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/Hunter.lua
+
+- Now this was another "interesting" one. Apparently Careful Aim changes the AP coefficient of Volley TOTALLY UNLIKE the description. Thanks to elite3vil for the help in figuring this one out.
+------------------------------------------------------------------------
+r1146 | gagorian | 2009-12-06 00:04:46 +0000 (Sun, 06 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/Warlock.lua
+
+- Conflagrate 3: The Return of Pain
+------------------------------------------------------------------------
+r1145 | gagorian | 2009-12-05 22:39:26 +0000 (Sat, 05 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Aura.lua
+   M /trunk/Data/Paladin.lua
+   M /trunk/DrDamage.lua
+
+- Glyph of Seal of Light doesn't apply to Gift of the Naaru. Slightly lowered coefficient.
+------------------------------------------------------------------------
+r1144 | gagorian | 2009-12-05 21:59:13 +0000 (Sat, 05 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/Paladin.lua
+   M /trunk/DrDamage.lua
+
+- Some fixes to Gift of the Naaru
+------------------------------------------------------------------------
+r1143 | gagorian | 2009-12-05 14:33:26 +0000 (Sat, 05 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/.pkgmeta
+   M /trunk/DrDamage.toc
+   M /trunk/libs
+
+- Apparently AceGUI-3.0-SharedMediaWidgets is back to SVN.
+------------------------------------------------------------------------
+r1142 | gagorian | 2009-12-05 13:37:01 +0000 (Sat, 05 Dec 2009) | 3 lines
+Changed paths:
+   M /trunk/Caster.lua
+   M /trunk/DrDamage.lua
+
+- Shoot actionbar icon (for Wands) now displays cast time when cast time displaytype is selected
+- Customized haste values now are properly applied to periodic spell period time display. Hybrid spell period time display no longer incorrectly gets increased by haste.
+- Totem bar icons texts are now properly updated when the totem is swapped
+------------------------------------------------------------------------
+r1141 | gagorian | 2009-12-04 19:19:24 +0000 (Fri, 04 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Caster.lua
+   M /trunk/Data/Mage.lua
+   M /trunk/Data/Paladin.lua
+   M /trunk/Data/Shaman.lua
+
+- Fixed a few more errors
+------------------------------------------------------------------------
+r1140 | gagorian | 2009-12-04 18:35:23 +0000 (Fri, 04 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Caster.lua
+
+- Fixed nil error in Caster.lua
+------------------------------------------------------------------------
+r1139 | gagorian | 2009-12-04 18:24:40 +0000 (Fri, 04 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/Paladin.lua
+   M /trunk/Data/Priest.lua
+
+- Fixed error in Paladin.lua and Priest.lua
+------------------------------------------------------------------------
+r1138 | gagorian | 2009-12-04 18:09:51 +0000 (Fri, 04 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/.pkgmeta
+   M /trunk/DrDamage.lua
+   M /trunk/libs
+
+- Changed AceGUI-3.0-SharedMediaWidgets to new git repo in .pkgmeta
+------------------------------------------------------------------------
+r1137 | gagorian | 2009-12-04 17:55:28 +0000 (Fri, 04 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/DrDamage.lua
+
+- Added support for totem bar (untested)
+------------------------------------------------------------------------
+r1136 | gagorian | 2009-12-04 17:03:36 +0000 (Fri, 04 Dec 2009) | 5 lines
+Changed paths:
+   M /trunk/Caster.lua
+   M /trunk/Data/Druid.lua
+   M /trunk/Data/Priest.lua
+   M /trunk/Data/Warlock.lua
+   M /trunk/Data/Warrior.lua
+   M /trunk/DrDamage.lua
+
+- Modified calculation engine to calculate haste effects for DoTs/HoTs. Related to this the tooltip now displays period between ticks with periodic spells, this doesn't cover all extra effects though as they're implemented in a way which doesn't support it
+- Added Glyph of Rapid Rejuvenation, Glyph of Quick Decay and the 3.3 Shadowform effects to VT and DP
+- Added possibility of displaying cast time on the actionbar (Will be GCD, full channel time or cast time depending on the spell)
+- Added possibility to display GCD of instant casts in the tooltip by enabling the option for additional mana usage information
+- And all this you get completely drycoded, enjoy.
+------------------------------------------------------------------------
+r1135 | gagorian | 2009-12-03 21:44:02 +0000 (Thu, 03 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/Paladin.lua
+
+- Fixed 2p T10 holydin, Added 4p T10 holydin bonus
+------------------------------------------------------------------------
+r1134 | karzon13 | 2009-12-03 21:37:39 +0000 (Thu, 03 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/Warrior.lua
+
+Added T10
+------------------------------------------------------------------------
+r1133 | karzon13 | 2009-12-03 21:27:51 +0000 (Thu, 03 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/Paladin.lua
+
+Added T10
+------------------------------------------------------------------------
+r1132 | gagorian | 2009-12-03 20:19:29 +0000 (Thu, 03 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/Shaman.lua
+
+- Shaman: Altered T10 4p calculation
+------------------------------------------------------------------------
+r1131 | gagorian | 2009-12-03 19:52:19 +0000 (Thu, 03 Dec 2009) | 2 lines
+Changed paths:
+   M /trunk/Data/Priest.lua
+   M /trunk/Data/Shaman.lua
+
+- Priest: Altered 2p T10 healing and 4p T10 damage set bonus calculation
+- Shaman: Renamed Fire Nova Totem to Fire Nova
+------------------------------------------------------------------------
+r1130 | karzon13 | 2009-12-03 18:53:44 +0000 (Thu, 03 Dec 2009) | 2 lines
+Changed paths:
+   M /trunk/Data/Priest.lua
+
+Added T10.  
+Healing 2p bonus may be a little screwy.
+------------------------------------------------------------------------
+r1129 | karzon13 | 2009-12-03 17:48:40 +0000 (Thu, 03 Dec 2009) | 2 lines
+Changed paths:
+   M /trunk/Data/Shaman.lua
+
+Added T10
+Fixed typo, added to Fire Nova
+------------------------------------------------------------------------
+r1128 | karzon13 | 2009-12-03 16:43:05 +0000 (Thu, 03 Dec 2009) | 1 line
+Changed paths:
+   M /trunk/Data/Rogue.lua
+
+Added T10, though don't know that there's any way to model it.
+------------------------------------------------------------------------
+r1127 | gagorian | 2009-12-03 14:54:29 +0000 (Thu, 03 Dec 2009) | 4 lines
+Changed paths:
+   M /trunk/Aura.lua
+   M /trunk/Data/Paladin.lua
+   M /trunk/Data/Priest.lua
+   M /trunk/Data/Rogue.lua
+   M /trunk/DrDamage.lua
+
+- Curse of Shadows rank 4 is now 11%
+- Flash of Light HoT requires Infusion of Light talent
+- Improved Devouring Plague is now 10/20/30% instead of 5/10/15%
+- Murder is a flat bonus to everything now, added envenom increase of chance for instant poison proc
+------------------------------------------------------------------------
+r1126 | gagorian | 2009-12-03 14:25:08 +0000 (Thu, 03 Dec 2009) | 6 lines
+Changed paths:
+   M /trunk/Data/Mage.lua
+   M /trunk/Data/Priest.lua
+   M /trunk/Data/Rogue.lua
+   M /trunk/Data/Shaman.lua
+   M /trunk/Data/Warlock.lua
+   M /trunk/Data/Warrior.lua
+
+- Warlock: First attempt at Conflag calculation, most likely to fail miserably.. And I still do prefer the salt in the eye.
+- Mage: Added Glyph of Eternal Water, all flamestrikes are now 2s cast
+- Priest: Added new Glyph of Mind Flay, 
+- Rogue: Fixed Envenom. Nobody told me it was wrong for all this time!
+- Shaman: Changed T9 elemental lava burst bonus to 10% dot dmg
+- Warrior: Glyph of Victory Rush always grants crit bonus
+------------------------------------------------------------------------
+r1125 | gagorian | 2009-12-03 12:41:21 +0000 (Thu, 03 Dec 2009) | 3 lines
+Changed paths:
+   M /trunk/Data/Warlock.lua
+
+- Added 3.3 Molten Core talent
+- Added T10
+- Would rather take a spoonful of salt in the eye than try to guess how conflagrate is calculated this time
+------------------------------------------------------------------------
+r1124 | gagorian | 2009-12-03 12:13:49 +0000 (Thu, 03 Dec 2009) | 3 lines
+Changed paths:
+   M /trunk/Aura.lua
+   M /trunk/Data/DeathKnight.lua
+   M /trunk/Data/Druid.lua
+
+- Mage improved scorch doesn't stack anymore in 3.3
+- Implemented Moonkin T10 2p and 4p
+- Added GotEM back for lifebloom
+------------------------------------------------------------------------
+r1123 | karzon13 | 2009-12-03 00:24:20 +0000 (Thu, 03 Dec 2009) | 2 lines
+Changed paths:
+   M /trunk/Data/Mage.lua
+
+No T10 needed.
+Added Glyph of Scorch
+------------------------------------------------------------------------
+r1122 | karzon13 | 2009-12-03 00:19:26 +0000 (Thu, 03 Dec 2009) | 5 lines
+Changed paths:
+   M /trunk/Data/Druid.lua
+
+Added T10
+Eclipse updated
+Rejuvenation updated
+Gift of the Earthmother commented out (remove if in agreement)
+Not Added: Glyph of Rapid Regeneration
+------------------------------------------------------------------------
+r1121 | karzon13 | 2009-12-02 23:56:32 +0000 (Wed, 02 Dec 2009) | 4 lines
+Changed paths:
+   M /trunk/Data/DeathKnight.lua
+
+T9 Set modified
+T10 Sets added
+Scourge Strike, Unholy Blight changed
+Glyph of Icy Touch added
+------------------------------------------------------------------------
+r1120 | gagorian | 2009-11-21 02:13:30 +0000 (Sat, 21 Nov 2009) | 1 line
+Changed paths:
+   M /trunk/Data/Hunter.lua
+   M /trunk/DrDamage.lua
+
+- Altered global damage modifier update triggers to save the modifier value on actionbar update instead of the throttled player aura update to know for sure what the global modifier was when the last update happened
+------------------------------------------------------------------------

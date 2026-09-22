@@ -1,0 +1,29 @@
+## Interface: 30300
+## Author: GetLocalPlayer
+## Title: AppearanceBuddy
+## Title-ruRU: AppearanceBuddy — трансмогрификация
+## Notes: Transmog addon for WotLK 3.3.5
+## Notes-ruRU: Трансмогрификация для WotLK 3.3.5: каталог открытых предметов, комплекты, иллюзии
+## OptionalDeps: AIO
+## SavedVariables: AppearanceBuddySettings, AppearanceBuddyTransmogSavedSets, DressMeSettings, DressMeTransmogSavedSets, AppearanceBuddyBlacklist, AppearanceBuddyPageCaps, AppearanceBuddyHiddenCatalogSets
+## Version: 3.8
+
+# Русский язык: localization.lua создаёт ABL(), locale\ruRU.lua наполняет словарь.
+# Файлы подключаются первыми — остальные берут строки через ABL().
+localization.lua
+locale\ruRU.lua
+
+db\ItemsDB.lua
+db\ItemsAPI.lua
+db\PreviewSetupDB.lua
+db\PreviewSetupAPI.lua
+
+frames\QueryItem.lua
+frames\WowheadURL.lua
+frames\DressingRoom.lua
+frames\PreviewList.lua
+frames\ListFrame.lua
+
+AppearanceBuddy.lua
+frames\Transmog.lua
+frames\AppearanceBorder.lua

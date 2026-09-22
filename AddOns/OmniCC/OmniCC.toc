@@ -1,0 +1,14 @@
+## Interface: 30300
+## Title: OmniCC
+## Title-ruRU: OmniCC
+## Notes: Cooldown count for everything
+## Notes-ruRU: Цифровой отсчёт перезарядки для всего
+## Notes-koKR: 모든 것을 위한 쿨다운 카운트
+## Author: Tuller
+## Version: 3.0.4
+## SavedVariables: OmniCCGlobalSettings
+embeds.xml
+localization.xml
+config.lua
+cc.lua
+effects.xml
