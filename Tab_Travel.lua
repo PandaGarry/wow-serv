@@ -45,35 +45,50 @@ local RAIDS = {
 }
 
 local GRIND_A = {
-	{ "1-6   Североземье",        ".tele NorthshireValley" },
-	{ "10-15 Сторожевой холм",    ".tele SentinelHill" },
-	{ "20-25 Тёмный лес",         ".tele Darkshire" },
-	{ "40-45 Терамор",            ".tele TheramoreIsle" },
-	{ "58-63 Оплот Чести",        ".tele HonorHold" },
-	{ "70-72 Крепость Отваги",    ".tele ValianceKeep" },
+	{ "1-6: Североземье",        ".tele NorthshireValley" },
+	{ "10-15: Сторожевой холм",  ".tele SentinelHill" },
+	{ "20-25: Тёмный лес",       ".tele Darkshire" },
+	{ "40-45: Терамор",          ".tele TheramoreIsle" },
+	{ "58-63: Оплот Чести",      ".tele HonorHold" },
+	{ "70-72: Крепость Отваги",  ".tele ValianceKeep" },
 }
 
 local GRIND_H = {
-	{ "1-6   Долина Испытаний",   ".tele ValleyOfTrials" },
-	{ "10-15 Перекрёсток",        ".tele TheCrossroads" },
-	{ "25-30 Мельница Таррен",    ".tele TarrenMill" },
-	{ "40-45 Деревня Колючего Ограждения", ".tele BrackenwallVillage" },
-	{ "58-63 Траллмар",           ".tele Thrallmar" },
-	{ "70-72 Крепость Песни Войны", ".tele WarsongHold" },
+	{ "1-6: Долина Испытаний",   ".tele ValleyOfTrials" },
+	{ "10-15: Перекрёсток",      ".tele TheCrossroads" },
+	{ "25-30: Мельница Таррен",  ".tele TarrenMill" },
+	{ "40-45: Деревня Колючего Ограждения", ".tele BrackenwallVillage" },
+	{ "58-63: Траллмар",         ".tele Thrallmar" },
+	{ "70-72: Крепость Песни Войны", ".tele WarsongHold" },
 }
 
 local openDungeons = AT.BuildMenu("AdminToolsRUDungeonMenu", DUNGEONS)
 local openRaids    = AT.BuildMenu("AdminToolsRURaidMenu",    RAIDS)
-local openGrindA   = AT.BuildMenu("AdminToolsRUGRindAMenu",  GRIND_A)
-local openGrindH   = AT.BuildMenu("AdminToolsRUGRindHMenu",  GRIND_H)
+local openGrindA   = AT.BuildMenu("AdminToolsRUGrindAMenu",  GRIND_A)
+local openGrindH   = AT.BuildMenu("AdminToolsRUGrindHMenu",  GRIND_H)
 
-local defs = {
-	{ "Подземелья (все, по уровням)  \226\150\188", openDungeons },
-	{ "Рейды (все, по уровням)  \226\150\188",        openRaids },
-	{ "Места кача — Альянс  \226\150\188",            openGrindA },
-	{ "Места кача — Орда  \226\150\188",              openGrindH },
-}
-for i, d in ipairs(defs) do
-	local b = AT.MakeButton(p, d[1], 300, d[2], nil, "Открыть список")
-	b:SetPoint("TOPLEFT", p, "TOPLEFT", 8, -12 - (i - 1) * 30)
+local W = AT.floor((AT.CONTENT_W - 8 - AT.PAD) / 2)
+
+local function MenuRow(y, left, right)
+	for col, d in ipairs({ left, right }) do
+		local b
+		local open = d[2]
+		b = AT.MakeButton(p, d[1], W, function() open(b) end, nil, d[3])
+		b:SetPoint("TOPLEFT", p, "TOPLEFT", 4 + (col - 1) * (W + AT.PAD), y)
+	end
+	return y - AT.BTN_H - AT.PAD - 4
 end
+
+local y = AT.MakeSection(p, "Подземелья и рейды", -2)
+y = MenuRow(y,
+	{ "Подземелья  »", openDungeons, "Все подземелья по дополнениям и уровням" },
+	{ "Рейды  »",      openRaids,    "Все рейды по дополнениям" })
+
+y = AT.MakeSection(p, "Места прокачки", y - 4)
+y = MenuRow(y,
+	{ "Альянс  »", openGrindA, "Точки прокачки для Альянса" },
+	{ "Орда  »",   openGrindH, "Точки прокачки для Орды" })
+
+y = AT.MakeNote(p, "Нажмите кнопку — под ней откроется список. Наведите на раздел, чтобы увидеть точки телепорта.", y - 6)
+
+AT.FinishPage(p, y)

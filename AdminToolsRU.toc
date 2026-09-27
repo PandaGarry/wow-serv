@@ -1,8 +1,8 @@
 ## Interface: 30300
-## Title: Admin Tools RU v4.2
+## Title: Admin Tools RU v4.3
 ## Notes: Модульная панель GM-команд + кнопка на миникарте + настройки
 ## Author: valdrea (original), RU-adaptation
-## Version: 4.2.0-ru
+## Version: 4.3.0-ru
 ## SavedVariables: AdminToolsDB
 ## X-Category: Miscellaneous
 
@@ -17,4 +17,4 @@ Tab_Group.lua
 Tab_Server.lua
 Tab_Settings.lua
 Tab_Custom.lua
-Main.lua
+Main.lua

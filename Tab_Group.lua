@@ -4,16 +4,20 @@
 
 local p = AT.RegisterTab("Группа")
 
-local y = AT.FlowButtons(p, {
-	{ "Призвать группу", ".groupsummon", AT.BTN_W, 2, "Призвать всех членов группы" },
-	{ "Вернуть цель", ".recall", AT.BTN_W, 2, "Вернуть цель в предыдущую точку" },
-	{ "Убить цель", ".die", AT.BTN_W, 2, "Убить выделенную цель" },
-	{ "Воскресить цель", ".revive", AT.BTN_W, 2, "Воскресить выделенную цель" },
-	{ "Заморозить", ".freeze", AT.BTN_W, 2, "Заморозить цель" },
-	{ "Разморозить", ".unfreeze", AT.BTN_W, 2, "Разморозить цель" },
-}, -4)
+local y = AT.MakeSection(p, "Действия с целью", -2)
+y = AT.FlowButtons(p, {
+	{ "Призвать группу", ".groupsummon", nil, 2, "Призвать всех членов группы" },
+	{ "Вернуть цель",    ".recall",      nil, 2, "Вернуть цель в предыдущую точку" },
+	{ "Убить цель",      ".die",         nil, 2, "Убить выделенную цель" },
+	{ "Воскресить цель", ".revive",      nil, 2, "Воскресить выделенную цель" },
+	{ "Заморозить",      ".freeze",      nil, 2, "Заморозить цель" },
+	{ "Разморозить",     ".unfreeze",    nil, 2, "Разморозить цель" },
+}, y)
 
-y = AT.FormRow(p, y - 4, "Явиться к:",    function(t) return ".appear " .. t end)
-y = AT.FormRow(p, y,     "Призвать:",      function(t) return ".summon " .. t end)
-y = AT.FormRow(p, y,     "Инфо игрока:",   function(t) return ".pinfo " .. t end)
-y = AT.FormRow(p, y,     "Кикнуть:",       function(t) return ".kick " .. t end)
+y = AT.MakeSection(p, "По имени игрока", y - 6)
+y = AT.FormRow(p, y, "Явиться к игроку:", function(t) return ".appear " .. t end)
+y = AT.FormRow(p, y, "Призвать игрока:",  function(t) return ".summon " .. t end)
+y = AT.FormRow(p, y, "Инфо об игроке:",   function(t) return ".pinfo " .. t end)
+y = AT.FormRow(p, y, "Кикнуть игрока:",   function(t) return ".kick " .. t end)
+
+AT.FinishPage(p, y)
