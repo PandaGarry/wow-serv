@@ -2,8 +2,8 @@ Admin Tools RU v4.3 — русская панель GM-команд (WoW 3.3.5a)
 ============================================================
 
 Установка:
-1. Скопируйте файлы в папку Interface/AddOns/AdminToolsRU/
-   (AdminToolsRU.toc, Core.lua, Main.lua и все Tab_*.lua).
+1. Скопируйте папку AdminToolsRU целиком в Interface/AddOns/
+   (путь: Interface/AddOns/AdminToolsRU/AdminToolsRU.toc).
 2. Включите аддон в меню выбора персонажа.
 
 Использование:
