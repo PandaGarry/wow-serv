@@ -1,0 +1,167 @@
+[worldserver]
+
+#
+#   Buff.Enable
+#       Description: Enable or disable the module.
+#       Default: 1 (Enable)
+#       Value:
+#           1 (Enable)
+#           0 (Disable)
+#
+
+Buff.Enable = 1
+
+#
+#   Buff.Announce
+#       Description: Announce the module when the player logs in?
+#       Default: 1 (Enable)
+#       Value:
+#           1 (Enable)
+#           0 (Disable)
+#
+
+Buff.Announce = 1
+
+#
+#   Buff.CureRes
+#       Description: Remove Resurrection Sickness? ID: 15007
+#       Default: 1 (Enable)
+#       Value:
+#           1 (Enable)
+#           0 (Disable)
+#
+
+Buff.CureRes = 1
+
+#
+#   Buff.ByLevel
+#       Description: Limit buffs by level
+#       Default: 1 (Enable)
+#       Value:
+#           1 (Enable)
+#           0 (Disable)
+#
+
+Buff.ByLevel = 1
+
+#
+#   Buff.MaxLevel
+#       Description: The highest character level at which buffs are scaled.
+#                    Characters at this level or higher receive the maximum
+#                    strength of buffs.
+#
+
+Buff.MaxLevel = 80
+
+#
+#   Buff.Spells
+#       Description: Buff Defaults (Leave blank to disable a buff)
+#
+#       1. Prayer of Fortitude (48162)
+#       2. Greater Blessing of Kings (43223)
+#       3. Mark of the Wild (48469)
+#       4. Prayer of Spirit (48074)
+#       5. Prayer of Shadow Protection (48170)
+#       6. Arcane Intellect (42995)
+#       7. Thorns (53307)
+#
+#       Fun Stuff
+#       48612 (Dalron the Controller)
+#
+
+Buff.Spells = "48162;43223;48469;48074;48170;42995;53307;"
+
+#
+#   Buff.MessageTimer
+#       Description: How often does the NPC emote in milliseconds?
+#                    Randomly caclulated within range 60000 (1 min, minumum) to 3000000 (5 minutes, max)
+#       Default: 60000 (1 minutes, minimum)
+#       Disable: 0
+#
+
+Buff.MessageTimer = 60000
+
+#
+#   Buff.NumPhrases
+#       Description: How many pharases does the NPC have?
+#       Default: 4
+#       Disable: 0
+#
+
+Buff.NumPhrases = 4
+
+#
+#   NPC Phrases - Add your own!
+#   Spoken randomly to the world
+#
+
+BF.P1 = "Подходите за баффами, отведайте моих чар — эльфийкам всегда мало!"
+BF.P2 = "Она не стряхивала звёзды с кружащегося космоса, но любила добрых тауренов и ездила на добрых кодо."
+BF.P3 = "Мистер Граббс — самая крутая личинка в округе. Без сомнений."
+BF.P4 = "Эти тролли умеют танцевать! Говорят, они любят веселиться в горах Темных берегов."
+#
+#   Buff.NumWhispers
+#       Description: How many whispers does the NPC have?
+#       Default: 10
+#       Disable: 0
+#
+
+Buff.NumWhispers = 10
+
+#
+#   NPC Whisper Phrases - Add your own!
+#   Whispered to the player after interaction
+#   Use '%s%' to include the player's name
+#
+
+BF.W1 = "Дух Койтера стоит на страже над Степями. Вы уже побывали у святилища, %s?"
+BF.W2 = "Кости короля всё ещё там, навеки в пыли. И оружие тоже… если знать, где искать, %s."
+BF.W3 = "Ох, %s, как я скучаю по тем дням в пустошах… закаты над Награндом."
+BF.W4 = "А-а… давно не виделись, %s! Как дела на фронте, старый друг?"
+BF.W5 = "Статую вы найдёте за мостом на севере Азшары, %s. Она в руинах, и её охраняют наги."
+BF.W6 = "Сокрушить врагов, гнать их перед собой, %s, и слышать плач их женщин!"
+BF.W7 = "Да… %s. Говорят, в клетках Глубин Черной горы сидят двое пленников. Может, они расскажут больше."
+BF.W8 = "Верно… %s. Дворфы хранят много тайн о том, что лежит в глубинах их королевств."
+BF.W9 = "Немного этого… капельку того… ах… вот так, %s."
+BF.W10 = "Нет, %s, я так и не слышал, нашли ли детей, пропавших в Награнде и Зангартопи."
+
+
+#
+#   Buff.EmoteSpell
+#       Description: The spell cast to get the player's attention
+#       Default: 44940
+#       Disable: 0
+#
+
+Buff.EmoteSpell = 0
+
+#
+#   Buff.EmoteCommand
+#       Description: The gesture the NPC performs when speaking emote text
+#       Default: 3 (Wave)
+#       Disable: 0
+#
+#       0  - NONE
+#       1  - TALK
+#       2  - BOW
+#       3  - WAVE
+#       4  - CHEER
+#       5  - EXCLAMATION
+#       6  - QUESTION
+#       7  - EAT
+#       11 - LAUGH
+#       14 - RUDE
+#       15 - ROAR
+#       16 - KNEEL
+#       17 - KISS
+#       18 - CRY
+#       19 - CHICKEN
+#       20 - BEG
+#       21 - APPLAUD
+#       22 - SHOUT
+#       23 - FLEX
+#       24 - SHY
+#       25 - POINT
+#
+
+Buff.EmoteCommand = 3
