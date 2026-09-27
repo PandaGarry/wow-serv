@@ -162,6 +162,8 @@ def gen_strings():
     for r in rows:
         e = int(r["entry"]); src = r["content_default"] or ""
         dst = tr_strings.T.get(e)
+        if dst is not None and "\\n" in dst and "\\n" not in src:
+            dst = dst.replace("\\n", "\n")   # в оригинале настоящий перевод строки
         if dst is None:
             MISSING["acore_string"].append((e, src)); continue
         check("acore_string", e, src, dst)
@@ -179,6 +181,20 @@ if __name__ == "__main__":
         "3.csv меню NPC": gen_gossip(),
         "4.csv сообщения": gen_strings(),
     }
+    # Общий файл: 01 (официальный перевод ботов) + 02..05
+    parts = ["01_npcbots_npc_text_locale_ruRU.sql", "02_npcbots_npc_text_dop.sql", "03_suschestva_imena.sql",
+             "04_menyu_npc.sql", "05_soobscheniya_servera.sql"]
+    allsql = ("-- =====================================================================\n"
+              "-- RUSIFIKACIYA_VSE.sql — вся русификация одним файлом (01..05).\n"
+              "-- База: acore_world. Перед применением остановите worldserver и сделайте бэкап.\n"
+              "-- =====================================================================\n"
+              "SET NAMES utf8mb4;\n\n")
+    for n in parts:
+        path = os.path.join(ROOT, "sql", n)
+        if os.path.exists(path):
+            allsql += f"\n-- ---------------- {n} ----------------\n" + open(path, encoding="utf-8").read() + "\n"
+    write("RUSIFIKACIYA_VSE.sql", allsql)
+
     print("\nИтог:")
     for k, v in stats.items():
         print(f"  {k}: " + ("ещё не переведено" if v is None else f"{v[0]} из {v[1]}"))
