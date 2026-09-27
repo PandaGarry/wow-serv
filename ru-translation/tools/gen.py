@@ -47,7 +47,8 @@ def read_csv(name):
 def q(s):
     if s is None:
         return "NULL"
-    return "'" + s.replace("\\", "\\\\").replace("'", "\\'").replace("\r", "\\r").replace("\n", "\\n") + "'"
+    # Апостроф удваиваем ('') — стандартный SQL, HeidiSQL его корректно разбирает
+    return "'" + s.replace("\\", "\\\\").replace("'", "''").replace("\r", "\\r").replace("\n", "\\n") + "'"
 
 ERRORS = []
 MISSING = collections.defaultdict(list)
