@@ -170,7 +170,15 @@ def gen_strings():
         check("acore_string", e, src, dst)
         vals.append((e, dst))
     out = header("Системные сообщения сервера и ответы на команды", "acore_string")
-    out += "\n".join(f"UPDATE `acore_string` SET `locale_ruRU`={q(t)} WHERE `entry`={e};" for e, t in vals) + "\n"
+    # Одна UPDATE-команда через временную таблицу (HeidiSQL не ругается на 1193 отдельных UPDATE)
+    out += "DROP TEMPORARY TABLE IF EXISTS `tmp_ru_strings`;\n"
+    out += "CREATE TEMPORARY TABLE `tmp_ru_strings` (`entry` INT UNSIGNED NOT NULL PRIMARY KEY, `txt` TEXT) DEFAULT CHARSET=utf8mb4;\n"
+    for part in chunks(vals, 200):
+        out += "INSERT INTO `tmp_ru_strings` (`entry`, `txt`) VALUES\n"
+        out += ",\n".join(f"({e}, {q(t)})" for e, t in part) + ";\n"
+    out += ("UPDATE `acore_string` AS a INNER JOIN `tmp_ru_strings` AS t ON t.`entry` = a.`entry`\n"
+            "SET a.`locale_ruRU` = t.`txt` WHERE a.`entry` = t.`entry`;\n")
+    out += "DROP TEMPORARY TABLE IF EXISTS `tmp_ru_strings`;\n"
     write("05_soobscheniya_servera.sql", out)
     return len(vals), len(rows)
 

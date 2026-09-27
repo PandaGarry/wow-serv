@@ -5,1196 +5,1207 @@
 -- =====================================================================
 SET NAMES utf8mb4;
 
-UPDATE `acore_string` SET `locale_ruRU`='Выберите персонажа или существо.' WHERE `entry`=1;
-UPDATE `acore_string` SET `locale_ruRU`='Выберите существо.' WHERE `entry`=2;
-UPDATE `acore_string` SET `locale_ruRU`='[СЕРВЕР] {}' WHERE `entry`=3;
-UPDATE `acore_string` SET `locale_ruRU`='|cffff0000[Событие]: {}|r' WHERE `entry`=4;
-UPDATE `acore_string` SET `locale_ruRU`='Справки по этой команде нет' WHERE `entry`=5;
-UPDATE `acore_string` SET `locale_ruRU`='Команда ''{}'' не существует' WHERE `entry`=6;
-UPDATE `acore_string` SET `locale_ruRU`='Подкоманда ''{}{}{}'' неоднозначна:' WHERE `entry`=7;
-UPDATE `acore_string` SET `locale_ruRU`='Возможные подкоманды:' WHERE `entry`=8;
-UPDATE `acore_string` SET `locale_ruRU`='Доступные вам команды:' WHERE `entry`=9;
-UPDATE `acore_string` SET `locale_ruRU`='Неверный синтаксис.' WHERE `entry`=10;
-UPDATE `acore_string` SET `locale_ruRU`='Уровень вашего аккаунта: {}' WHERE `entry`=11;
-UPDATE `acore_string` SET `locale_ruRU`='Активных подключений: {} (макс.: {}) В очереди: {} (макс.: {})' WHERE `entry`=12;
-UPDATE `acore_string` SET `locale_ruRU`='Время работы сервера: {}' WHERE `entry`=13;
-UPDATE `acore_string` SET `locale_ruRU`='Игрок сохранён.' WHERE `entry`=14;
-UPDATE `acore_string` SET `locale_ruRU`='Все игроки сохранены.' WHERE `entry`=15;
-UPDATE `acore_string` SET `locale_ruRU`='На сервере сейчас находятся следующие ГМ:' WHERE `entry`=16;
-UPDATE `acore_string` SET `locale_ruRU`='Сейчас на сервере нет ни одного ГМ.' WHERE `entry`=17;
-UPDATE `acore_string` SET `locale_ruRU`='Нельзя сделать это в полёте.' WHERE `entry`=18;
-UPDATE `acore_string` SET `locale_ruRU`='Разница времени обновления: {}.' WHERE `entry`=19;
-UPDATE `acore_string` SET `locale_ruRU`='До выключения/перезапуска осталось: {}' WHERE `entry`=20;
-UPDATE `acore_string` SET `locale_ruRU`='{}: не удалось выполнить команду полёта.' WHERE `entry`=21;
-UPDATE `acore_string` SET `locale_ruRU`='Вы не верхом, спешиваться не с чего.' WHERE `entry`=22;
-UPDATE `acore_string` SET `locale_ruRU`='Нельзя сделать это во время боя.' WHERE `entry`=23;
-UPDATE `acore_string` SET `locale_ruRU`='Вы недавно это использовали.' WHERE `entry`=24;
-UPDATE `acore_string` SET `locale_ruRU`='Пароль не изменён (неизвестная ошибка)!' WHERE `entry`=25;
-UPDATE `acore_string` SET `locale_ruRU`='Пароль изменён' WHERE `entry`=26;
-UPDATE `acore_string` SET `locale_ruRU`='Старый пароль неверен' WHERE `entry`=27;
-UPDATE `acore_string` SET `locale_ruRU`='Ваш аккаунт заблокирован.' WHERE `entry`=28;
-UPDATE `acore_string` SET `locale_ruRU`='Ваш аккаунт разблокирован.' WHERE `entry`=29;
-UPDATE `acore_string` SET `locale_ruRU`=', ранг ' WHERE `entry`=30;
-UPDATE `acore_string` SET `locale_ruRU`=' [известно]' WHERE `entry`=31;
-UPDATE `acore_string` SET `locale_ruRU`=' [изучить]' WHERE `entry`=32;
-UPDATE `acore_string` SET `locale_ruRU`=' [пассивное]' WHERE `entry`=33;
-UPDATE `acore_string` SET `locale_ruRU`=' [талант]' WHERE `entry`=34;
-UPDATE `acore_string` SET `locale_ruRU`=' [активно]' WHERE `entry`=35;
-UPDATE `acore_string` SET `locale_ruRU`=' [выполнено]' WHERE `entry`=36;
-UPDATE `acore_string` SET `locale_ruRU`=' (не в сети)' WHERE `entry`=37;
-UPDATE `acore_string` SET `locale_ruRU`='вкл' WHERE `entry`=38;
-UPDATE `acore_string` SET `locale_ruRU`='выкл' WHERE `entry`=39;
-UPDATE `acore_string` SET `locale_ruRU`='Вы: {}' WHERE `entry`=40;
-UPDATE `acore_string` SET `locale_ruRU`='видимы' WHERE `entry`=41;
-UPDATE `acore_string` SET `locale_ruRU`='невидимы' WHERE `entry`=42;
-UPDATE `acore_string` SET `locale_ruRU`='готово' WHERE `entry`=43;
-UPDATE `acore_string` SET `locale_ruRU`='Вы' WHERE `entry`=44;
-UPDATE `acore_string` SET `locale_ruRU`=' <неизвестно> ' WHERE `entry`=45;
-UPDATE `acore_string` SET `locale_ruRU`='<ошибка>' WHERE `entry`=46;
-UPDATE `acore_string` SET `locale_ruRU`='<несуществующий персонаж>' WHERE `entry`=47;
-UPDATE `acore_string` SET `locale_ruRU`='НЕИЗВЕСТНО' WHERE `entry`=48;
-UPDATE `acore_string` SET `locale_ruRU`='Для входа нужен уровень не ниже {}.' WHERE `entry`=49;
-UPDATE `acore_string` SET `locale_ruRU`='Для входа нужен уровень не ниже {} и предмет {}.' WHERE `entry`=50;
-UPDATE `acore_string` SET `locale_ruRU`='Привет! Готов к тренировке?' WHERE `entry`=51;
-UPDATE `acore_string` SET `locale_ruRU`='Неверное количество ({}) для предмета {}' WHERE `entry`=52;
-UPDATE `acore_string` SET `locale_ruRU`='В письме не может быть больше {} стопок предметов' WHERE `entry`=53;
-UPDATE `acore_string` SET `locale_ruRU`='Новые пароли не совпадают' WHERE `entry`=54;
-UPDATE `acore_string` SET `locale_ruRU`='Текущее сообщение дня:' WHERE `entry`=56;
-UPDATE `acore_string` SET `locale_ruRU`='Мировая БД: {}' WHERE `entry`=57;
-UPDATE `acore_string` SET `locale_ruRU`='Библиотека скриптов: {}' WHERE `entry`=58;
-UPDATE `acore_string` SET `locale_ruRU`='EventAI существ: {}' WHERE `entry`=59;
-UPDATE `acore_string` SET `locale_ruRU`='Игроков в сети: {} (макс.: {})' WHERE `entry`=60;
-UPDATE `acore_string` SET `locale_ruRU`='Сейчас разрешены дополнения до {}.' WHERE `entry`=61;
-UPDATE `acore_string` SET `locale_ruRU`='Один или несколько параметров имеют неверные значения' WHERE `entry`=62;
-UPDATE `acore_string` SET `locale_ruRU`='Неверный id параметра: {}, не существует' WHERE `entry`=63;
-UPDATE `acore_string` SET `locale_ruRU`='Неверный параметр realmId: {}' WHERE `entry`=64;
-UPDATE `acore_string` SET `locale_ruRU`='Аккаунту {} ({}) выданы права:' WHERE `entry`=65;
-UPDATE `acore_string` SET `locale_ruRU`='Аккаунту {} ({}) запрещены права:' WHERE `entry`=66;
-UPDATE `acore_string` SET `locale_ruRU`='Аккаунт {} ({}) унаследовал права от уровня доступа {} ({}):' WHERE `entry`=67;
-UPDATE `acore_string` SET `locale_ruRU`='Права:' WHERE `entry`=68;
-UPDATE `acore_string` SET `locale_ruRU`='Связанные права:' WHERE `entry`=69;
-UPDATE `acore_string` SET `locale_ruRU`='Список пуст' WHERE `entry`=70;
-UPDATE `acore_string` SET `locale_ruRU`='- {} ({})' WHERE `entry`=71;
-UPDATE `acore_string` SET `locale_ruRU`='Не удалось выдать право {} ({}) realmId {}. У аккаунта {} ({}) оно уже есть' WHERE `entry`=72;
-UPDATE `acore_string` SET `locale_ruRU`='Не удалось выдать право {} ({}) realmId {}. У аккаунта {} ({}) оно в списке запретов' WHERE `entry`=73;
-UPDATE `acore_string` SET `locale_ruRU`='Право {} ({}) realmId {} выдано аккаунту {} ({})' WHERE `entry`=74;
-UPDATE `acore_string` SET `locale_ruRU`='Не удалось запретить право {} ({}) realmId {}. Аккаунту {} ({}) оно уже запрещено' WHERE `entry`=75;
-UPDATE `acore_string` SET `locale_ruRU`='Не удалось запретить право {} ({}) realmId {}. У аккаунта {} ({}) оно в списке выданных' WHERE `entry`=76;
-UPDATE `acore_string` SET `locale_ruRU`='Право {} ({}) realmId {} запрещено аккаунту {} ({})' WHERE `entry`=77;
-UPDATE `acore_string` SET `locale_ruRU`='Право {} ({}) realmId {} отозвано у аккаунта {} ({})' WHERE `entry`=78;
-UPDATE `acore_string` SET `locale_ruRU`='Не удалось отозвать право {} ({}) realmId {}. У аккаунта {} ({}) его нет' WHERE `entry`=79;
-UPDATE `acore_string` SET `locale_ruRU`='Победы на полях боя за последние 7 дней\nАльянс: {}\nОрда: {}' WHERE `entry`=80;
-UPDATE `acore_string` SET `locale_ruRU`='Сохранение результатов полей боя отключено!' WHERE `entry`=81;
-UPDATE `acore_string` SET `locale_ruRU`='{}: {}' WHERE `entry`=82;
-UPDATE `acore_string` SET `locale_ruRU`='Синтаксис: .rbac account list $account\nПоказать выданные, запрещённые и унаследованные права аккаунта.' WHERE `entry`=83;
-UPDATE `acore_string` SET `locale_ruRU`='Синтаксис: .rbac account grant $account $permissionId [$realmId]\nВыдать право аккаунту. Необязательный realmId (-1 = все миры).' WHERE `entry`=84;
-UPDATE `acore_string` SET `locale_ruRU`='Синтаксис: .rbac account deny $account $permissionId [$realmId]\nЗапретить право аккаунту. Необязательный realmId (-1 = все миры).' WHERE `entry`=85;
-UPDATE `acore_string` SET `locale_ruRU`='Синтаксис: .rbac account revoke $account $permissionId [$realmId]\nОтозвать ранее выданное или запрещённое право. Необязательный realmId (-1 = все миры).' WHERE `entry`=86;
-UPDATE `acore_string` SET `locale_ruRU`='НЕИЗВЕСТНАЯ_ОШИБКА' WHERE `entry`=87;
-UPDATE `acore_string` SET `locale_ruRU`='Команды двухфакторной аутентификации не настроены.' WHERE `entry`=88;
-UPDATE `acore_string` SET `locale_ruRU`='Двухфакторная аутентификация для этого аккаунта уже включена.' WHERE `entry`=89;
-UPDATE `acore_string` SET `locale_ruRU`='Указан неверный код двухфакторной аутентификации.' WHERE `entry`=90;
-UPDATE `acore_string` SET `locale_ruRU`='Чтобы завершить настройку, подключите устройство, которое будет вторым фактором.\nВаш ключ 2FA: {}\nПосле настройки устройства подтвердите командой .account 2fa setup <код> с полученным кодом.' WHERE `entry`=91;
-UPDATE `acore_string` SET `locale_ruRU`='Двухфакторная аутентификация успешно настроена.' WHERE `entry`=92;
-UPDATE `acore_string` SET `locale_ruRU`='Двухфакторная аутентификация для этого аккаунта не включена.' WHERE `entry`=93;
-UPDATE `acore_string` SET `locale_ruRU`='Чтобы отключить двухфакторную аутентификацию, укажите свежий код с вашего устройства.' WHERE `entry`=94;
-UPDATE `acore_string` SET `locale_ruRU`='Двухфакторная аутентификация успешно отключена.' WHERE `entry`=95;
-UPDATE `acore_string` SET `locale_ruRU`='Название гильдии ''{}'' уже занято' WHERE `entry`=96;
-UPDATE `acore_string` SET `locale_ruRU`='Название гильдии ''{}'' изменено на ''{}''' WHERE `entry`=97;
-UPDATE `acore_string` SET `locale_ruRU`='Имя персонажа ''{}'' уже существует, выберите другое' WHERE `entry`=98;
-UPDATE `acore_string` SET `locale_ruRU`='Игрок ''{}'' принудительно переименован в ''{}''' WHERE `entry`=99;
-UPDATE `acore_string` SET `locale_ruRU`='Общее оповещение: ' WHERE `entry`=100;
-UPDATE `acore_string` SET `locale_ruRU`='Карта: {} ({}) Зона: {} ({}) Область: {} ({}) Фаза: {}\nX: {} Y: {} Z: {} Ориентация: {}\ngrid[{},{}]cell[{},{}] InstanceID: {}\n ZoneX: {} ZoneY: {}\nGroundZ: {} FloorZ: {} Данные высот (Map: {} VMap: {} MMap: {})' WHERE `entry`=101;
-UPDATE `acore_string` SET `locale_ruRU`='{} уже телепортируется.' WHERE `entry`=102;
-UPDATE `acore_string` SET `locale_ruRU`='Призвать игрока в своё подземелье можно, только если он в вашей группе, а вы — лидер.' WHERE `entry`=103;
-UPDATE `acore_string` SET `locale_ruRU`='Вы не можете отправиться в подземелье игрока, так как сейчас состоите в группе.' WHERE `entry`=104;
-UPDATE `acore_string` SET `locale_ruRU`='Отправиться в подземелье игрока, не состоя в его группе, можно только в режиме ГМ.' WHERE `entry`=105;
-UPDATE `acore_string` SET `locale_ruRU`='Нельзя переместиться к игроку {} из подземелья в подземелье.' WHERE `entry`=106;
-UPDATE `acore_string` SET `locale_ruRU`='Нельзя призвать игрока {} из подземелья в подземелье.' WHERE `entry`=107;
-UPDATE `acore_string` SET `locale_ruRU`='Вы призываете {}{}.' WHERE `entry`=108;
-UPDATE `acore_string` SET `locale_ruRU`='Вас призывает {}.' WHERE `entry`=109;
-UPDATE `acore_string` SET `locale_ruRU`='Вы телепортируете {}{} в {}.' WHERE `entry`=110;
-UPDATE `acore_string` SET `locale_ruRU`='Вас телепортирует {}.' WHERE `entry`=111;
-UPDATE `acore_string` SET `locale_ruRU`='Игрок ({}) не существует.' WHERE `entry`=112;
-UPDATE `acore_string` SET `locale_ruRU`='Перемещение к {}.' WHERE `entry`=113;
-UPDATE `acore_string` SET `locale_ruRU`='{} перемещается к вам.' WHERE `entry`=114;
-UPDATE `acore_string` SET `locale_ruRU`='Неверные значения.' WHERE `entry`=115;
-UPDATE `acore_string` SET `locale_ruRU`='Персонаж не выбран.' WHERE `entry`=116;
-UPDATE `acore_string` SET `locale_ruRU`='{} не состоит в группе.' WHERE `entry`=117;
-UPDATE `acore_string` SET `locale_ruRU`='Вы изменили здоровье {} на {}/{}.' WHERE `entry`=118;
-UPDATE `acore_string` SET `locale_ruRU`='{} изменил ваше здоровье на {}/{}.' WHERE `entry`=119;
-UPDATE `acore_string` SET `locale_ruRU`='Вы изменили ману {} на {}/{}.' WHERE `entry`=120;
-UPDATE `acore_string` SET `locale_ruRU`='{} изменил вашу ману на {}/{}.' WHERE `entry`=121;
-UPDATE `acore_string` SET `locale_ruRU`='Вы изменили энергию {} на {}/{}.' WHERE `entry`=122;
-UPDATE `acore_string` SET `locale_ruRU`='{} изменил вашу энергию на {}/{}.' WHERE `entry`=123;
-UPDATE `acore_string` SET `locale_ruRU`='Текущая энергия: {}' WHERE `entry`=124;
-UPDATE `acore_string` SET `locale_ruRU`='Вы изменили ярость {} на {}/{}.' WHERE `entry`=125;
-UPDATE `acore_string` SET `locale_ruRU`='{} изменил вашу ярость на {}/{}.' WHERE `entry`=126;
-UPDATE `acore_string` SET `locale_ruRU`='Вы изменили уровень {} на {}.' WHERE `entry`=127;
-UPDATE `acore_string` SET `locale_ruRU`='GUID {}, фракция {}, flags {}, npcflag {}, DY flag {}' WHERE `entry`=128;
-UPDATE `acore_string` SET `locale_ruRU`='Неверная фракция: {} (нет в factiontemplate.dbc).' WHERE `entry`=129;
-UPDATE `acore_string` SET `locale_ruRU`='Вы изменили GUID={}: фракция {}, flags {}, npcflag {}, dyflag {}.' WHERE `entry`=130;
-UPDATE `acore_string` SET `locale_ruRU`='Вы изменили spellflatid={}, val= {}, mark ={} для {}.' WHERE `entry`=131;
-UPDATE `acore_string` SET `locale_ruRU`='{} изменил ваш spellflatid={}, val= {}, mark ={}.' WHERE `entry`=132;
-UPDATE `acore_string` SET `locale_ruRU`='{} теперь имеет доступ ко всем точкам полётов (до выхода из игры).' WHERE `entry`=133;
-UPDATE `acore_string` SET `locale_ruRU`='{} больше не имеет доступа ко всем точкам полётов (доступны только посещённые).' WHERE `entry`=134;
-UPDATE `acore_string` SET `locale_ruRU`='{} открыл вам доступ ко всем точкам полётов (до выхода из игры).' WHERE `entry`=135;
-UPDATE `acore_string` SET `locale_ruRU`='{} убрал доступ ко всем точкам полётов (доступны только посещённые).' WHERE `entry`=136;
-UPDATE `acore_string` SET `locale_ruRU`='Вы установили все скорости {} (обычная: {}).' WHERE `entry`=137;
-UPDATE `acore_string` SET `locale_ruRU`='{} установил все ваши скорости на {} от обычной.' WHERE `entry`=138;
-UPDATE `acore_string` SET `locale_ruRU`='Вы установили скорость {} (обычная: {}).' WHERE `entry`=139;
-UPDATE `acore_string` SET `locale_ruRU`='{} установил вашу скорость на {} от обычной.' WHERE `entry`=140;
-UPDATE `acore_string` SET `locale_ruRU`='Вы установили скорость плавания {} (обычная: {}).' WHERE `entry`=141;
-UPDATE `acore_string` SET `locale_ruRU`='{} установил вашу скорость плавания на {} от обычной.' WHERE `entry`=142;
-UPDATE `acore_string` SET `locale_ruRU`='Вы установили скорость бега назад {} (обычная: {}).' WHERE `entry`=143;
-UPDATE `acore_string` SET `locale_ruRU`='{} установил вашу скорость бега назад на {} от обычной.' WHERE `entry`=144;
-UPDATE `acore_string` SET `locale_ruRU`='Вы установили скорость полёта {} (обычная: {}).' WHERE `entry`=145;
-UPDATE `acore_string` SET `locale_ruRU`='{} установил вашу скорость полёта на {} от обычной.' WHERE `entry`=146;
-UPDATE `acore_string` SET `locale_ruRU`='Вы установили размер {} для {}.' WHERE `entry`=147;
-UPDATE `acore_string` SET `locale_ruRU`='{} установил ваш размер на {}.' WHERE `entry`=148;
-UPDATE `acore_string` SET `locale_ruRU`='Такого транспорта нет.' WHERE `entry`=149;
-UPDATE `acore_string` SET `locale_ruRU`='Вы выдали транспорт игроку {}.' WHERE `entry`=150;
-UPDATE `acore_string` SET `locale_ruRU`='{} выдал вам транспорт.' WHERE `entry`=151;
-UPDATE `acore_string` SET `locale_ruRU`='USER1: {}, ADD: {}, DIF: {}\n' WHERE `entry`=152;
-UPDATE `acore_string` SET `locale_ruRU`='Вы забрали все деньги у {}.' WHERE `entry`=153;
-UPDATE `acore_string` SET `locale_ruRU`='{} забрал у вас все деньги.' WHERE `entry`=154;
-UPDATE `acore_string` SET `locale_ruRU`='Вы забрали {} меди у {}.' WHERE `entry`=155;
-UPDATE `acore_string` SET `locale_ruRU`='{} забрал у вас {} меди.' WHERE `entry`=156;
-UPDATE `acore_string` SET `locale_ruRU`='Вы дали {} меди игроку {}.' WHERE `entry`=157;
-UPDATE `acore_string` SET `locale_ruRU`='{} дал вам {} меди.' WHERE `entry`=158;
-UPDATE `acore_string` SET `locale_ruRU`='Вы слышите звук {}.' WHERE `entry`=159;
-UPDATE `acore_string` SET `locale_ruRU`='USER2: {}, ADD: {}, RESULT: {}\n' WHERE `entry`=160;
-UPDATE `acore_string` SET `locale_ruRU`='Сброшен бит {} в поле {}.' WHERE `entry`=161;
-UPDATE `acore_string` SET `locale_ruRU`='Установлен бит {} в поле {}.' WHERE `entry`=162;
-UPDATE `acore_string` SET `locale_ruRU`='Таблица точек телепорта пуста!' WHERE `entry`=163;
-UPDATE `acore_string` SET `locale_ruRU`='Точка телепорта не найдена!' WHERE `entry`=164;
-UPDATE `acore_string` SET `locale_ruRU`='Нужен параметр поиска.' WHERE `entry`=165;
-UPDATE `acore_string` SET `locale_ruRU`='Нет точек телепорта, подходящих под запрос.' WHERE `entry`=166;
-UPDATE `acore_string` SET `locale_ruRU`='Это имя зарезервировано, выберите другое' WHERE `entry`=167;
-UPDATE `acore_string` SET `locale_ruRU`='Найденные точки:\n{}' WHERE `entry`=168;
-UPDATE `acore_string` SET `locale_ruRU`='Письмо отправлено: {}' WHERE `entry`=169;
-UPDATE `acore_string` SET `locale_ruRU`='Вы пытаетесь услышать звук {}, но его не существует.' WHERE `entry`=170;
-UPDATE `acore_string` SET `locale_ruRU`='Нельзя телепортировать себя к себе!' WHERE `entry`=171;
-UPDATE `acore_string` SET `locale_ruRU`='команда серверной консоли' WHERE `entry`=172;
-UPDATE `acore_string` SET `locale_ruRU`='Вы изменили силу рун {} на {}/{}.' WHERE `entry`=173;
-UPDATE `acore_string` SET `locale_ruRU`='{} изменил вашу силу рун на {}/{}.' WHERE `entry`=174;
-UPDATE `acore_string` SET `locale_ruRU`='Уровень жидкости: {}, земля: {}, тип: {}, флаги {}, состояние: {}.' WHERE `entry`=175;
-UPDATE `acore_string` SET `locale_ruRU`='Неверный тип объекта: нужно разрушаемое здание.' WHERE `entry`=176;
-UPDATE `acore_string` SET `locale_ruRU`='Объект {} (GUID: {}) повреждён на {} (текущая прочность: {}).' WHERE `entry`=177;
-UPDATE `acore_string` SET `locale_ruRU`='grid[{},{}]cell[{},{}] InstanceID: {}\n ZoneX: {} ZoneY: {}\nGroundZ: {} FloorZ: {} Данные высот (Map: {} VMap: {} MMap: {})' WHERE `entry`=178;
-UPDATE `acore_string` SET `locale_ruRU`='| Флаги аккаунта:' WHERE `entry`=179;
-UPDATE `acore_string` SET `locale_ruRU`='TransMapID: {} TransOffsetX: {} TransOffsetY: {} TransOffsetZ: {} TransOffsetO: {} (ID транспорта: {} {})' WHERE `entry`=186;
-UPDATE `acore_string` SET `locale_ruRU`='Это имя недопустимо, выберите другое' WHERE `entry`=187;
-UPDATE `acore_string` SET `locale_ruRU`='Указанный секрет двухфакторной аутентификации слишком длинный.' WHERE `entry`=188;
-UPDATE `acore_string` SET `locale_ruRU`='Указанный секрет двухфакторной аутентификации недействителен.' WHERE `entry`=189;
-UPDATE `acore_string` SET `locale_ruRU`='Двухфакторная аутентификация для ''{}'' успешно включена с указанным секретом.' WHERE `entry`=190;
-UPDATE `acore_string` SET `locale_ruRU`='|- {}' WHERE `entry`=191;
-UPDATE `acore_string` SET `locale_ruRU`='|- {} ...' WHERE `entry`=192;
-UPDATE `acore_string` SET `locale_ruRU`='Подкоманда ''{}{}{}'' не существует.' WHERE `entry`=193;
-UPDATE `acore_string` SET `locale_ruRU`='Команда ''{}'' неоднозначна:' WHERE `entry`=194;
-UPDATE `acore_string` SET `locale_ruRU`='### ИСПОЛЬЗОВАНИЕ: .{} ...' WHERE `entry`=195;
-UPDATE `acore_string` SET `locale_ruRU`='Для ''{}'' нет подробного описания использования.\nДля стандартных команд AzerothCore такого быть не должно — если это произошло, сообщите об ошибке.' WHERE `entry`=196;
-UPDATE `acore_string` SET `locale_ruRU`='Id восстановления: {} | Предмет: {} ({}) | Кол-во: {}' WHERE `entry`=197;
-UPDATE `acore_string` SET `locale_ruRU`='У игрока нет предметов для восстановления' WHERE `entry`=198;
-UPDATE `acore_string` SET `locale_ruRU`='У игрока нет восстанавливаемого предмета с id {}' WHERE `entry`=199;
-UPDATE `acore_string` SET `locale_ruRU`='Ничего не выбрано.' WHERE `entry`=200;
-UPDATE `acore_string` SET `locale_ruRU`='GUID объекта: {}' WHERE `entry`=201;
-UPDATE `acore_string` SET `locale_ruRU`='Имя длиннее допустимого на {} символов.' WHERE `entry`=202;
-UPDATE `acore_string` SET `locale_ruRU`='Ошибка: имя может содержать только символы A-Z и a-z.' WHERE `entry`=203;
-UPDATE `acore_string` SET `locale_ruRU`='Подпись длиннее допустимой на {} символов.' WHERE `entry`=204;
-UPDATE `acore_string` SET `locale_ruRU`='Ещё не реализовано' WHERE `entry`=205;
-UPDATE `acore_string` SET `locale_ruRU`='Предмет ''{}'' ''{}'' добавлен в список (maxcount ''{}'', incrtime ''{}'', extendedcost ''{}'')' WHERE `entry`=206;
-UPDATE `acore_string` SET `locale_ruRU`='Предмет ''{}'' не найден в базе данных.' WHERE `entry`=207;
-UPDATE `acore_string` SET `locale_ruRU`='Предмет ''{}'' ''{}'' удалён из списка торговца' WHERE `entry`=208;
-UPDATE `acore_string` SET `locale_ruRU`='Предмет ''{}'' не найден в списке торговца.' WHERE `entry`=209;
-UPDATE `acore_string` SET `locale_ruRU`='Предмет ''{}'' (с extended cost {}) уже есть в списке торговца.' WHERE `entry`=210;
-UPDATE `acore_string` SET `locale_ruRU`='Заклинания {} сброшены.' WHERE `entry`=211;
-UPDATE `acore_string` SET `locale_ruRU`='Заклинания {} будут сброшены при следующем входе.' WHERE `entry`=212;
-UPDATE `acore_string` SET `locale_ruRU`='Таланты {} сброшены.' WHERE `entry`=213;
-UPDATE `acore_string` SET `locale_ruRU`='Таланты {} будут сброшены при следующем входе.' WHERE `entry`=214;
-UPDATE `acore_string` SET `locale_ruRU`='Ваши заклинания сброшены.' WHERE `entry`=215;
-UPDATE `acore_string` SET `locale_ruRU`='Ваши таланты сброшены.' WHERE `entry`=216;
-UPDATE `acore_string` SET `locale_ruRU`='Неизвестный вариант ''{}'' для команды .resetall. Введите полное правильное название.' WHERE `entry`=217;
-UPDATE `acore_string` SET `locale_ruRU`='Заклинания будут сброшены у всех игроков при входе. Настоятельно рекомендуется перезайти!' WHERE `entry`=218;
-UPDATE `acore_string` SET `locale_ruRU`='Таланты будут сброшены у всех игроков при входе. Настоятельно рекомендуется перезайти!' WHERE `entry`=219;
-UPDATE `acore_string` SET `locale_ruRU`='Существо (GUID: {}): точка маршрута не найдена.' WHERE `entry`=220;
-UPDATE `acore_string` SET `locale_ruRU`='Существо (GUID: {}): последняя точка маршрута не найдена.' WHERE `entry`=221;
-UPDATE `acore_string` SET `locale_ruRU`='Существо (GUID: {}): точка маршрута не найдена по ''wpguid''. Пробуем найти по позиции...' WHERE `entry`=222;
-UPDATE `acore_string` SET `locale_ruRU`='Для существа (GUID: {}) нет данных о маршруте. Убедитесь, что команда ''wp show on'' выполнена правильно.' WHERE `entry`=223;
-UPDATE `acore_string` SET `locale_ruRU`='Выбранное существо игнорируется — используется указанный GUID' WHERE `entry`=224;
-UPDATE `acore_string` SET `locale_ruRU`='Существо (GUID: {}) не найдено' WHERE `entry`=225;
-UPDATE `acore_string` SET `locale_ruRU`='Выберите визуальную точку маршрута.' WHERE `entry`=226;
-UPDATE `acore_string` SET `locale_ruRU`='Визуальные точки маршрута не найдены' WHERE `entry`=227;
-UPDATE `acore_string` SET `locale_ruRU`='Не удалось создать визуальную точку маршрута с creatureID: {}' WHERE `entry`=228;
-UPDATE `acore_string` SET `locale_ruRU`='Все визуальные точки маршрута удалены' WHERE `entry`=229;
-UPDATE `acore_string` SET `locale_ruRU`='Не удалось создать существо-точку маршрута с ID: {}' WHERE `entry`=230;
-UPDATE `acore_string` SET `locale_ruRU`='GUID не указан.' WHERE `entry`=231;
-UPDATE `acore_string` SET `locale_ruRU`='Номер точки маршрута не указан.' WHERE `entry`=232;
-UPDATE `acore_string` SET `locale_ruRU`='Для ''{}'' нужен аргумент.' WHERE `entry`=233;
-UPDATE `acore_string` SET `locale_ruRU`='Точка маршрута {} добавлена к GUID: {}' WHERE `entry`=234;
-UPDATE `acore_string` SET `locale_ruRU`='Точка маршрута {} добавлена.' WHERE `entry`=235;
-UPDATE `acore_string` SET `locale_ruRU`='Точка маршрута изменена.' WHERE `entry`=236;
-UPDATE `acore_string` SET `locale_ruRU`='Точка маршрута {} изменена.' WHERE `entry`=237;
-UPDATE `acore_string` SET `locale_ruRU`='Экспорт маршрута выполнен.' WHERE `entry`=238;
-UPDATE `acore_string` SET `locale_ruRU`='В базе данных нет точек маршрута.' WHERE `entry`=239;
-UPDATE `acore_string` SET `locale_ruRU`='Файл импортирован.' WHERE `entry`=240;
-UPDATE `acore_string` SET `locale_ruRU`='Точка маршрута удалена.' WHERE `entry`=241;
-UPDATE `acore_string` SET `locale_ruRU`='Внимание: не удалось удалить точку маршрута из мира, ID: {}' WHERE `entry`=242;
-UPDATE `acore_string` SET `locale_ruRU`='Это бывает, если точка маршрута слишком далеко от вашего персонажа.' WHERE `entry`=243;
-UPDATE `acore_string` SET `locale_ruRU`='Точка удалена из базы данных, но не из мира.' WHERE `entry`=244;
-UPDATE `acore_string` SET `locale_ruRU`='Они исчезнут после перезапуска сервера.' WHERE `entry`=245;
-UPDATE `acore_string` SET `locale_ruRU`='Точка маршрута {}: данные существа: {}, GUID: {}' WHERE `entry`=246;
-UPDATE `acore_string` SET `locale_ruRU`='Время ожидания: {}' WHERE `entry`=247;
-UPDATE `acore_string` SET `locale_ruRU`='Модель {}: {}' WHERE `entry`=248;
-UPDATE `acore_string` SET `locale_ruRU`='Эмоция: {}' WHERE `entry`=249;
-UPDATE `acore_string` SET `locale_ruRU`='Заклинание: {}' WHERE `entry`=250;
-UPDATE `acore_string` SET `locale_ruRU`='Текст{} (ID: {}): {}' WHERE `entry`=251;
-UPDATE `acore_string` SET `locale_ruRU`='AI-скрипт: {}' WHERE `entry`=252;
-UPDATE `acore_string` SET `locale_ruRU`='Игроку {} будет предложено сменить имя при следующем входе.' WHERE `entry`=253;
-UPDATE `acore_string` SET `locale_ruRU`='Игроку {} (GUID #{}) будет предложено сменить имя при следующем входе.' WHERE `entry`=254;
-UPDATE `acore_string` SET `locale_ruRU`='Существо-точка маршрута (GUID: {}) не найдено' WHERE `entry`=255;
-UPDATE `acore_string` SET `locale_ruRU`='Не удалось найти NPC...' WHERE `entry`=256;
-UPDATE `acore_string` SET `locale_ruRU`='Тип движения существа: ''{}'', точки маршрута удалены (если были).' WHERE `entry`=257;
-UPDATE `acore_string` SET `locale_ruRU`='Тип движения существа: ''{}'', точки маршрута не удалены.' WHERE `entry`=258;
-UPDATE `acore_string` SET `locale_ruRU`='Неверное значение, используйте on или off' WHERE `entry`=259;
-UPDATE `acore_string` SET `locale_ruRU`='Значение сохранено.' WHERE `entry`=260;
-UPDATE `acore_string` SET `locale_ruRU`='Значение сохранено. Возможно, нужно перезайти или очистить кэш клиента.' WHERE `entry`=261;
-UPDATE `acore_string` SET `locale_ruRU`='Areatrigger с ID {} не найден!' WHERE `entry`=262;
-UPDATE `acore_string` SET `locale_ruRU`='Неверная карта или координаты (X: {} Y: {} MapId: {})' WHERE `entry`=263;
-UPDATE `acore_string` SET `locale_ruRU`='Неверные координаты зоны (X: {} Y: {} AreaId: {})' WHERE `entry`=264;
-UPDATE `acore_string` SET `locale_ruRU`='Зона {} ({}) — часть инстансовой карты {} ({})' WHERE `entry`=265;
-UPDATE `acore_string` SET `locale_ruRU`='Ничего не найдено!' WHERE `entry`=266;
-UPDATE `acore_string` SET `locale_ruRU`='Объект не найден!' WHERE `entry`=267;
-UPDATE `acore_string` SET `locale_ruRU`='Существо не найдено!' WHERE `entry`=268;
-UPDATE `acore_string` SET `locale_ruRU`='Внимание: существо найдено несколько раз — вы будете телепортированы к первому найденному в БД.' WHERE `entry`=269;
-UPDATE `acore_string` SET `locale_ruRU`='Существо удалено' WHERE `entry`=270;
-UPDATE `acore_string` SET `locale_ruRU`='Существо перемещено.' WHERE `entry`=271;
-UPDATE `acore_string` SET `locale_ruRU`='Существо (GUID:{}) должно быть на той же карте, что и игрок!' WHERE `entry`=272;
-UPDATE `acore_string` SET `locale_ruRU`='Игровой объект (GUID: {}) не найден' WHERE `entry`=273;
-UPDATE `acore_string` SET `locale_ruRU`='Игровой объект (GUID: {}) упоминается в списке объектов ненайденного существа {}, удалить нельзя.' WHERE `entry`=274;
-UPDATE `acore_string` SET `locale_ruRU`='Игровой объект (GUID: {}) удалён' WHERE `entry`=275;
-UPDATE `acore_string` SET `locale_ruRU`='Игровой объект |cffffffff|Hgameobject:{}|h[{}]|h|r (GUID: {}) повёрнут' WHERE `entry`=276;
-UPDATE `acore_string` SET `locale_ruRU`='Игровой объект |cffffffff|Hgameobject:{}|h[{}]|h|r (GUID: {}) перемещён' WHERE `entry`=277;
-UPDATE `acore_string` SET `locale_ruRU`='Выберите торговца' WHERE `entry`=278;
-UPDATE `acore_string` SET `locale_ruRU`='Укажите id предмета' WHERE `entry`=279;
-UPDATE `acore_string` SET `locale_ruRU`='У торговца слишком много предметов (макс. 128)' WHERE `entry`=280;
-UPDATE `acore_string` SET `locale_ruRU`='Нельзя кикнуть себя, просто выйдите из игры' WHERE `entry`=281;
-UPDATE `acore_string` SET `locale_ruRU`='Игрок {} кикнут.' WHERE `entry`=282;
-UPDATE `acore_string` SET `locale_ruRU`='{} заблокировал чат {} на {}, начиная со следующего входа игрока. Причина: {}.' WHERE `entry`=283;
-UPDATE `acore_string` SET `locale_ruRU`='Приём личных сообщений: {}' WHERE `entry`=284;
-UPDATE `acore_string` SET `locale_ruRU`='Приём личных сообщений: ВКЛ' WHERE `entry`=285;
-UPDATE `acore_string` SET `locale_ruRU`='Приём личных сообщений: ВЫКЛ' WHERE `entry`=286;
-UPDATE `acore_string` SET `locale_ruRU`='Существо (GUID: {}) не найдено' WHERE `entry`=287;
-UPDATE `acore_string` SET `locale_ruRU`='Нельзя перейти к точке появления {}, их всего {}' WHERE `entry`=288;
-UPDATE `acore_string` SET `locale_ruRU`='Новый тикет от {}' WHERE `entry`=289;
-UPDATE `acore_string` SET `locale_ruRU`='Тикет {} (обновлён: {}):\n{}' WHERE `entry`=290;
-UPDATE `acore_string` SET `locale_ruRU`='Показ новых тикетов: ВКЛ' WHERE `entry`=291;
-UPDATE `acore_string` SET `locale_ruRU`='Показ новых тикетов: ВЫКЛ' WHERE `entry`=292;
-UPDATE `acore_string` SET `locale_ruRU`='Тикет {} не существует' WHERE `entry`=293;
-UPDATE `acore_string` SET `locale_ruRU`='Все тикеты удалены.' WHERE `entry`=294;
-UPDATE `acore_string` SET `locale_ruRU`='Тикет персонажа {} удалён.' WHERE `entry`=295;
-UPDATE `acore_string` SET `locale_ruRU`='Тикет удалён.' WHERE `entry`=296;
-UPDATE `acore_string` SET `locale_ruRU`='Радиус блуждания изменён на: {}' WHERE `entry`=297;
-UPDATE `acore_string` SET `locale_ruRU`='Время появления изменено на: {}' WHERE `entry`=298;
-UPDATE `acore_string` SET `locale_ruRU`='Честь {} установлена на {}!' WHERE `entry`=299;
-UPDATE `acore_string` SET `locale_ruRU`='Ваш чат заблокирован на {}. Кем: {}, причина: {}.' WHERE `entry`=300;
-UPDATE `acore_string` SET `locale_ruRU`='{} заблокировал чат {} на {}. Причина: {}.' WHERE `entry`=301;
-UPDATE `acore_string` SET `locale_ruRU`='Чат игрока уже разблокирован.' WHERE `entry`=302;
-UPDATE `acore_string` SET `locale_ruRU`='Ваш чат разблокирован.' WHERE `entry`=303;
-UPDATE `acore_string` SET `locale_ruRU`='Вы разблокировали чат {}.' WHERE `entry`=304;
-UPDATE `acore_string` SET `locale_ruRU`='Репутация {} ({}) у {} установлена на {}!' WHERE `entry`=305;
-UPDATE `acore_string` SET `locale_ruRU`='Очки арены {} установлены на {}!' WHERE `entry`=306;
-UPDATE `acore_string` SET `locale_ruRU`='Фракция не найдена!' WHERE `entry`=307;
-UPDATE `acore_string` SET `locale_ruRU`='Фракция {} неизвестна!' WHERE `entry`=308;
-UPDATE `acore_string` SET `locale_ruRU`='Неверный параметр {}' WHERE `entry`=309;
-UPDATE `acore_string` SET `locale_ruRU`='delta должна быть от 0 до {} включительно' WHERE `entry`=310;
-UPDATE `acore_string` SET `locale_ruRU`='{} - |cffffffff|Hfaction:{}|h[{}]|h|r' WHERE `entry`=311;
-UPDATE `acore_string` SET `locale_ruRU`=' [видима]' WHERE `entry`=312;
-UPDATE `acore_string` SET `locale_ruRU`=' [война]' WHERE `entry`=313;
-UPDATE `acore_string` SET `locale_ruRU`=' [принудительный мир]' WHERE `entry`=314;
-UPDATE `acore_string` SET `locale_ruRU`=' [скрыта]' WHERE `entry`=315;
-UPDATE `acore_string` SET `locale_ruRU`=' [принудительно невидима]' WHERE `entry`=316;
-UPDATE `acore_string` SET `locale_ruRU`=' [неактивна]' WHERE `entry`=317;
-UPDATE `acore_string` SET `locale_ruRU`='Ненависть' WHERE `entry`=318;
-UPDATE `acore_string` SET `locale_ruRU`='Враждебность' WHERE `entry`=319;
-UPDATE `acore_string` SET `locale_ruRU`='Неприязнь' WHERE `entry`=320;
-UPDATE `acore_string` SET `locale_ruRU`='Равнодушие' WHERE `entry`=321;
-UPDATE `acore_string` SET `locale_ruRU`='Дружелюбие' WHERE `entry`=322;
-UPDATE `acore_string` SET `locale_ruRU`='Уважение' WHERE `entry`=323;
-UPDATE `acore_string` SET `locale_ruRU`='Почтение' WHERE `entry`=324;
-UPDATE `acore_string` SET `locale_ruRU`='Превознесение' WHERE `entry`=325;
-UPDATE `acore_string` SET `locale_ruRU`='У фракции {} ({}) не может быть репутации.' WHERE `entry`=326;
-UPDATE `acore_string` SET `locale_ruRU`=' [нет репутации]' WHERE `entry`=327;
-UPDATE `acore_string` SET `locale_ruRU`='Персонажи аккаунта {} (Id: {})' WHERE `entry`=328;
-UPDATE `acore_string` SET `locale_ruRU`='  {} (GUID {})' WHERE `entry`=329;
-UPDATE `acore_string` SET `locale_ruRU`='Игроки не найдены!' WHERE `entry`=330;
-UPDATE `acore_string` SET `locale_ruRU`='Extended item cost {} не существует' WHERE `entry`=331;
-UPDATE `acore_string` SET `locale_ruRU`='Режим ГМ ВКЛЮЧЁН' WHERE `entry`=332;
-UPDATE `acore_string` SET `locale_ruRU`='Режим ГМ ВЫКЛЮЧЕН' WHERE `entry`=333;
-UPDATE `acore_string` SET `locale_ruRU`='Значок ГМ в чате ВКЛЮЧЁН' WHERE `entry`=334;
-UPDATE `acore_string` SET `locale_ruRU`='Значок ГМ в чате ВЫКЛЮЧЕН' WHERE `entry`=335;
-UPDATE `acore_string` SET `locale_ruRU`='Вы починили все предметы {}.' WHERE `entry`=336;
-UPDATE `acore_string` SET `locale_ruRU`='Все ваши предметы починил {}.' WHERE `entry`=337;
-UPDATE `acore_string` SET `locale_ruRU`='Вы установили режим хождения по воде {} для {}.' WHERE `entry`=338;
-UPDATE `acore_string` SET `locale_ruRU`='Ваш режим хождения по воде {} (изменил {}).' WHERE `entry`=339;
-UPDATE `acore_string` SET `locale_ruRU`='{} теперь следует за вами.' WHERE `entry`=340;
-UPDATE `acore_string` SET `locale_ruRU`='{} не следует за вами.' WHERE `entry`=341;
-UPDATE `acore_string` SET `locale_ruRU`='{} больше не следует за вами.' WHERE `entry`=342;
-UPDATE `acore_string` SET `locale_ruRU`='Существо (Entry: {}) нельзя приручить.' WHERE `entry`=343;
-UPDATE `acore_string` SET `locale_ruRU`='У вас уже есть питомец.' WHERE `entry`=344;
-UPDATE `acore_string` SET `locale_ruRU`='Игроку {} будет предложено изменить внешность при следующем входе.' WHERE `entry`=345;
-UPDATE `acore_string` SET `locale_ruRU`='Игроку {} (GUID #{}) будет предложено изменить внешность при следующем входе.' WHERE `entry`=346;
-UPDATE `acore_string` SET `locale_ruRU`='TaxiNode с ID {} не найден!' WHERE `entry`=347;
-UPDATE `acore_string` SET `locale_ruRU`='Игровой объект (Entry: {}) содержит неверные данные и не может быть создан' WHERE `entry`=348;
-UPDATE `acore_string` SET `locale_ruRU`='{} (idx:{}) - |cffffffff|Htitle:{}|h[{} {}]|h|r {} {} ' WHERE `entry`=349;
-UPDATE `acore_string` SET `locale_ruRU`='{} (idx:{}) - [{} {}] {} {} ' WHERE `entry`=350;
-UPDATE `acore_string` SET `locale_ruRU`='Звания не найдены!' WHERE `entry`=351;
-UPDATE `acore_string` SET `locale_ruRU`='Неверный id звания: {}' WHERE `entry`=352;
-UPDATE `acore_string` SET `locale_ruRU`='Звание {} ({}) добавлено в список известных званий игрока {}.' WHERE `entry`=353;
-UPDATE `acore_string` SET `locale_ruRU`='Звание {} ({}) удалено из списка известных званий игрока {}.' WHERE `entry`=354;
-UPDATE `acore_string` SET `locale_ruRU`='Звание {} ({}) выбрано текущим для игрока {}.' WHERE `entry`=355;
-UPDATE `acore_string` SET `locale_ruRU`='Текущее звание игрока {} сброшено, так как оно больше не известно.' WHERE `entry`=356;
-UPDATE `acore_string` SET `locale_ruRU`='Состояние чит-команд:' WHERE `entry`=357;
-UPDATE `acore_string` SET `locale_ruRU`='Бессмертие: {}.' WHERE `entry`=358;
-UPDATE `acore_string` SET `locale_ruRU`='Время произнесения: {}.' WHERE `entry`=359;
-UPDATE `acore_string` SET `locale_ruRU`='Восстановление: {}.' WHERE `entry`=360;
-UPDATE `acore_string` SET `locale_ruRU`='Ресурс: {}.' WHERE `entry`=361;
-UPDATE `acore_string` SET `locale_ruRU`='Хождение по воде: {}.' WHERE `entry`=362;
-UPDATE `acore_string` SET `locale_ruRU`='Игрок {} больше не может писать вам личные сообщения.' WHERE `entry`=363;
-UPDATE `acore_string` SET `locale_ruRU`='Точки полётов: {}.' WHERE `entry`=364;
-UPDATE `acore_string` SET `locale_ruRU`='Удалено надетых предметов: |cffffffff{}|r у {}' WHERE `entry`=365;
-UPDATE `acore_string` SET `locale_ruRU`='Удалено предметов в сумках: |cffffffff{}|r у {}' WHERE `entry`=366;
-UPDATE `acore_string` SET `locale_ruRU`='Удалено предметов в банке: |cffffffff{}|r у {}' WHERE `entry`=367;
-UPDATE `acore_string` SET `locale_ruRU`='Удалено ключей из связки: |cffffffff{}|r у {}' WHERE `entry`=368;
-UPDATE `acore_string` SET `locale_ruRU`='Удалено валют: |cffffffff{}|r у {}' WHERE `entry`=369;
-UPDATE `acore_string` SET `locale_ruRU`='Удалено предметов из выкупа у торговцев: |cffffffff{}|r у {}' WHERE `entry`=370;
-UPDATE `acore_string` SET `locale_ruRU`='У {} удалены все предметы:\n|cffffffff{}|r надетых\n|cffffffff{}|r в сумках\n|cffffffff{}|r в банке\n|cffffffff{}|r ключей в связке\n|cffffffff{}|r видов валюты\n|cffffffff{}|r в выкупе у торговцев' WHERE `entry`=371;
-UPDATE `acore_string` SET `locale_ruRU`='У {} удалены все предметы (включая сумки):\n|cffffffff{}|r надетых\n|cffffffff{}|r в сумках\n|cffffffff{}|r в банке\n|cffffffff{}|r ключей в связке\n|cffffffff{}|r видов валюты\n|cffffffff{}|r в выкупе у торговцев\n|cffffffff{}|r обычных сумок\n|cffffffff{}|r банковских сумок' WHERE `entry`=372;
-UPDATE `acore_string` SET `locale_ruRU`='У цели нет ауры {}!' WHERE `entry`=373;
-UPDATE `acore_string` SET `locale_ruRU`='Не указано количество стаков!' WHERE `entry`=374;
-UPDATE `acore_string` SET `locale_ruRU`='Заклинание {} не может складываться!' WHERE `entry`=375;
-UPDATE `acore_string` SET `locale_ruRU`='|cffff0000[Системное сообщение]:|rСкрипты перезагружены' WHERE `entry`=400;
-UPDATE `acore_string` SET `locale_ruRU`='Вы изменили уровень доступа аккаунта {} на {}.' WHERE `entry`=401;
-UPDATE `acore_string` SET `locale_ruRU`='{} изменил ваш уровень доступа на {}.' WHERE `entry`=402;
-UPDATE `acore_string` SET `locale_ruRU`='У вас недостаточный уровень доступа.' WHERE `entry`=403;
-UPDATE `acore_string` SET `locale_ruRU`='Движение существа отключено.' WHERE `entry`=404;
-UPDATE `acore_string` SET `locale_ruRU`='Движение существа включено.' WHERE `entry`=405;
-UPDATE `acore_string` SET `locale_ruRU`='Погоду в этой зоне изменить нельзя.' WHERE `entry`=406;
-UPDATE `acore_string` SET `locale_ruRU`='Система погоды на сервере отключена.' WHERE `entry`=407;
-UPDATE `acore_string` SET `locale_ruRU`='{} забанен на {}. Причина: {}.' WHERE `entry`=408;
-UPDATE `acore_string` SET `locale_ruRU`='{} забанен навсегда. Причина: {}.' WHERE `entry`=409;
-UPDATE `acore_string` SET `locale_ruRU`='{} {} не найден' WHERE `entry`=410;
-UPDATE `acore_string` SET `locale_ruRU`='{} разбанен.' WHERE `entry`=411;
-UPDATE `acore_string` SET `locale_ruRU`='Ошибка при снятии бана с {}.' WHERE `entry`=412;
-UPDATE `acore_string` SET `locale_ruRU`='Аккаунт не существует: {}' WHERE `entry`=413;
-UPDATE `acore_string` SET `locale_ruRU`='Такого персонажа нет. Помните, что имена чувствительны к РеГиСтРу!' WHERE `entry`=414;
-UPDATE `acore_string` SET `locale_ruRU`='Такого IP нет в списке банов.' WHERE `entry`=415;
-UPDATE `acore_string` SET `locale_ruRU`='Аккаунт {} никогда не был забанен' WHERE `entry`=416;
-UPDATE `acore_string` SET `locale_ruRU`='История банов аккаунта {}:' WHERE `entry`=417;
-UPDATE `acore_string` SET `locale_ruRU`='Дата бана: {} Срок: {} Активен: {}  Причина: {} Кем: {}' WHERE `entry`=418;
-UPDATE `acore_string` SET `locale_ruRU`='Бессрочно' WHERE `entry`=419;
-UPDATE `acore_string` SET `locale_ruRU`='Никогда' WHERE `entry`=420;
-UPDATE `acore_string` SET `locale_ruRU`='Да' WHERE `entry`=421;
-UPDATE `acore_string` SET `locale_ruRU`='Нет' WHERE `entry`=422;
-UPDATE `acore_string` SET `locale_ruRU`='IP: {}\nДата бана: {}\nДата разбана: {}\nОсталось: {}\nПричина: {}\nКем: {}' WHERE `entry`=423;
-UPDATE `acore_string` SET `locale_ruRU`='Подходящий бан по IP не найден.' WHERE `entry`=424;
-UPDATE `acore_string` SET `locale_ruRU`='Подходящий аккаунт не найден.' WHERE `entry`=425;
-UPDATE `acore_string` SET `locale_ruRU`='Нет забаненного аккаунта с персонажем, подходящим под этот запрос.' WHERE `entry`=426;
-UPDATE `acore_string` SET `locale_ruRU`='Под ваш шаблон подходят IP:' WHERE `entry`=427;
-UPDATE `acore_string` SET `locale_ruRU`='Под ваш запрос подходят аккаунты:' WHERE `entry`=428;
-UPDATE `acore_string` SET `locale_ruRU`='Вы изучили множество заклинаний/навыков.' WHERE `entry`=429;
-UPDATE `acore_string` SET `locale_ruRU`='Вы изучили все заклинания класса.' WHERE `entry`=430;
-UPDATE `acore_string` SET `locale_ruRU`='Вы изучили все таланты класса.' WHERE `entry`=431;
-UPDATE `acore_string` SET `locale_ruRU`='Вы изучили все языки.' WHERE `entry`=432;
-UPDATE `acore_string` SET `locale_ruRU`='Вы изучили все ремесленные навыки и рецепты.' WHERE `entry`=433;
-UPDATE `acore_string` SET `locale_ruRU`='Не удалось найти ''{}''' WHERE `entry`=434;
-UPDATE `acore_string` SET `locale_ruRU`='Неверный id предмета: {}' WHERE `entry`=435;
-UPDATE `acore_string` SET `locale_ruRU`='Предметы не найдены!' WHERE `entry`=436;
-UPDATE `acore_string` SET `locale_ruRU`='Неверный id игрового объекта: {}' WHERE `entry`=437;
-UPDATE `acore_string` SET `locale_ruRU`='Найдено предметов {}: {} (инвентарь {} почта {} аукцион {} гильдия {})' WHERE `entry`=438;
-UPDATE `acore_string` SET `locale_ruRU`='Найдено игровых объектов {}: {} ' WHERE `entry`=439;
-UPDATE `acore_string` SET `locale_ruRU`='Неверный id существа: {}' WHERE `entry`=440;
-UPDATE `acore_string` SET `locale_ruRU`='Найдено существ {}: {} ' WHERE `entry`=441;
-UPDATE `acore_string` SET `locale_ruRU`='Область не найдена!' WHERE `entry`=442;
-UPDATE `acore_string` SET `locale_ruRU`='Комплекты предметов не найдены!' WHERE `entry`=443;
-UPDATE `acore_string` SET `locale_ruRU`='Навыки не найдены!' WHERE `entry`=444;
-UPDATE `acore_string` SET `locale_ruRU`='Заклинания не найдены!' WHERE `entry`=445;
-UPDATE `acore_string` SET `locale_ruRU`='Задания не найдены!' WHERE `entry`=446;
-UPDATE `acore_string` SET `locale_ruRU`='Существа не найдены!' WHERE `entry`=447;
-UPDATE `acore_string` SET `locale_ruRU`='Игровые объекты не найдены!' WHERE `entry`=448;
-UPDATE `acore_string` SET `locale_ruRU`='Кладбище #{} не существует.' WHERE `entry`=449;
-UPDATE `acore_string` SET `locale_ruRU`='Кладбище #{} уже привязано к зоне #{} (текущей).' WHERE `entry`=450;
-UPDATE `acore_string` SET `locale_ruRU`='Кладбище #{} привязано к зоне #{} (текущей).' WHERE `entry`=451;
-UPDATE `acore_string` SET `locale_ruRU`='Кладбище #{} нельзя привязать к подзоне или несуществующей зоне #{} (внутренняя ошибка).' WHERE `entry`=452;
-UPDATE `acore_string` SET `locale_ruRU`='До снятия бана: {}, забанил: {}, причина: {}' WHERE `entry`=453;
-UPDATE `acore_string` SET `locale_ruRU`='У кладбища с id= #{} нет фракции, исправьте БД' WHERE `entry`=454;
-UPDATE `acore_string` SET `locale_ruRU`='неверная сторона, исправьте базу данных' WHERE `entry`=455;
-UPDATE `acore_string` SET `locale_ruRU`='любая' WHERE `entry`=456;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс' WHERE `entry`=457;
-UPDATE `acore_string` SET `locale_ruRU`='Орда' WHERE `entry`=458;
-UPDATE `acore_string` SET `locale_ruRU`='Кладбище #{} (фракция: {}) — ближайшее из привязанных к зоне #{}.' WHERE `entry`=459;
-UPDATE `acore_string` SET `locale_ruRU`='К зоне #{} не привязано ни одного кладбища.' WHERE `entry`=460;
-UPDATE `acore_string` SET `locale_ruRU`='К зоне #{} не привязано кладбищ для фракции: {}.' WHERE `entry`=461;
-UPDATE `acore_string` SET `locale_ruRU`='Такая точка телепорта уже существует!' WHERE `entry`=462;
-UPDATE `acore_string` SET `locale_ruRU`='Точка телепорта добавлена.' WHERE `entry`=463;
-UPDATE `acore_string` SET `locale_ruRU`='Точка телепорта НЕ добавлена: ошибка базы данных.' WHERE `entry`=464;
-UPDATE `acore_string` SET `locale_ruRU`='Точка телепорта удалена.' WHERE `entry`=465;
-UPDATE `acore_string` SET `locale_ruRU`='Точки полётов не найдены!' WHERE `entry`=466;
-UPDATE `acore_string` SET `locale_ruRU`='У цели аур: {}:' WHERE `entry`=467;
-UPDATE `acore_string` SET `locale_ruRU`='id: {} {} effmask: {} заряды: {} стаки: {} слот {} длительность: {} макс. длительность: {} {} {} заклинатель: {} guid: {}' WHERE `entry`=468;
-UPDATE `acore_string` SET `locale_ruRU`='У цели {} аур типа {}:' WHERE `entry`=469;
-UPDATE `acore_string` SET `locale_ruRU`='id: {} eff: {} значение: {}' WHERE `entry`=470;
-UPDATE `acore_string` SET `locale_ruRU`='Задание {} не найдено.' WHERE `entry`=471;
-UPDATE `acore_string` SET `locale_ruRU`='Задание {} начинается с предмета. Для корректной работы положите предмет в инвентарь и возьмите задание обычным способом: .additem {}' WHERE `entry`=472;
-UPDATE `acore_string` SET `locale_ruRU`='Задание {} ({}) удалено.' WHERE `entry`=473;
-UPDATE `acore_string` SET `locale_ruRU`='Задание {} ({}): награда получена.' WHERE `entry`=474;
-UPDATE `acore_string` SET `locale_ruRU`='Задание {} ({}) выполнено.' WHERE `entry`=475;
-UPDATE `acore_string` SET `locale_ruRU`='Задание {} ({}) уже активно.' WHERE `entry`=476;
-UPDATE `acore_string` SET `locale_ruRU`='Режим полёта {}: {}' WHERE `entry`=477;
-UPDATE `acore_string` SET `locale_ruRU`='Опкод {} отправлен {}' WHERE `entry`=478;
-UPDATE `acore_string` SET `locale_ruRU`='Персонаж успешно загружен!' WHERE `entry`=479;
-UPDATE `acore_string` SET `locale_ruRU`='Не удалось загрузить персонажа!' WHERE `entry`=480;
-UPDATE `acore_string` SET `locale_ruRU`='Дамп персонажа успешно создан!' WHERE `entry`=481;
-UPDATE `acore_string` SET `locale_ruRU`='Не удалось создать дамп персонажа!' WHERE `entry`=482;
-UPDATE `acore_string` SET `locale_ruRU`='Заклинание {} сломано, его нельзя применять или изучать!' WHERE `entry`=483;
-UPDATE `acore_string` SET `locale_ruRU`='Навык {} ({}) игрока {} установлен на {}, текущий максимум — {} (без постоянных бонусов от талантов).' WHERE `entry`=484;
-UPDATE `acore_string` SET `locale_ruRU`='Для этой команды у игрока {} должен быть навык {} ({}).' WHERE `entry`=485;
-UPDATE `acore_string` SET `locale_ruRU`='Неверный id навыка ({})' WHERE `entry`=486;
-UPDATE `acore_string` SET `locale_ruRU`='Вы изучили стандартные заклинания/навыки ГМ.' WHERE `entry`=487;
-UPDATE `acore_string` SET `locale_ruRU`='Вы уже знаете это заклинание.' WHERE `entry`=488;
-UPDATE `acore_string` SET `locale_ruRU`='Цель ({}) уже знает это заклинание.' WHERE `entry`=489;
-UPDATE `acore_string` SET `locale_ruRU`='{} не знает это заклинание.' WHERE `entry`=490;
-UPDATE `acore_string` SET `locale_ruRU`='Вы уже забыли это заклинание.' WHERE `entry`=491;
-UPDATE `acore_string` SET `locale_ruRU`='Все восстановления заклинаний сброшены для {}.' WHERE `entry`=492;
-UPDATE `acore_string` SET `locale_ruRU`='Восстановление заклинания {} сброшено для {}.' WHERE `entry`=493;
-UPDATE `acore_string` SET `locale_ruRU`='Команда: Additem, itemId = {}, кол-во = {}' WHERE `entry`=494;
-UPDATE `acore_string` SET `locale_ruRU`='Команда: Additemset, itemsetId = {}' WHERE `entry`=495;
-UPDATE `acore_string` SET `locale_ruRU`='Удалено: itemID = {}, кол-во = {} у {}' WHERE `entry`=496;
-UPDATE `acore_string` SET `locale_ruRU`='Не удалось создать предмет ''{}'' (кол-во: {})' WHERE `entry`=497;
-UPDATE `acore_string` SET `locale_ruRU`='Укажите название гильдии!' WHERE `entry`=498;
-UPDATE `acore_string` SET `locale_ruRU`='Игрок не найден!' WHERE `entry`=499;
-UPDATE `acore_string` SET `locale_ruRU`='Игрок уже состоит в гильдии!' WHERE `entry`=500;
-UPDATE `acore_string` SET `locale_ruRU`='Гильдия не создана! (уже существует?)' WHERE `entry`=501;
-UPDATE `acore_string` SET `locale_ruRU`='Не найдено предметов из комплекта ''{}''.' WHERE `entry`=502;
-UPDATE `acore_string` SET `locale_ruRU`='Расстояние: (3D) {} (2D) {} (точное 3D) {} (точное 2D) {} м.' WHERE `entry`=503;
-UPDATE `acore_string` SET `locale_ruRU`='Предмет ''{}'' ''{}'' Ячейка {}' WHERE `entry`=504;
-UPDATE `acore_string` SET `locale_ruRU`='Предмет ''{}'' не существует.' WHERE `entry`=505;
-UPDATE `acore_string` SET `locale_ruRU`='Предмет ''{}'' ''{}'' добавлен в ячейку {}' WHERE `entry`=506;
-UPDATE `acore_string` SET `locale_ruRU`='Не удалось сохранить предмет!' WHERE `entry`=507;
-UPDATE `acore_string` SET `locale_ruRU`='{} - владелец: {} (guid: {} аккаунт: {} ) {}' WHERE `entry`=508;
-UPDATE `acore_string` SET `locale_ruRU`='{} - отправитель: {} (guid: {} аккаунт: {} ) получатель: {} (guid: {} аккаунт: {} ) {}' WHERE `entry`=509;
-UPDATE `acore_string` SET `locale_ruRU`='{} - владелец: {} (guid: {} аккаунт: {} ) {}' WHERE `entry`=510;
-UPDATE `acore_string` SET `locale_ruRU`='Неверный тип ссылки!' WHERE `entry`=511;
-UPDATE `acore_string` SET `locale_ruRU`='{} - |c{}|Hitem:{}:0:0:0:0:0:0:0:0|h[{}]|h|r ' WHERE `entry`=512;
-UPDATE `acore_string` SET `locale_ruRU`='{} - |cffffffff|Hquest:{}:{}|h[{}]|h|r {}' WHERE `entry`=513;
-UPDATE `acore_string` SET `locale_ruRU`='{} - |cffffffff|Hcreature_entry:{}|h[{}]|h|r ' WHERE `entry`=514;
-UPDATE `acore_string` SET `locale_ruRU`='{} - (entry: {}) |cffffffff|Hcreature:{}|h[{} X:{} Y:{} Z:{} MapId:{}]|h|r' WHERE `entry`=515;
-UPDATE `acore_string` SET `locale_ruRU`='{} - |cffffffff|Hgameobject_entry:{}|h[{}]|h|r ' WHERE `entry`=516;
-UPDATE `acore_string` SET `locale_ruRU`='{} (Entry: {}) - |cffffffff|Hgameobject:{}|h[{} X:{} Y:{} Z:{} MapId:{}]|h|r ' WHERE `entry`=517;
-UPDATE `acore_string` SET `locale_ruRU`='{} - |cffffffff|Hitemset:{}|h[{} {}]|h|r ' WHERE `entry`=518;
-UPDATE `acore_string` SET `locale_ruRU`='|cffffffff|Htele:{}|h[{}]|h|r ' WHERE `entry`=519;
-UPDATE `acore_string` SET `locale_ruRU`='{} - |cffffffff|Hspell:{}|h[{}]|h|r ' WHERE `entry`=520;
-UPDATE `acore_string` SET `locale_ruRU`='{} - |cffffffff|Hskill:{}|h[{} {}]|h|r {} {}' WHERE `entry`=521;
-UPDATE `acore_string` SET `locale_ruRU`='Игровой объект (Entry: {}) не найден' WHERE `entry`=522;
-UPDATE `acore_string` SET `locale_ruRU`='>> Игровой объект {} (GUID: {}) в точке {} {} {}. Ориентация {}.' WHERE `entry`=523;
-UPDATE `acore_string` SET `locale_ruRU`='Выбранный объект:\n|cffffffff|Hgameobject:{}|h[{}]|h|r GUID: {} ID: {}\nX: {} Y: {} Z: {} MapId: {}\nОриентация: {}\nPhasemask {}' WHERE `entry`=524;
-UPDATE `acore_string` SET `locale_ruRU`='>> Игровой объект ''{}'' ({}) (GUID: {}) добавлен в точке ''{} {} {}''.' WHERE `entry`=525;
-UPDATE `acore_string` SET `locale_ruRU`='{} (lowguid: {}) стек генераторов движения:' WHERE `entry`=526;
-UPDATE `acore_string` SET `locale_ruRU`='   Покой' WHERE `entry`=527;
-UPDATE `acore_string` SET `locale_ruRU`='   Случайное' WHERE `entry`=528;
-UPDATE `acore_string` SET `locale_ruRU`='   По маршруту' WHERE `entry`=529;
-UPDATE `acore_string` SET `locale_ruRU`='   Случайное (животное)' WHERE `entry`=530;
-UPDATE `acore_string` SET `locale_ruRU`='   Растерянность' WHERE `entry`=531;
-UPDATE `acore_string` SET `locale_ruRU`='   К игроку {} (lowguid {})' WHERE `entry`=532;
-UPDATE `acore_string` SET `locale_ruRU`='   К существу {} (lowguid {})' WHERE `entry`=533;
-UPDATE `acore_string` SET `locale_ruRU`='   К <NULL>' WHERE `entry`=534;
-UPDATE `acore_string` SET `locale_ruRU`='   Возврат домой в (X:{} Y:{} Z:{})' WHERE `entry`=535;
-UPDATE `acore_string` SET `locale_ruRU`='   Возврат домой у игрока?!?' WHERE `entry`=536;
-UPDATE `acore_string` SET `locale_ruRU`='   Полёт на транспорте' WHERE `entry`=537;
-UPDATE `acore_string` SET `locale_ruRU`='   Неизвестный генератор движения ({})' WHERE `entry`=538;
-UPDATE `acore_string` SET `locale_ruRU`='Игрок выбрал NPC\nGUID в БД: {}, текущий GUID: {}.\nТекущий Entry: {} из ({}, {}, {}).\nDisplayID: {} (исходный: {}).\nФракция: {}.\nnpcFlags: {}.' WHERE `entry`=539;
-UPDATE `acore_string` SET `locale_ruRU`='Уровень: {}.' WHERE `entry`=540;
-UPDATE `acore_string` SET `locale_ruRU`='Здоровье (базовое): {}. (макс.): {}. (текущее): {}.' WHERE `entry`=541;
-UPDATE `acore_string` SET `locale_ruRU`='Unit Flags: {}.\nUnit Flags 2: {}.\nDynamic Flags: {}.\nFaction Template: {}.' WHERE `entry`=542;
-UPDATE `acore_string` SET `locale_ruRU`='Добыча: {} Карманы: {} Снятие шкур: {}' WHERE `entry`=543;
-UPDATE `acore_string` SET `locale_ruRU`='Позиция: {} {} {}.' WHERE `entry`=544;
-UPDATE `acore_string` SET `locale_ruRU`='* торговец ({})' WHERE `entry`=545;
-UPDATE `acore_string` SET `locale_ruRU`='* учитель ({})' WHERE `entry`=546;
-UPDATE `acore_string` SET `locale_ruRU`='InstanceID: {}' WHERE `entry`=547;
-UPDATE `acore_string` SET `locale_ruRU`='Игрок{} {} (guid: {}) Аккаунт: {} (id: {}) Email: {} Уровень ГМ: {} Последний IP: {} Последний вход: {} Задержка: {}мс' WHERE `entry`=548;
-UPDATE `acore_string` SET `locale_ruRU`='Раса: {} Класс: {} Время в игре: {} Уровень: {} Деньги: {}з{}с{}м' WHERE `entry`=549;
-UPDATE `acore_string` SET `locale_ruRU`='До снятия мута: {}, кем: {}, причина: {}' WHERE `entry`=550;
-UPDATE `acore_string` SET `locale_ruRU`='{} теперь исследовал все зоны.' WHERE `entry`=551;
-UPDATE `acore_string` SET `locale_ruRU`='{} больше не имеет исследованных зон.' WHERE `entry`=552;
-UPDATE `acore_string` SET `locale_ruRU`='{} открыл для вас все зоны.' WHERE `entry`=553;
-UPDATE `acore_string` SET `locale_ruRU`='{} скрыл от вас все зоны.' WHERE `entry`=554;
-UPDATE `acore_string` SET `locale_ruRU`='SetData выполнен для [GUID: {}, entry: {}, имя: {}] Поле: {}, Данные: {}, с {}' WHERE `entry`=555;
-UPDATE `acore_string` SET `locale_ruRU`='Найдено существ поблизости (радиус {}): {} ' WHERE `entry`=556;
-UPDATE `acore_string` SET `locale_ruRU`='{} повысил ваш уровень до ({})' WHERE `entry`=557;
-UPDATE `acore_string` SET `locale_ruRU`='{} понизил ваш уровень до ({})' WHERE `entry`=558;
-UPDATE `acore_string` SET `locale_ruRU`='{} сбросил прогресс вашего уровня.' WHERE `entry`=559;
-UPDATE `acore_string` SET `locale_ruRU`='Область отмечена как исследованная.' WHERE `entry`=560;
-UPDATE `acore_string` SET `locale_ruRU`='Область отмечена как неисследованная.' WHERE `entry`=561;
-UPDATE `acore_string` SET `locale_ruRU`='GUID={}: updateIndex: {}, значение:  {}.' WHERE `entry`=562;
-UPDATE `acore_string` SET `locale_ruRU`='Вы изменили у GUID={} UpdateIndex: {} на значение {}.' WHERE `entry`=563;
-UPDATE `acore_string` SET `locale_ruRU`='Индекс значения {} слишком велик для {} (количество: {}).' WHERE `entry`=564;
-UPDATE `acore_string` SET `locale_ruRU`='Set {} uint32 Value:[OPCODE]:{} [VALUE]:{}' WHERE `entry`=565;
-UPDATE `acore_string` SET `locale_ruRU`='Вы установили {} поле:{} в uint32 значение: {}' WHERE `entry`=566;
-UPDATE `acore_string` SET `locale_ruRU`='Set {} float Value:[OPCODE]:{} [VALUE]:{}' WHERE `entry`=567;
-UPDATE `acore_string` SET `locale_ruRU`='Вы установили {} поле:{} в float значение: {}' WHERE `entry`=568;
-UPDATE `acore_string` SET `locale_ruRU`='Get {} uint32 Value:[OPCODE]:{} [VALUE]:{}' WHERE `entry`=569;
-UPDATE `acore_string` SET `locale_ruRU`='uint32 значение {} в {}: {}' WHERE `entry`=570;
-UPDATE `acore_string` SET `locale_ruRU`='Get {} float Value:[OPCODE]:{} [VALUE]:{}' WHERE `entry`=571;
-UPDATE `acore_string` SET `locale_ruRU`='float значение {} в {}: {}' WHERE `entry`=572;
-UPDATE `acore_string` SET `locale_ruRU`='.Set32Bit:[OPCODE]:{} [VALUE]:{}' WHERE `entry`=573;
-UPDATE `acore_string` SET `locale_ruRU`='Вы установили бит поля:{} в значение: {}' WHERE `entry`=574;
-UPDATE `acore_string` SET `locale_ruRU`='.Mod32Value:[OPCODE]:{} [VALUE]:{}' WHERE `entry`=575;
-UPDATE `acore_string` SET `locale_ruRU`='Вы изменили значение поля:{} на: {}' WHERE `entry`=576;
-UPDATE `acore_string` SET `locale_ruRU`='Теперь вы невидимы.' WHERE `entry`=577;
-UPDATE `acore_string` SET `locale_ruRU`='Теперь вы видимы.' WHERE `entry`=578;
-UPDATE `acore_string` SET `locale_ruRU`='У выбранного игрока или существа нет цели атаки.' WHERE `entry`=579;
-UPDATE `acore_string` SET `locale_ruRU`='Игрок {} изучил все стандартные заклинания расы/класса и заклинания за выполненные задания.' WHERE `entry`=580;
-UPDATE `acore_string` SET `locale_ruRU`='Найдено игровых объектов поблизости (радиус {}): {} ' WHERE `entry`=581;
-UPDATE `acore_string` SET `locale_ruRU`='Время появления: полное:{} осталось:{}' WHERE `entry`=582;
-UPDATE `acore_string` SET `locale_ruRU`='{} - |cffffffff|Hgameevent:{}|h[{}]|h|r{}' WHERE `entry`=583;
-UPDATE `acore_string` SET `locale_ruRU`='События не найдены!' WHERE `entry`=584;
-UPDATE `acore_string` SET `locale_ruRU`='Событие не существует!' WHERE `entry`=585;
-UPDATE `acore_string` SET `locale_ruRU`='Событие {}: {}{}\nНачало: {} Конец: {} Периодичность: {} Длительность: {}\nСледующая смена состояния: {}' WHERE `entry`=586;
-UPDATE `acore_string` SET `locale_ruRU`='Событие {} ({}) уже активно!' WHERE `entry`=587;
-UPDATE `acore_string` SET `locale_ruRU`='Событие {} ({}) не активно!' WHERE `entry`=588;
-UPDATE `acore_string` SET `locale_ruRU`='   Движение к точке (X:{} Y:{} Z:{})' WHERE `entry`=589;
-UPDATE `acore_string` SET `locale_ruRU`='   Бегство в страхе' WHERE `entry`=590;
-UPDATE `acore_string` SET `locale_ruRU`='   Отвлечение' WHERE `entry`=591;
-UPDATE `acore_string` SET `locale_ruRU`='Вы изучили все рецепты ремесла: {}' WHERE `entry`=592;
-UPDATE `acore_string` SET `locale_ruRU`='Забаненные аккаунты:' WHERE `entry`=593;
-UPDATE `acore_string` SET `locale_ruRU`='|    Аккаунт    |  Дата бана   |  Дата разбана |    Кем       |    Причина    |' WHERE `entry`=594;
-UPDATE `acore_string` SET `locale_ruRU`='Забаненные IP:' WHERE `entry`=595;
-UPDATE `acore_string` SET `locale_ruRU`='|      IP       |  Дата бана   |  Дата разбана |    Кем       |    Причина    |' WHERE `entry`=596;
-UPDATE `acore_string` SET `locale_ruRU`='Текущие ГМ:' WHERE `entry`=597;
-UPDATE `acore_string` SET `locale_ruRU`='|    Аккаунт    |  ГМ  |' WHERE `entry`=598;
-UPDATE `acore_string` SET `locale_ruRU`='ГМ нет.' WHERE `entry`=599;
-UPDATE `acore_string` SET `locale_ruRU`='Событие {} ({}) запущено' WHERE `entry`=600;
-UPDATE `acore_string` SET `locale_ruRU`='Событие {} ({}) остановлено' WHERE `entry`=601;
-UPDATE `acore_string` SET `locale_ruRU`=' [награда получена]' WHERE `entry`=602;
-UPDATE `acore_string` SET `locale_ruRU`='Do Action выполнен для [GUID: {}, entry: {}, имя: {}] Действие: {}' WHERE `entry`=603;
-UPDATE `acore_string` SET `locale_ruRU`='Вы сможете снова говорить через {}.' WHERE `entry`=705;
-UPDATE `acore_string` SET `locale_ruRU`='С надеванием/размещением этих предметов в инвентаре возникли проблемы.' WHERE `entry`=706;
-UPDATE `acore_string` SET `locale_ruRU`='{} просит не беспокоить: {}' WHERE `entry`=707;
-UPDATE `acore_string` SET `locale_ruRU`='{} отошёл: {}' WHERE `entry`=708;
-UPDATE `acore_string` SET `locale_ruRU`='Не беспокоить' WHERE `entry`=709;
-UPDATE `acore_string` SET `locale_ruRU`='Отошёл' WHERE `entry`=710;
-UPDATE `acore_string` SET `locale_ruRU`='Очередь на {} (ур. {}–{})\nВ очереди Альянса: {} (нужно ещё минимум {})\nВ очереди Орды: {} (нужно ещё минимум {})' WHERE `entry`=711;
-UPDATE `acore_string` SET `locale_ruRU`='|cffff0000[Очередь на поле боя]:|r {} -- [{}-{}] [{}/{}]|r' WHERE `entry`=712;
-UPDATE `acore_string` SET `locale_ruRU`='Очередь на {} (стычка {}) (ур. {}–{})\nВ очереди: {} (нужно ещё минимум {})' WHERE `entry`=713;
-UPDATE `acore_string` SET `locale_ruRU`='Карта: {}, Область: {}, Зона: {}, Фаза: {}' WHERE `entry`=714;
-UPDATE `acore_string` SET `locale_ruRU`='Вы не соответствуете требованиям поля боя по уровню' WHERE `entry`=715;
-UPDATE `acore_string` SET `locale_ruRU`='Карта: {}, Область: {}' WHERE `entry`=716;
-UPDATE `acore_string` SET `locale_ruRU`='|cffff0000[Очередь на поле боя]:|r {} -- [{}-{}] Началось!|r' WHERE `entry`=717;
-UPDATE `acore_string` SET `locale_ruRU`='|cffff0000[Очередь на арену]:|r {} -- Вступили: {}x{} : {}|r' WHERE `entry`=718;
-UPDATE `acore_string` SET `locale_ruRU`='|cffff0000[Очередь на арену]:|r {} -- Вышли: {}x{} : {}|r' WHERE `entry`=719;
-UPDATE `acore_string` SET `locale_ruRU`='Ваша группа слишком велика для этого поля боя. Перегруппируйтесь, чтобы вступить.' WHERE `entry`=720;
-UPDATE `acore_string` SET `locale_ruRU`='Ваша группа слишком велика для этой арены. Перегруппируйтесь, чтобы вступить.' WHERE `entry`=721;
-UPDATE `acore_string` SET `locale_ruRU`='В вашей группе есть игроки не из вашей команды арены. Перегруппируйтесь, чтобы вступить.' WHERE `entry`=722;
-UPDATE `acore_string` SET `locale_ruRU`='В вашей группе недостаточно игроков для этого матча.' WHERE `entry`=723;
-UPDATE `acore_string` SET `locale_ruRU`='|cffff0000[Очередь на арену]:|r {} (стычка {}) -- [{}-{}] [{}/{}]|r' WHERE `entry`=726;
-UPDATE `acore_string` SET `locale_ruRU`='В вашей группе есть игрок не в сети. Исключите его перед вступлением.' WHERE `entry`=727;
-UPDATE `acore_string` SET `locale_ruRU`='В вашей группе есть игроки противоположной фракции. Вступить на поле боя группой нельзя.' WHERE `entry`=728;
-UPDATE `acore_string` SET `locale_ruRU`='В вашей группе игроки из разных уровневых диапазонов поля боя. Вступить группой нельзя.' WHERE `entry`=729;
-UPDATE `acore_string` SET `locale_ruRU`='Кто-то из вашей группы уже стоит в очереди на это поле боя. Ему нужно выйти из неё, чтобы вступить группой.' WHERE `entry`=730;
-UPDATE `acore_string` SET `locale_ruRU`='Кто-то из вашей группы — дезертир. Вступить группой нельзя.' WHERE `entry`=731;
-UPDATE `acore_string` SET `locale_ruRU`='Кто-то из вашей группы уже стоит в трёх очередях на поля боя. Вступить группой нельзя.' WHERE `entry`=732;
-UPDATE `acore_string` SET `locale_ruRU`='Нельзя телепортироваться на карту поля боя или арены.' WHERE `entry`=733;
-UPDATE `acore_string` SET `locale_ruRU`='Нельзя призывать игроков на карту поля боя или арены.' WHERE `entry`=734;
-UPDATE `acore_string` SET `locale_ruRU`='Чтобы телепортироваться к игроку на поле боя, нужен режим ГМ.' WHERE `entry`=735;
-UPDATE `acore_string` SET `locale_ruRU`='Нельзя телепортироваться на поле боя с другого поля боя. Сначала покиньте текущее.' WHERE `entry`=736;
-UPDATE `acore_string` SET `locale_ruRU`='Арены переведены в режим 1х1 для отладки. Не вступайте группой.' WHERE `entry`=737;
-UPDATE `acore_string` SET `locale_ruRU`='Арены переведены в обычный режим по числу игроков.' WHERE `entry`=738;
-UPDATE `acore_string` SET `locale_ruRU`='Поля боя переведены в режим 1х0 для отладки.' WHERE `entry`=739;
-UPDATE `acore_string` SET `locale_ruRU`='Поля боя переведены в обычный режим по числу игроков.' WHERE `entry`=740;
-UPDATE `acore_string` SET `locale_ruRU`='Начисление очков арены по рейтингу команд, это может занять несколько минут. Подождите...' WHERE `entry`=741;
-UPDATE `acore_string` SET `locale_ruRU`='Распределение очков арены между игроками...' WHERE `entry`=742;
-UPDATE `acore_string` SET `locale_ruRU`='Очки арены игрокам в сети начислены.' WHERE `entry`=743;
-UPDATE `acore_string` SET `locale_ruRU`='Обновление числа игр, очков арены и т.д. для загруженных команд арены, отправка статистики игрокам в сети...' WHERE `entry`=744;
-UPDATE `acore_string` SET `locale_ruRU`='Изменения выполнены.' WHERE `entry`=745;
-UPDATE `acore_string` SET `locale_ruRU`='Начисление очков арены завершено.' WHERE `entry`=746;
-UPDATE `acore_string` SET `locale_ruRU`='Это поле боя отключено. Встать в очередь нельзя.' WHERE `entry`=747;
-UPDATE `acore_string` SET `locale_ruRU`='Арены отключены. Встать в очередь нельзя.' WHERE `entry`=748;
-UPDATE `acore_string` SET `locale_ruRU`='¦ ОС: {} - Задержка: {} мс' WHERE `entry`=749;
-UPDATE `acore_string` SET `locale_ruRU`='Недостаточно игроков. Игра закроется через {} мин.' WHERE `entry`=750;
-UPDATE `acore_string` SET `locale_ruRU`='Недостаточно игроков. Игра закроется через {} сек.' WHERE `entry`=751;
-UPDATE `acore_string` SET `locale_ruRU`='¦ Последний IP: {} (Привязка: {})' WHERE `entry`=752;
-UPDATE `acore_string` SET `locale_ruRU`='|cffff0000[Очередь на арену]:|r {} -- Вступили: {}x{}|r' WHERE `entry`=773;
-UPDATE `acore_string` SET `locale_ruRU`='|cffff0000[Очередь на арену]:|r {} -- Вышли: {}x{}|r' WHERE `entry`=774;
-UPDATE `acore_string` SET `locale_ruRU`='|cffff0000[Очередь на арену]:|r Вступили: {}x{} : {}|r' WHERE `entry`=775;
-UPDATE `acore_string` SET `locale_ruRU`='|cffff0000[Очередь на арену]:|r Вышли: {}x{} : {}|r' WHERE `entry`=776;
-UPDATE `acore_string` SET `locale_ruRU`='|cffff0000[Очередь на арену]:|r Вступили: {}x{}|r' WHERE `entry`=777;
-UPDATE `acore_string` SET `locale_ruRU`='|cffff0000[Очередь на арену]:|r Вышли: {}x{}|r' WHERE `entry`=778;
-UPDATE `acore_string` SET `locale_ruRU`='Тестирование арены: {}' WHERE `entry`=785;
-UPDATE `acore_string` SET `locale_ruRU`='|cffff0000[Автоматически]:|r' WHERE `entry`=786;
-UPDATE `acore_string` SET `locale_ruRU`='|cffffff00[|c1f40af20Объявление от|r |cffff0000{}|cffffff00]:|r {}|r' WHERE `entry`=787;
-UPDATE `acore_string` SET `locale_ruRU`='Недопустимое имя' WHERE `entry`=800;
-UPDATE `acore_string` SET `locale_ruRU`='У вас недостаточно золота' WHERE `entry`=801;
-UPDATE `acore_string` SET `locale_ruRU`='У вас недостаточно свободных ячеек' WHERE `entry`=802;
-UPDATE `acore_string` SET `locale_ruRU`='У вашего партнёра недостаточно свободных ячеек в сумках' WHERE `entry`=803;
-UPDATE `acore_string` SET `locale_ruRU`='У вас нет прав на это действие' WHERE `entry`=804;
-UPDATE `acore_string` SET `locale_ruRU`='Неизвестный язык' WHERE `entry`=805;
-UPDATE `acore_string` SET `locale_ruRU`='Вы не знаете этого языка' WHERE `entry`=806;
-UPDATE `acore_string` SET `locale_ruRU`='Укажите имя персонажа' WHERE `entry`=807;
-UPDATE `acore_string` SET `locale_ruRU`='Игрок {} не найден или не в сети' WHERE `entry`=808;
-UPDATE `acore_string` SET `locale_ruRU`='Аккаунт персонажа {} не найден' WHERE `entry`=809;
-UPDATE `acore_string` SET `locale_ruRU`='Глава гильдии' WHERE `entry`=811;
-UPDATE `acore_string` SET `locale_ruRU`='Офицер' WHERE `entry`=812;
-UPDATE `acore_string` SET `locale_ruRU`='Ветеран' WHERE `entry`=813;
-UPDATE `acore_string` SET `locale_ruRU`='Участник' WHERE `entry`=814;
-UPDATE `acore_string` SET `locale_ruRU`='Новичок' WHERE `entry`=815;
-UPDATE `acore_string` SET `locale_ruRU`='Внимание: вы вошли в зону, где полёты запрещены, и сейчас будете спешены!' WHERE `entry`=816;
-UPDATE `acore_string` SET `locale_ruRU`='Entry {} не найден в таблице creature_template.' WHERE `entry`=817;
-UPDATE `acore_string` SET `locale_ruRU`='Entry {} не найден в sCreatureStorage. Возможно, это новая строка в creature_template, но добавлять новых существ без перезапуска нельзя — разрешено только изменение.' WHERE `entry`=818;
-UPDATE `acore_string` SET `locale_ruRU`='Город' WHERE `entry`=819;
-UPDATE `acore_string` SET `locale_ruRU`='* есть диалог ({})' WHERE `entry`=820;
-UPDATE `acore_string` SET `locale_ruRU`='* выдаёт задания ({})' WHERE `entry`=821;
-UPDATE `acore_string` SET `locale_ruRU`='* учитель класса ({})' WHERE `entry`=822;
-UPDATE `acore_string` SET `locale_ruRU`='* учитель профессии ({})' WHERE `entry`=823;
-UPDATE `acore_string` SET `locale_ruRU`='* торговец боеприпасами ({})' WHERE `entry`=824;
-UPDATE `acore_string` SET `locale_ruRU`='* торговец едой ({})' WHERE `entry`=825;
-UPDATE `acore_string` SET `locale_ruRU`='* торговец ядами ({})' WHERE `entry`=826;
-UPDATE `acore_string` SET `locale_ruRU`='* торговец реагентами ({})' WHERE `entry`=827;
-UPDATE `acore_string` SET `locale_ruRU`='* может чинить ({})' WHERE `entry`=828;
-UPDATE `acore_string` SET `locale_ruRU`='* распорядитель полётов ({})' WHERE `entry`=829;
-UPDATE `acore_string` SET `locale_ruRU`='* целитель душ ({})' WHERE `entry`=830;
-UPDATE `acore_string` SET `locale_ruRU`='* проводник духов ({})' WHERE `entry`=831;
-UPDATE `acore_string` SET `locale_ruRU`='* хозяин таверны ({})' WHERE `entry`=832;
-UPDATE `acore_string` SET `locale_ruRU`='* банкир ({})' WHERE `entry`=833;
-UPDATE `acore_string` SET `locale_ruRU`='* регистратор ({})' WHERE `entry`=834;
-UPDATE `acore_string` SET `locale_ruRU`='* изготовитель гербовых накидок ({})' WHERE `entry`=835;
-UPDATE `acore_string` SET `locale_ruRU`='* военачальник ({})' WHERE `entry`=836;
-UPDATE `acore_string` SET `locale_ruRU`='* аукционист ({})' WHERE `entry`=837;
-UPDATE `acore_string` SET `locale_ruRU`='* смотритель стойл ({})' WHERE `entry`=838;
-UPDATE `acore_string` SET `locale_ruRU`='* банкир гильдии ({})' WHERE `entry`=839;
-UPDATE `acore_string` SET `locale_ruRU`='* реагирует на клик ({})' WHERE `entry`=840;
-UPDATE `acore_string` SET `locale_ruRU`='* почтовый ящик ({})' WHERE `entry`=841;
-UPDATE `acore_string` SET `locale_ruRU`='* транспорт игрока ({})' WHERE `entry`=842;
-UPDATE `acore_string` SET `locale_ruRU`='¦ Уровень: {} ({}/{} опыта (осталось {}))' WHERE `entry`=843;
-UPDATE `acore_string` SET `locale_ruRU`='¦ Раса: {} {}, {}' WHERE `entry`=844;
-UPDATE `acore_string` SET `locale_ruRU`='¦ Жив?: {}' WHERE `entry`=845;
-UPDATE `acore_string` SET `locale_ruRU`='¦ Фаза: {}' WHERE `entry`=846;
-UPDATE `acore_string` SET `locale_ruRU`='¦ Деньги: {}з{}с{}м' WHERE `entry`=847;
-UPDATE `acore_string` SET `locale_ruRU`='¦ Карта: {}, Зона: {}' WHERE `entry`=848;
-UPDATE `acore_string` SET `locale_ruRU`='¦ Гильдия: {} (ID: {})' WHERE `entry`=849;
-UPDATE `acore_string` SET `locale_ruRU`='├─ Звание: {}' WHERE `entry`=850;
-UPDATE `acore_string` SET `locale_ruRU`='├─ Заметка: {}' WHERE `entry`=851;
-UPDATE `acore_string` SET `locale_ruRU`='├─ Заметка офицера: {}' WHERE `entry`=852;
-UPDATE `acore_string` SET `locale_ruRU`='¦ Время в игре: {}' WHERE `entry`=853;
-UPDATE `acore_string` SET `locale_ruRU`='¦ Письма: {} прочитано/{} всего' WHERE `entry`=854;
-UPDATE `acore_string` SET `locale_ruRU`='Мужской' WHERE `entry`=855;
-UPDATE `acore_string` SET `locale_ruRU`='Женский' WHERE `entry`=856;
-UPDATE `acore_string` SET `locale_ruRU`='Команда арены [{}] не найдена' WHERE `entry`=857;
-UPDATE `acore_string` SET `locale_ruRU`='Команда арены с названием "{}" уже существует' WHERE `entry`=858;
-UPDATE `acore_string` SET `locale_ruRU`='{} уже состоит в команде арены такого размера' WHERE `entry`=859;
-UPDATE `acore_string` SET `locale_ruRU`='Команда арены в бою' WHERE `entry`=860;
-UPDATE `acore_string` SET `locale_ruRU`='Арена с названием "{}" или похожим не найдена' WHERE `entry`=861;
-UPDATE `acore_string` SET `locale_ruRU`='[{}] не состоит в команде "{}"' WHERE `entry`=862;
-UPDATE `acore_string` SET `locale_ruRU`='[{}] уже капитан команды "{}"' WHERE `entry`=863;
-UPDATE `acore_string` SET `locale_ruRU`='Создана команда арены [Название: "{}"][Id: {}][Тип: {}][GUID капитана: {}]' WHERE `entry`=864;
-UPDATE `acore_string` SET `locale_ruRU`='Команда арены "{}"[Id: {}] распущена' WHERE `entry`=865;
-UPDATE `acore_string` SET `locale_ruRU`='Команда арены [Id: {}] переименована из "{}" в "{}"' WHERE `entry`=866;
-UPDATE `acore_string` SET `locale_ruRU`='Команда арены "{}"[Id: {}]: капитан сменён с [{}] на [{}]' WHERE `entry`=867;
-UPDATE `acore_string` SET `locale_ruRU`='Команда арены: "{}"[{}] - Рейтинг: {} - Тип: {}x{}' WHERE `entry`=868;
-UPDATE `acore_string` SET `locale_ruRU`='Имя:"{}"[guid:{}] - ЛР: {} - {}' WHERE `entry`=869;
-UPDATE `acore_string` SET `locale_ruRU`='|"{}"[ID:{}]({}x{})|' WHERE `entry`=870;
-UPDATE `acore_string` SET `locale_ruRU`='¦ Уровень: {}' WHERE `entry`=871;
-UPDATE `acore_string` SET `locale_ruRU`='Введённый email не совпадает с email регистрации, проверьте ввод' WHERE `entry`=872;
-UPDATE `acore_string` SET `locale_ruRU`='Новые email не совпадают' WHERE `entry`=873;
-UPDATE `acore_string` SET `locale_ruRU`='Email изменён' WHERE `entry`=874;
-UPDATE `acore_string` SET `locale_ruRU`='Email не может быть длиннее 255 символов, email не изменён!' WHERE `entry`=875;
-UPDATE `acore_string` SET `locale_ruRU`='Email не изменён (неизвестная ошибка)!' WHERE `entry`=876;
-UPDATE `acore_string` SET `locale_ruRU`='Менять не нужно: новый email совпадает со старым' WHERE `entry`=877;
-UPDATE `acore_string` SET `locale_ruRU`='Ваш email: {}' WHERE `entry`=878;
-UPDATE `acore_string` SET `locale_ruRU`='¦ Email регистрации: {} - Email: {}' WHERE `entry`=879;
-UPDATE `acore_string` SET `locale_ruRU`='Уровень доступа: {}' WHERE `entry`=880;
-UPDATE `acore_string` SET `locale_ruRU`='Для смены пароля нужен email.' WHERE `entry`=881;
-UPDATE `acore_string` SET `locale_ruRU`='Для входа нужно выполнить задания:' WHERE `entry`=882;
-UPDATE `acore_string` SET `locale_ruRU`='Для входа нужно получить достижения:' WHERE `entry`=883;
-UPDATE `acore_string` SET `locale_ruRU`='Для входа в инвентаре должны быть предметы:' WHERE `entry`=884;
-UPDATE `acore_string` SET `locale_ruRU`='- Примечание:' WHERE `entry`=885;
-UPDATE `acore_string` SET `locale_ruRU`='Вход невозможен. Требования не выполнены.' WHERE `entry`=886;
-UPDATE `acore_string` SET `locale_ruRU`='Для входа средний уровень предметов вашей экипировки должен быть не ниже {}. Сейчас он равен: {}.' WHERE `entry`=887;
-UPDATE `acore_string` SET `locale_ruRU`='Для входа ваш уровень должен быть ниже {}.' WHERE `entry`=888;
-UPDATE `acore_string` SET `locale_ruRU`='Для входа лидер группы ({}) должен выполнить задания:' WHERE `entry`=889;
-UPDATE `acore_string` SET `locale_ruRU`='Для входа лидер группы ({}) должен получить достижения:' WHERE `entry`=890;
-UPDATE `acore_string` SET `locale_ruRU`='Для входа у лидера группы ({}) в инвентаре должны быть предметы:' WHERE `entry`=891;
-UPDATE `acore_string` SET `locale_ruRU`='Завершение работы службы...' WHERE `entry`=1000;
-UPDATE `acore_string` SET `locale_ruRU`='Аккаунт удалён: {}' WHERE `entry`=1001;
-UPDATE `acore_string` SET `locale_ruRU`='Аккаунт {} НЕ удалён (вероятно, изменился формат sql-файла)' WHERE `entry`=1002;
-UPDATE `acore_string` SET `locale_ruRU`='Аккаунт {} НЕ удалён (неизвестная ошибка)' WHERE `entry`=1003;
-UPDATE `acore_string` SET `locale_ruRU`='Аккаунт создан: {}' WHERE `entry`=1004;
-UPDATE `acore_string` SET `locale_ruRU`='Аккаунт с таким именем уже существует!' WHERE `entry`=1006;
-UPDATE `acore_string` SET `locale_ruRU`='Аккаунт {} НЕ создан (вероятно, изменился формат sql-файла)' WHERE `entry`=1007;
-UPDATE `acore_string` SET `locale_ruRU`='Аккаунт {} НЕ создан (неизвестная ошибка)' WHERE `entry`=1008;
-UPDATE `acore_string` SET `locale_ruRU`='Игрок {} (Guid: {}) Аккаунт {} (Id: {}) удалён.' WHERE `entry`=1009;
-UPDATE `acore_string` SET `locale_ruRU`='-[         Аккаунт][    Персонаж][             IP][Карта][Зона][Доп][ГМ]-' WHERE `entry`=1010;
-UPDATE `acore_string` SET `locale_ruRU`='|<Ошибка>       | {} |<Ошибка>         |<Ош>| <Ошибка>  |' WHERE `entry`=1011;
-UPDATE `acore_string` SET `locale_ruRU`='-==================================================================-' WHERE `entry`=1012;
-UPDATE `acore_string` SET `locale_ruRU`='-[{}][{}][{}][{}][{}][{}][{}]-' WHERE `entry`=1013;
-UPDATE `acore_string` SET `locale_ruRU`='Нет игроков в сети.' WHERE `entry`=1014;
-UPDATE `acore_string` SET `locale_ruRU`='-======================== Персонажи в сети ========================-' WHERE `entry`=1015;
-UPDATE `acore_string` SET `locale_ruRU`='| GUID       | Имя                  | Ур.   | Аккаунт                      | Дата удаления       |' WHERE `entry`=1016;
-UPDATE `acore_string` SET `locale_ruRU`='| {} | {} | {} | {} ({}) | {} |' WHERE `entry`=1017;
-UPDATE `acore_string` SET `locale_ruRU`='==================================================================================================' WHERE `entry`=1018;
-UPDATE `acore_string` SET `locale_ruRU`='Персонажи не найдены.' WHERE `entry`=1019;
-UPDATE `acore_string` SET `locale_ruRU`='Восстанавливаются персонажи:' WHERE `entry`=1020;
-UPDATE `acore_string` SET `locale_ruRU`='Удаляются персонажи:' WHERE `entry`=1021;
-UPDATE `acore_string` SET `locale_ruRU`='ОШИБКА: новое имя можно задать, только если выбран один персонаж!' WHERE `entry`=1022;
-UPDATE `acore_string` SET `locale_ruRU`='Персонажа ''{}'' (GUID: {} Аккаунт {}) нельзя восстановить: аккаунт не существует!' WHERE `entry`=1023;
-UPDATE `acore_string` SET `locale_ruRU`='Персонажа ''{}'' (GUID: {} Аккаунт {}) нельзя восстановить: список персонажей аккаунта заполнен!' WHERE `entry`=1024;
-UPDATE `acore_string` SET `locale_ruRU`='Персонажа ''{}'' (GUID: {} Аккаунт {}) нельзя восстановить: новое имя уже занято!' WHERE `entry`=1025;
-UPDATE `acore_string` SET `locale_ruRU`='GUID: {} Имя: {} Уровень: {} Аккаунт: {} ({}) Дата: {}' WHERE `entry`=1026;
-UPDATE `acore_string` SET `locale_ruRU`='Журналирование запросов SQL-драйвера включено.' WHERE `entry`=1027;
-UPDATE `acore_string` SET `locale_ruRU`='Журналирование запросов SQL-драйвера отключено.' WHERE `entry`=1028;
-UPDATE `acore_string` SET `locale_ruRU`='Пароль аккаунта НЕ может быть длиннее 16 символов (ограничение клиента). Аккаунт НЕ создан.' WHERE `entry`=1031;
-UPDATE `acore_string` SET `locale_ruRU`='Аккаунту {} (Id: {}) теперь разрешены дополнения до {}.' WHERE `entry`=1100;
-UPDATE `acore_string` SET `locale_ruRU`='Сообщение дня в мире {} для языка {} изменено на:\\r {}' WHERE `entry`=1101;
-UPDATE `acore_string` SET `locale_ruRU`='Сообщение отправлено {}: {}' WHERE `entry`=1102;
-UPDATE `acore_string` SET `locale_ruRU`='{} - {} {}' WHERE `entry`=1103;
-UPDATE `acore_string` SET `locale_ruRU`='{} - {}' WHERE `entry`=1104;
-UPDATE `acore_string` SET `locale_ruRU`='{} - {}' WHERE `entry`=1105;
-UPDATE `acore_string` SET `locale_ruRU`='{} - {} {}' WHERE `entry`=1106;
-UPDATE `acore_string` SET `locale_ruRU`='{} - {}' WHERE `entry`=1107;
-UPDATE `acore_string` SET `locale_ruRU`='{} - {} {}' WHERE `entry`=1108;
-UPDATE `acore_string` SET `locale_ruRU`='{} - {} {} {} {}' WHERE `entry`=1109;
-UPDATE `acore_string` SET `locale_ruRU`='{} - {} X:{} Y:{} Z:{} MapId:{}' WHERE `entry`=1110;
-UPDATE `acore_string` SET `locale_ruRU`='{} - {} X:{} Y:{} Z:{} MapId:{}' WHERE `entry`=1111;
-UPDATE `acore_string` SET `locale_ruRU`='Не удалось открыть файл: {}' WHERE `entry`=1112;
-UPDATE `acore_string` SET `locale_ruRU`='У аккаунта {} ({}) максимальное число персонажей (ограничение клиента)' WHERE `entry`=1113;
-UPDATE `acore_string` SET `locale_ruRU`='Файл дампа содержит повреждённые данные!' WHERE `entry`=1114;
-UPDATE `acore_string` SET `locale_ruRU`='Недопустимое имя персонажа!' WHERE `entry`=1115;
-UPDATE `acore_string` SET `locale_ruRU`='Недопустимый guid персонажа!' WHERE `entry`=1116;
-UPDATE `acore_string` SET `locale_ruRU`='Guid персонажа {} уже используется!' WHERE `entry`=1117;
-UPDATE `acore_string` SET `locale_ruRU`='{} - гильдия: {} (guid: {}) {}' WHERE `entry`=1118;
-UPDATE `acore_string` SET `locale_ruRU`='Укажите пол: male или female.' WHERE `entry`=1119;
-UPDATE `acore_string` SET `locale_ruRU`='Вы изменили пол {} на {}.' WHERE `entry`=1120;
-UPDATE `acore_string` SET `locale_ruRU`='{} изменил ваш пол на {}.' WHERE `entry`=1121;
-UPDATE `acore_string` SET `locale_ruRU`='({}/{} +пост. {} +врем. {})' WHERE `entry`=1122;
-UPDATE `acore_string` SET `locale_ruRU`='Питомец не найден' WHERE `entry`=1123;
-UPDATE `acore_string` SET `locale_ruRU`='Неверный тип питомца' WHERE `entry`=1124;
-UPDATE `acore_string` SET `locale_ruRU`='Ваш питомец изучил все таланты' WHERE `entry`=1125;
-UPDATE `acore_string` SET `locale_ruRU`='Таланты вашего питомца сброшены.' WHERE `entry`=1126;
-UPDATE `acore_string` SET `locale_ruRU`='Таланты питомца {} сброшены.' WHERE `entry`=1127;
-UPDATE `acore_string` SET `locale_ruRU`='{} - |cffffffff|Htaxinode:{}|h[{} {}]|h|r (Карта:{} X:{} Y:{} Z:{})' WHERE `entry`=1128;
-UPDATE `acore_string` SET `locale_ruRU`='{} - {} {} (Карта:{} X:{} Y:{} Z:{})' WHERE `entry`=1129;
-UPDATE `acore_string` SET `locale_ruRU`='Нельзя сделать дамп удалённых персонажей, отмена.' WHERE `entry`=1130;
-UPDATE `acore_string` SET `locale_ruRU`='Под ваш запрос подходят персонажи:' WHERE `entry`=1131;
-UPDATE `acore_string` SET `locale_ruRU`='Забаненные персонажи:' WHERE `entry`=1132;
-UPDATE `acore_string` SET `locale_ruRU`='|   Персонаж    |  Дата бана   |  Дата разбана |    Кем       |    Причина    |' WHERE `entry`=1133;
-UPDATE `acore_string` SET `locale_ruRU`='Отправка тикетов разрешена.' WHERE `entry`=1134;
-UPDATE `acore_string` SET `locale_ruRU`='Отправка тикетов запрещена.' WHERE `entry`=1135;
-UPDATE `acore_string` SET `locale_ruRU`='Персонаж {} никогда не был забанен!' WHERE `entry`=1136;
-UPDATE `acore_string` SET `locale_ruRU`='Режим разработчика ВКЛЮЧЁН' WHERE `entry`=1137;
-UPDATE `acore_string` SET `locale_ruRU`='Режим разработчика ВЫКЛЮЧЕН' WHERE `entry`=1138;
-UPDATE `acore_string` SET `locale_ruRU`='   Следование за игроком {} (lowguid {})' WHERE `entry`=1139;
-UPDATE `acore_string` SET `locale_ruRU`='   Следование за существом {} (lowguid {})' WHERE `entry`=1140;
-UPDATE `acore_string` SET `locale_ruRU`='   Следование за <NULL>' WHERE `entry`=1141;
-UPDATE `acore_string` SET `locale_ruRU`='   Движение от эффекта' WHERE `entry`=1142;
-UPDATE `acore_string` SET `locale_ruRU`='moveFlags цели: {}, moveFlagsExtra: {}.' WHERE `entry`=1143;
-UPDATE `acore_string` SET `locale_ruRU`='moveFlags цели установлены: {}, moveFlagsExtra: {}' WHERE `entry`=1144;
-UPDATE `acore_string` SET `locale_ruRU`='{} уже состоит в группе!' WHERE `entry`=1145;
-UPDATE `acore_string` SET `locale_ruRU`='{} вступил в группу {}.' WHERE `entry`=1146;
-UPDATE `acore_string` SET `locale_ruRU`='{} не состоит в группе!' WHERE `entry`=1147;
-UPDATE `acore_string` SET `locale_ruRU`='Группа заполнена!' WHERE `entry`=1148;
-UPDATE `acore_string` SET `locale_ruRU`='Тип группы: {}, игроков: {}.' WHERE `entry`=1149;
-UPDATE `acore_string` SET `locale_ruRU`='Имя: {} ({}),\n\n Зона: {}, Фаза: {}, GUID: {}, Флаги: {}, Роли: {}' WHERE `entry`=1150;
-UPDATE `acore_string` SET `locale_ruRU`='Список писем: писем: {}, игрок: {}({})' WHERE `entry`=1151;
-UPDATE `acore_string` SET `locale_ruRU`='Письмо Id: {} Тема: "{}" Деньги: {}з{}с{}м' WHERE `entry`=1152;
-UPDATE `acore_string` SET `locale_ruRU`='Отправитель: {}({}),\n\n Получатель: {}({})' WHERE `entry`=1153;
-UPDATE `acore_string` SET `locale_ruRU`='Доставка: {}, истекает: {}' WHERE `entry`=1154;
-UPDATE `acore_string` SET `locale_ruRU`='Предмет: {}[Entry:{} Guid:{} Кол-во:{}]' WHERE `entry`=1155;
-UPDATE `acore_string` SET `locale_ruRU`='Список писем: у этого персонажа нет писем.' WHERE `entry`=1156;
-UPDATE `acore_string` SET `locale_ruRU`='Все настройки перезагружены из файлов конфигурации.' WHERE `entry`=1157;
-UPDATE `acore_string` SET `locale_ruRU`='==========================================================' WHERE `entry`=1158;
-UPDATE `acore_string` SET `locale_ruRU`='|--------------------------------------------------------|' WHERE `entry`=1159;
-UPDATE `acore_string` SET `locale_ruRU`='|            |  Альянс  |   Орда   | Нейтрал. |  Всего   |' WHERE `entry`=1160;
-UPDATE `acore_string` SET `locale_ruRU`='          Альянс/Орда/Нейтральные/Всего' WHERE `entry`=1161;
-UPDATE `acore_string` SET `locale_ruRU`='| {} | {} | {} | {} | {} |' WHERE `entry`=1162;
-UPDATE `acore_string` SET `locale_ruRU`='{} = {} / {} / {} / {}' WHERE `entry`=1163;
-UPDATE `acore_string` SET `locale_ruRU`='Количество' WHERE `entry`=1164;
-UPDATE `acore_string` SET `locale_ruRU`='Доля предметов' WHERE `entry`=1165;
-UPDATE `acore_string` SET `locale_ruRU`='|            |  Альянс  |   Орда   | Нейтрал. |  Кол-во  |' WHERE `entry`=1166;
-UPDATE `acore_string` SET `locale_ruRU`='          Альянс/Орда/Нейтральные/Кол-во' WHERE `entry`=1167;
-UPDATE `acore_string` SET `locale_ruRU`='Серые' WHERE `entry`=1168;
-UPDATE `acore_string` SET `locale_ruRU`='Белые' WHERE `entry`=1169;
-UPDATE `acore_string` SET `locale_ruRU`='Зелёные' WHERE `entry`=1170;
-UPDATE `acore_string` SET `locale_ruRU`='Синие' WHERE `entry`=1171;
-UPDATE `acore_string` SET `locale_ruRU`='Фиолетовые' WHERE `entry`=1172;
-UPDATE `acore_string` SET `locale_ruRU`='Оранжевые' WHERE `entry`=1173;
-UPDATE `acore_string` SET `locale_ruRU`='Жёлтые' WHERE `entry`=1174;
-UPDATE `acore_string` SET `locale_ruRU`='Количество предметов {} установлено на {}.' WHERE `entry`=1175;
-UPDATE `acore_string` SET `locale_ruRU`='Доля предметов для {} установлена на {}.' WHERE `entry`=1176;
-UPDATE `acore_string` SET `locale_ruRU`='Сведения о гильдии {} (Id: {})' WHERE `entry`=1177;
-UPDATE `acore_string` SET `locale_ruRU`='| Глава гильдии: {} (GUID: {})' WHERE `entry`=1178;
-UPDATE `acore_string` SET `locale_ruRU`='| Дата создания: {}' WHERE `entry`=1179;
-UPDATE `acore_string` SET `locale_ruRU`='| Участников: {}' WHERE `entry`=1180;
-UPDATE `acore_string` SET `locale_ruRU`='| Банк гильдии: {} золота' WHERE `entry`=1181;
-UPDATE `acore_string` SET `locale_ruRU`='| Сообщение дня гильдии: {}' WHERE `entry`=1182;
-UPDATE `acore_string` SET `locale_ruRU`='| Информация о гильдии: {}' WHERE `entry`=1183;
-UPDATE `acore_string` SET `locale_ruRU`='| Звания гильдии:' WHERE `entry`=1184;
-UPDATE `acore_string` SET `locale_ruRU`='| {} - {}' WHERE `entry`=1185;
-UPDATE `acore_string` SET `locale_ruRU`='Режим повелителя зверей: {}' WHERE `entry`=1186;
-UPDATE `acore_string` SET `locale_ruRU`='Вы пытаетесь посмотреть ролик {}, но его не существует.' WHERE `entry`=1200;
-UPDATE `acore_string` SET `locale_ruRU`='Вы пытаетесь посмотреть видео {}, но его не существует.' WHERE `entry`=1201;
-UPDATE `acore_string` SET `locale_ruRU`='Отладка areatrigger включена.' WHERE `entry`=1202;
-UPDATE `acore_string` SET `locale_ruRU`='Отладка areatrigger выключена.' WHERE `entry`=1203;
-UPDATE `acore_string` SET `locale_ruRU`='Вы достигли areatrigger {}.' WHERE `entry`=1204;
-UPDATE `acore_string` SET `locale_ruRU`='Генерал Северного Волка мёртв!' WHERE `entry`=1331;
-UPDATE `acore_string` SET `locale_ruRU`='Генерал Грозовой Вершины мёртв!' WHERE `entry`=1332;
-UPDATE `acore_string` SET `locale_ruRU`='Ваш тикет закрыт.' WHERE `entry`=1334;
-UPDATE `acore_string` SET `locale_ruRU`='Вы получили ответ на тикет.' WHERE `entry`=1335;
-UPDATE `acore_string` SET `locale_ruRU`='Либо:' WHERE `entry`=1500;
-UPDATE `acore_string` SET `locale_ruRU`='Или:   ' WHERE `entry`=1501;
-UPDATE `acore_string` SET `locale_ruRU`='Значение ''{}'' недопустимо для типа {}.' WHERE `entry`=1502;
-UPDATE `acore_string` SET `locale_ruRU`='В строке найдены неверные последовательности UTF-8.' WHERE `entry`=1503;
-UPDATE `acore_string` SET `locale_ruRU`='Ссылка содержит неверные данные.' WHERE `entry`=1504;
-UPDATE `acore_string` SET `locale_ruRU`='Аккаунт ''{}'' не существует.' WHERE `entry`=1505;
-UPDATE `acore_string` SET `locale_ruRU`='Аккаунт с ID {} не существует.' WHERE `entry`=1506;
-UPDATE `acore_string` SET `locale_ruRU`='{} не существует.' WHERE `entry`=1507;
-UPDATE `acore_string` SET `locale_ruRU`='Персонаж ''{}'' не существует.' WHERE `entry`=1508;
-UPDATE `acore_string` SET `locale_ruRU`='''{}'' — недопустимое имя персонажа.' WHERE `entry`=1509;
-UPDATE `acore_string` SET `locale_ruRU`='Достижение с ID {} не существует.' WHERE `entry`=1510;
-UPDATE `acore_string` SET `locale_ruRU`='Точка телепорта {} не существует.' WHERE `entry`=1511;
-UPDATE `acore_string` SET `locale_ruRU`='Точка телепорта ''{}'' не существует.' WHERE `entry`=1512;
-UPDATE `acore_string` SET `locale_ruRU`='Предмет с ID {} не существует.' WHERE `entry`=1513;
-UPDATE `acore_string` SET `locale_ruRU`='Заклинание с ID {} не существует.' WHERE `entry`=1514;
-UPDATE `acore_string` SET `locale_ruRU`='Ожидалось ''{}'', получено ''{}''.' WHERE `entry`=1515;
-UPDATE `acore_string` SET `locale_ruRU`='Задание с ID {} не существует' WHERE `entry`=1516;
-UPDATE `acore_string` SET `locale_ruRU`='|cff00ff00Новый тикет от|r|cffff00ff {}.|r |cff00ff00Номер тикета:|r|cffff00ff {}.|r' WHERE `entry`=2000;
-UPDATE `acore_string` SET `locale_ruRU`='|cff00ff00Персонаж|r|cffff00ff {} |r|cff00ff00изменил тикет:|r|cffff00ff {}.|r' WHERE `entry`=2001;
-UPDATE `acore_string` SET `locale_ruRU`='|cff00ff00Персонаж|r|cffff00ff {} |r|cff00ff00отозвал тикет:|r|cffff00ff {}.|r' WHERE `entry`=2002;
-UPDATE `acore_string` SET `locale_ruRU`='|cff00ff00Закрыл|r:|cff00ccff {}|r ' WHERE `entry`=2003;
-UPDATE `acore_string` SET `locale_ruRU`='|cff00ff00Удалил|r:|cff00ccff {}|r ' WHERE `entry`=2004;
-UPDATE `acore_string` SET `locale_ruRU`='Тикет не найден.' WHERE `entry`=2005;
-UPDATE `acore_string` SET `locale_ruRU`='Закройте тикет, прежде чем удалить его навсегда.' WHERE `entry`=2006;
-UPDATE `acore_string` SET `locale_ruRU`='Тикет {} уже назначен.' WHERE `entry`=2007;
-UPDATE `acore_string` SET `locale_ruRU`='Тикетов загружено из базы данных: {}.' WHERE `entry`=2008;
-UPDATE `acore_string` SET `locale_ruRU`='Список открытых тикетов.' WHERE `entry`=2009;
-UPDATE `acore_string` SET `locale_ruRU`='Список открытых тикетов, авторы которых в сети.' WHERE `entry`=2010;
-UPDATE `acore_string` SET `locale_ruRU`='Список закрытых тикетов.' WHERE `entry`=2011;
-UPDATE `acore_string` SET `locale_ruRU`='Указано неверное имя. Нужно имя ГМ, находящегося в сети.' WHERE `entry`=2012;
-UPDATE `acore_string` SET `locale_ruRU`='Этот тикет уже назначен вам. Чтобы снять назначение, используйте .ticket unassign {} и назначьте заново.' WHERE `entry`=2013;
-UPDATE `acore_string` SET `locale_ruRU`='Тикет {} не назначен, снимать назначение не с чего.' WHERE `entry`=2014;
-UPDATE `acore_string` SET `locale_ruRU`='Нельзя снимать тикеты с сотрудников с уровнем доступа выше вашего.' WHERE `entry`=2015;
-UPDATE `acore_string` SET `locale_ruRU`='Нельзя закрыть тикет {}: он назначен другому ГМ.' WHERE `entry`=2016;
-UPDATE `acore_string` SET `locale_ruRU`='|cffaaffaaТикет|r:|cffaaccff {}.|r ' WHERE `entry`=2017;
-UPDATE `acore_string` SET `locale_ruRU`='|cff00ff00Создал|r:|cff00ccff {}|r ' WHERE `entry`=2018;
-UPDATE `acore_string` SET `locale_ruRU`='|cff00ff00Изменён|r:|cff00ccff {} назад|r ' WHERE `entry`=2019;
-UPDATE `acore_string` SET `locale_ruRU`='|cff00ff00Назначен|r:|cff00ccff {}|r ' WHERE `entry`=2020;
-UPDATE `acore_string` SET `locale_ruRU`='|cff00ff00Назначение снял|r:|cff00ccff {}|r ' WHERE `entry`=2021;
-UPDATE `acore_string` SET `locale_ruRU`='|cff00ff00Текст тикета|r: [{}]|r' WHERE `entry`=2022;
-UPDATE `acore_string` SET `locale_ruRU`='|cff00ff00Комментарий ГМ|r: [{}]|r' WHERE `entry`=2023;
-UPDATE `acore_string` SET `locale_ruRU`='|cff00ccff{}|r |cff00ff00добавил комментарий|r: [{}]|r' WHERE `entry`=2024;
-UPDATE `acore_string` SET `locale_ruRU`='|cff00ff00Создан|r:|cff00ccff {} назад|r ' WHERE `entry`=2025;
-UPDATE `acore_string` SET `locale_ruRU`='Есть открытые тикеты, сначала закройте их!' WHERE `entry`=2027;
-UPDATE `acore_string` SET `locale_ruRU`='Все закрытые тикеты удалены, счётчик сброшен на |cffff00ff 1|r' WHERE `entry`=2028;
-UPDATE `acore_string` SET `locale_ruRU`='|cff00ff00Ответ на тикет|r: [{}]|r' WHERE `entry`=2029;
-UPDATE `acore_string` SET `locale_ruRU`='|cff00ff00Выполнил|r:|cff00ccff {}|r' WHERE `entry`=2030;
-UPDATE `acore_string` SET `locale_ruRU`='|cff00ff00Ответ дополнен|r:|cff00ccff [{}]|r' WHERE `entry`=2031;
-UPDATE `acore_string` SET `locale_ruRU`='|cff00ff00Ответ удалил|r:|cff00ccff {}|r' WHERE `entry`=2032;
-UPDATE `acore_string` SET `locale_ruRU`='Вы заморозили игрока {}.' WHERE `entry`=5000;
-UPDATE `acore_string` SET `locale_ruRU`='Было бы забавно, но нет... заморозить себя нельзя!' WHERE `entry`=5001;
-UPDATE `acore_string` SET `locale_ruRU`='Неверный ввод, проверьте имя цели.' WHERE `entry`=5002;
-UPDATE `acore_string` SET `locale_ruRU`='Вы разморозили игрока {}.' WHERE `entry`=5003;
-UPDATE `acore_string` SET `locale_ruRU`='Замороженных игроков нет.' WHERE `entry`=5004;
-UPDATE `acore_string` SET `locale_ruRU`='На сервере заморожены игроки:' WHERE `entry`=5005;
-UPDATE `acore_string` SET `locale_ruRU`='- {}' WHERE `entry`=5006;
-UPDATE `acore_string` SET `locale_ruRU`='Для входа в это подземелье нужно быть в рейдовой группе.' WHERE `entry`=5007;
-UPDATE `acore_string` SET `locale_ruRU`='Это подземелье закрыто.' WHERE `entry`=5008;
-UPDATE `acore_string` SET `locale_ruRU`='Звук {} воспроизведён для всего сервера' WHERE `entry`=5009;
-UPDATE `acore_string` SET `locale_ruRU`='linkGUID: {}, Entry: {} ({})' WHERE `entry`=5010;
-UPDATE `acore_string` SET `locale_ruRU`='Нельзя телепортировать себя к себе!' WHERE `entry`=5011;
-UPDATE `acore_string` SET `locale_ruRU`='Карты не найдены!' WHERE `entry`=5012;
-UPDATE `acore_string` SET `locale_ruRU`='[Континент]' WHERE `entry`=5013;
-UPDATE `acore_string` SET `locale_ruRU`='[Подземелье]' WHERE `entry`=5014;
-UPDATE `acore_string` SET `locale_ruRU`='[Поле боя]' WHERE `entry`=5015;
-UPDATE `acore_string` SET `locale_ruRU`='[Арена]' WHERE `entry`=5016;
-UPDATE `acore_string` SET `locale_ruRU`='[Рейд]' WHERE `entry`=5017;
-UPDATE `acore_string` SET `locale_ruRU`='Phasemask: {}' WHERE `entry`=5020;
-UPDATE `acore_string` SET `locale_ruRU`='Броня: {}' WHERE `entry`=5021;
-UPDATE `acore_string` SET `locale_ruRU`='Передача прав владельца первому вошедшему в канал "{}": включена.' WHERE `entry`=5022;
-UPDATE `acore_string` SET `locale_ruRU`='Передача прав владельца первому вошедшему в канал "{}": отключена.' WHERE `entry`=5023;
-UPDATE `acore_string` SET `locale_ruRU`='Entry: {}' WHERE `entry`=5024;
-UPDATE `acore_string` SET `locale_ruRU`='Тип: {}' WHERE `entry`=5025;
-UPDATE `acore_string` SET `locale_ruRU`='DisplayID: {}' WHERE `entry`=5026;
-UPDATE `acore_string` SET `locale_ruRU`='Имя: {}' WHERE `entry`=5027;
-UPDATE `acore_string` SET `locale_ruRU`='Lootid: {}' WHERE `entry`=5028;
-UPDATE `acore_string` SET `locale_ruRU`='Достигнут лимит результатов (макс.: {})' WHERE `entry`=5029;
-UPDATE `acore_string` SET `locale_ruRU`='AIName: {} ScriptName: {}' WHERE `entry`=5031;
-UPDATE `acore_string` SET `locale_ruRU`='Поле боя не найдено!' WHERE `entry`=5032;
-UPDATE `acore_string` SET `locale_ruRU`='Критерии достижений не найдены!' WHERE `entry`=5033;
-UPDATE `acore_string` SET `locale_ruRU`='Мировое PvP не найдено!' WHERE `entry`=5034;
-UPDATE `acore_string` SET `locale_ruRU`='EquipmentId: {} (исходный: {}).' WHERE `entry`=5036;
-UPDATE `acore_string` SET `locale_ruRU`='MechanicImmuneMask: {}' WHERE `entry`=5037;
-UPDATE `acore_string` SET `locale_ruRU`='Unit Flags: {}' WHERE `entry`=5038;
-UPDATE `acore_string` SET `locale_ruRU`='Консоль' WHERE `entry`=5039;
-UPDATE `acore_string` SET `locale_ruRU`='Персонаж' WHERE `entry`=5040;
-UPDATE `acore_string` SET `locale_ruRU`='Навсегда' WHERE `entry`=5041;
-UPDATE `acore_string` SET `locale_ruRU`='Вы на открытом воздухе.' WHERE `entry`=5042;
-UPDATE `acore_string` SET `locale_ruRU`='Вы в помещении.' WHERE `entry`=5043;
-UPDATE `acore_string` SET `locale_ruRU`='нет данных VMAP для информации об области' WHERE `entry`=5044;
-UPDATE `acore_string` SET `locale_ruRU`='Карта: {} | ID: {} | пост.: {} | продлено: {} | сложность: {} | можно сбросить: {} | до сброса: {}' WHERE `entry`=5045;
-UPDATE `acore_string` SET `locale_ruRU`='Привязки игрока: {}' WHERE `entry`=5046;
-UPDATE `acore_string` SET `locale_ruRU`='Привязки группы: {}' WHERE `entry`=5047;
-UPDATE `acore_string` SET `locale_ruRU`='Снятие привязки: карта {} инст. {} пост. {} сложн. {} можно сбросить {} до сброса {}' WHERE `entry`=5048;
-UPDATE `acore_string` SET `locale_ruRU`='Снято привязок к подземельям: {}' WHERE `entry`=5049;
-UPDATE `acore_string` SET `locale_ruRU`='Загружено подземелий: {}' WHERE `entry`=5050;
-UPDATE `acore_string` SET `locale_ruRU`='Игроков в подземельях: {}' WHERE `entry`=5051;
-UPDATE `acore_string` SET `locale_ruRU`='Сохранений подземелий: {}' WHERE `entry`=5052;
-UPDATE `acore_string` SET `locale_ruRU`='Привязанных игроков: {}' WHERE `entry`=5053;
-UPDATE `acore_string` SET `locale_ruRU`='Привязанных групп: {}' WHERE `entry`=5054;
-UPDATE `acore_string` SET `locale_ruRU`='Карта не является подземельем.' WHERE `entry`=5055;
-UPDATE `acore_string` SET `locale_ruRU`='У карты нет данных подземелья.' WHERE `entry`=5056;
-UPDATE `acore_string` SET `locale_ruRU`='Состояние босса id {} установлено на {} ({}).' WHERE `entry`=5057;
-UPDATE `acore_string` SET `locale_ruRU`='Состояние босса id {} ({}): {} ({}).' WHERE `entry`=5058;
-UPDATE `acore_string` SET `locale_ruRU`='Муты аккаунта: {}' WHERE `entry`=5059;
-UPDATE `acore_string` SET `locale_ruRU`='У аккаунта нет мутов: {}' WHERE `entry`=5060;
-UPDATE `acore_string` SET `locale_ruRU`='Дата мута: {} Длительность: {} мин. Причина: {} Кем: {}' WHERE `entry`=5061;
-UPDATE `acore_string` SET `locale_ruRU`='SpellSchoolImmuneMask: {}' WHERE `entry`=5062;
-UPDATE `acore_string` SET `locale_ruRU`='Кэшированные данные персонажа: \n|- Имя: {} (Guid: {}) \n|- Аккаунт: {} \n|- Класс: {} \n|- Раса: {} \n|- Пол: {} \n|- Уровень: {} \n|- Писем: {} \n|- Гильдия: {} \n|- ID группы: {} \n|- Команда арены 2x2: {} \n|- Команда арены 3x3: {} \n|- Команда арены 5x5: {}' WHERE `entry`=5063;
-UPDATE `acore_string` SET `locale_ruRU`='Кэш персонажа {} ({}) очищен.' WHERE `entry`=5064;
-UPDATE `acore_string` SET `locale_ruRU`='Кэш персонажа {} ({}) обновлён.' WHERE `entry`=5065;
-UPDATE `acore_string` SET `locale_ruRU`='Кэш персонажа {} не найден' WHERE `entry`=5066;
-UPDATE `acore_string` SET `locale_ruRU`='Задание {} ({}) добавлено.' WHERE `entry`=5067;
-UPDATE `acore_string` SET `locale_ruRU`='Задание {} ({}) не найдено в журнале заданий.' WHERE `entry`=5068;
-UPDATE `acore_string` SET `locale_ruRU`='Для получения награды задание должно быть активно и выполнено' WHERE `entry`=5069;
-UPDATE `acore_string` SET `locale_ruRU`='Команда отключена в настройках' WHERE `entry`=5070;
-UPDATE `acore_string` SET `locale_ruRU`='Указанная запись extendedcost не существует.' WHERE `entry`=5071;
-UPDATE `acore_string` SET `locale_ruRU`='Возврат {} ({}) превысит лимит очков чести цели (лимит: {}, сейчас: {}, к возврату: {}).' WHERE `entry`=5072;
-UPDATE `acore_string` SET `locale_ruRU`='Не удалось вернуть предмет {}: будет превышен лимит очков чести.' WHERE `entry`=5073;
-UPDATE `acore_string` SET `locale_ruRU`='Предмет {} ({}) возвращён, восстановлено очков чести: {}.' WHERE `entry`=5074;
-UPDATE `acore_string` SET `locale_ruRU`='Возврат {} ({}) превысит лимит очков арены цели (лимит: {}, сейчас: {}, к возврату: {}).' WHERE `entry`=5075;
-UPDATE `acore_string` SET `locale_ruRU`='Не удалось вернуть предмет {}: будет превышен лимит очков арены.' WHERE `entry`=5076;
-UPDATE `acore_string` SET `locale_ruRU`='Предмет {} ({}) возвращён, восстановлено очков арены: {}.' WHERE `entry`=5077;
-UPDATE `acore_string` SET `locale_ruRU`='Предмет не найден в инвентаре персонажа (включая банк)' WHERE `entry`=5078;
-UPDATE `acore_string` SET `locale_ruRU`='Отключать автоматические объявления можно с уровня {}.' WHERE `entry`=5079;
-UPDATE `acore_string` SET `locale_ruRU`='Теперь вы получаете общие сообщения {}.' WHERE `entry`=5080;
-UPDATE `acore_string` SET `locale_ruRU`='Вы больше не будете получать общие сообщения {}.' WHERE `entry`=5081;
-UPDATE `acore_string` SET `locale_ruRU`='Неверный синтаксис. Укажите ''starter'' или ''ender''.' WHERE `entry`=5082;
-UPDATE `acore_string` SET `locale_ruRU`='Персонаж {} ({}) перенесён с аккаунта {} ({}) на аккаунт {} ({}).' WHERE `entry`=5083;
-UPDATE `acore_string` SET `locale_ruRU`='Не удалось применить заклинание! SpellCastResult: {} ({}).' WHERE `entry`=5084;
-UPDATE `acore_string` SET `locale_ruRU`='Объект {} (entry :{} guid: {}) возрождён!' WHERE `entry`=5085;
-UPDATE `acore_string` SET `locale_ruRU`='В радиусе {} м дверей не найдено.' WHERE `entry`=5086;
-UPDATE `acore_string` SET `locale_ruRU`='Дверь {} (Entry: {}) открыта!' WHERE `entry`=5087;
-UPDATE `acore_string` SET `locale_ruRU`='Задание: {} ({}) \nСостояние: {}' WHERE `entry`=5088;
-UPDATE `acore_string` SET `locale_ruRU`='Задание {} нельзя взять. Причины:' WHERE `entry`=5089;
-UPDATE `acore_string` SET `locale_ruRU`='  - Задание отключено.' WHERE `entry`=5090;
-UPDATE `acore_string` SET `locale_ruRU`='  - Задание уже взято или выполнено.' WHERE `entry`=5091;
-UPDATE `acore_string` SET `locale_ruRU`='  - Не подходит класс.' WHERE `entry`=5092;
-UPDATE `acore_string` SET `locale_ruRU`='  - Не подходит раса.' WHERE `entry`=5093;
-UPDATE `acore_string` SET `locale_ruRU`='  - Слишком низкий уровень (нужен: {}).' WHERE `entry`=5094;
-UPDATE `acore_string` SET `locale_ruRU`='  - Слишком высокий уровень (макс.: {}).' WHERE `entry`=5095;
-UPDATE `acore_string` SET `locale_ruRU`='  - Не выполнены требования к навыку.' WHERE `entry`=5096;
-UPDATE `acore_string` SET `locale_ruRU`='  - Не выполнены требования к репутации.' WHERE `entry`=5097;
-UPDATE `acore_string` SET `locale_ruRU`='  - Не выполнено предыдущее задание цепочки.' WHERE `entry`=5098;
-UPDATE `acore_string` SET `locale_ruRU`='  - Уже есть задание на время.' WHERE `entry`=5099;
-UPDATE `acore_string` SET `locale_ruRU`='  - Конфликт с заданием из взаимоисключающей группы.' WHERE `entry`=5100;
-UPDATE `acore_string` SET `locale_ruRU`='  - Следующее задание цепочки уже начато.' WHERE `entry`=5101;
-UPDATE `acore_string` SET `locale_ruRU`='  - Предыдущее задание цепочки всё ещё активно.' WHERE `entry`=5102;
-UPDATE `acore_string` SET `locale_ruRU`='  - Конфликт с заданием-указателем.' WHERE `entry`=5103;
-UPDATE `acore_string` SET `locale_ruRU`='  - Ежедневное задание сегодня недоступно.' WHERE `entry`=5104;
-UPDATE `acore_string` SET `locale_ruRU`='  - Еженедельное задание на этой неделе уже выполнено.' WHERE `entry`=5105;
-UPDATE `acore_string` SET `locale_ruRU`='  - Ежемесячное задание в этом месяце уже выполнено.' WHERE `entry`=5106;
-UPDATE `acore_string` SET `locale_ruRU`='  - Сезонное задание в этом сезоне уже выполнено.' WHERE `entry`=5107;
-UPDATE `acore_string` SET `locale_ruRU`='  - Не выполнены условия:' WHERE `entry`=5108;
-UPDATE `acore_string` SET `locale_ruRU`='  - Журнал заданий заполнен.' WHERE `entry`=5109;
-UPDATE `acore_string` SET `locale_ruRU`='    - Условие не выполнено: тип {} value1: {} value2: {} value3: {}' WHERE `entry`=5110;
-UPDATE `acore_string` SET `locale_ruRU`='Очки чести сброшены у всех игроков.' WHERE `entry`=5118;
-UPDATE `acore_string` SET `locale_ruRU`='Очки арены сброшены у всех игроков.' WHERE `entry`=5119;
-UPDATE `acore_string` SET `locale_ruRU`='  [З] {}' WHERE `entry`=5123;
-UPDATE `acore_string` SET `locale_ruRU`='  [П] {} ({}с)' WHERE `entry`=5124;
-UPDATE `acore_string` SET `locale_ruRU`='  [М] {}' WHERE `entry`=5125;
-UPDATE `acore_string` SET `locale_ruRU`='Вы не можете говорить, кричать и использовать эмоции до {} уровня.' WHERE `entry`=6604;
-UPDATE `acore_string` SET `locale_ruRU`='Вы не можете писать личные сообщения до {} уровня.' WHERE `entry`=6605;
-UPDATE `acore_string` SET `locale_ruRU`='Вы не можете писать в каналы до {} уровня.' WHERE `entry`=6606;
-UPDATE `acore_string` SET `locale_ruRU`='Вы не можете пользоваться аукционом до {} уровня.' WHERE `entry`=6607;
-UPDATE `acore_string` SET `locale_ruRU`='Вы не можете отправлять тикеты до {} уровня.' WHERE `entry`=6608;
-UPDATE `acore_string` SET `locale_ruRU`='Вы не можете торговать до {} уровня.' WHERE `entry`=6609;
-UPDATE `acore_string` SET `locale_ruRU`='Нельзя торговать с персонажами ниже {} уровня.' WHERE `entry`=6610;
-UPDATE `acore_string` SET `locale_ruRU`='Вы не можете отправлять почту до {} уровня.' WHERE `entry`=6611;
-UPDATE `acore_string` SET `locale_ruRU`='Нельзя отправлять почту персонажам ниже {} уровня.' WHERE `entry`=6612;
-UPDATE `acore_string` SET `locale_ruRU`='|cfff00000[Объявление ГМ]: {}|r' WHERE `entry`=6613;
-UPDATE `acore_string` SET `locale_ruRU`='Оповещение для ГМ - ' WHERE `entry`=6614;
-UPDATE `acore_string` SET `locale_ruRU`='|cffffff00[|c1f40af20Объявление ГМ от|r |cffff0000{}|cffffff00]:|r {}|r' WHERE `entry`=6615;
-UPDATE `acore_string` SET `locale_ruRU`='Режим тишины ВКЛЮЧЁН для {}' WHERE `entry`=6616;
-UPDATE `acore_string` SET `locale_ruRU`='Режим наблюдателя ГМ ВКЛЮЧЁН' WHERE `entry`=6617;
-UPDATE `acore_string` SET `locale_ruRU`='Режим наблюдателя ГМ ВЫКЛЮЧЕН' WHERE `entry`=6618;
-UPDATE `acore_string` SET `locale_ruRU`='МИР: подключения запрещены.' WHERE `entry`=7523;
-UPDATE `acore_string` SET `locale_ruRU`='МИР: подключения разрешены.' WHERE `entry`=7524;
-UPDATE `acore_string` SET `locale_ruRU`='Игрок: {}, Состояние: {}, Подземелья: {} ({}),\n\n Роли: {}, Комментарий: {}' WHERE `entry`=9980;
-UPDATE `acore_string` SET `locale_ruRU`='Группа поиска?: {}, Состояние: {}, Подземелье: {}' WHERE `entry`=9981;
-UPDATE `acore_string` SET `locale_ruRU`='Не в группе' WHERE `entry`=9982;
-UPDATE `acore_string` SET `locale_ruRU`='Очереди очищены' WHERE `entry`=9983;
-UPDATE `acore_string` SET `locale_ruRU`='Параметры поиска группы: {}' WHERE `entry`=9984;
-UPDATE `acore_string` SET `locale_ruRU`='Параметры поиска группы изменены' WHERE `entry`=9985;
-UPDATE `acore_string` SET `locale_ruRU`='Нет' WHERE `entry`=9986;
-UPDATE `acore_string` SET `locale_ruRU`='Проверка ролей' WHERE `entry`=9987;
-UPDATE `acore_string` SET `locale_ruRU`='В очереди' WHERE `entry`=9988;
-UPDATE `acore_string` SET `locale_ruRU`='Предложение' WHERE `entry`=9989;
-UPDATE `acore_string` SET `locale_ruRU`='Голосование за исключение' WHERE `entry`=9990;
-UPDATE `acore_string` SET `locale_ruRU`='В подземелье' WHERE `entry`=9991;
-UPDATE `acore_string` SET `locale_ruRU`='Подземелье пройдено' WHERE `entry`=9992;
-UPDATE `acore_string` SET `locale_ruRU`='Поиск рейда' WHERE `entry`=9993;
-UPDATE `acore_string` SET `locale_ruRU`='Танк' WHERE `entry`=9994;
-UPDATE `acore_string` SET `locale_ruRU`='Лекарь' WHERE `entry`=9995;
-UPDATE `acore_string` SET `locale_ruRU`='Урон' WHERE `entry`=9996;
-UPDATE `acore_string` SET `locale_ruRU`='Лидер' WHERE `entry`=9997;
-UPDATE `acore_string` SET `locale_ruRU`='Нет' WHERE `entry`=9998;
-UPDATE `acore_string` SET `locale_ruRU`='Ошибка' WHERE `entry`=9999;
-UPDATE `acore_string` SET `locale_ruRU`='Орда захватила Смотровую площадку!' WHERE `entry`=10001;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс захватил Смотровую площадку!' WHERE `entry`=10002;
-UPDATE `acore_string` SET `locale_ruRU`='Орда захватила Стадион!' WHERE `entry`=10003;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс захватил Стадион!' WHERE `entry`=10004;
-UPDATE `acore_string` SET `locale_ruRU`='Орда захватила Разбитый холм!' WHERE `entry`=10005;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс захватил Разбитый холм!' WHERE `entry`=10006;
-UPDATE `acore_string` SET `locale_ruRU`='Орда потеряла Смотровую площадку!' WHERE `entry`=10007;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс потерял Смотровую площадку!' WHERE `entry`=10008;
-UPDATE `acore_string` SET `locale_ruRU`='Орда потеряла Стадион!' WHERE `entry`=10009;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс потерял Стадион!' WHERE `entry`=10010;
-UPDATE `acore_string` SET `locale_ruRU`='Орда потеряла Разбитый холм!' WHERE `entry`=10011;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс потерял Разбитый холм!' WHERE `entry`=10012;
-UPDATE `acore_string` SET `locale_ruRU`='Орда захватила Западный маяк!' WHERE `entry`=10013;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс захватил Западный маяк!' WHERE `entry`=10014;
-UPDATE `acore_string` SET `locale_ruRU`='Орда захватила Восточный маяк!' WHERE `entry`=10015;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс захватил Восточный маяк!' WHERE `entry`=10016;
-UPDATE `acore_string` SET `locale_ruRU`='Орда захватила кладбище Двух Шпилей!' WHERE `entry`=10017;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс захватил кладбище Двух Шпилей!' WHERE `entry`=10018;
-UPDATE `acore_string` SET `locale_ruRU`='Орда потеряла Западный маяк!' WHERE `entry`=10019;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс потерял Западный маяк!' WHERE `entry`=10020;
-UPDATE `acore_string` SET `locale_ruRU`='Орда потеряла Восточный маяк!' WHERE `entry`=10021;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс потерял Восточный маяк!' WHERE `entry`=10022;
-UPDATE `acore_string` SET `locale_ruRU`='Орда потеряла кладбище Двух Шпилей!' WHERE `entry`=10023;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс потерял кладбище Двух Шпилей!' WHERE `entry`=10024;
-UPDATE `acore_string` SET `locale_ruRU`='Орда захватила Халаа!' WHERE `entry`=10025;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс захватил Халаа!' WHERE `entry`=10026;
-UPDATE `acore_string` SET `locale_ruRU`='Орда потеряла Халаа!' WHERE `entry`=10027;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс потерял Халаа!' WHERE `entry`=10028;
-UPDATE `acore_string` SET `locale_ruRU`='Орда захватила Башню духов!' WHERE `entry`=10029;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс захватил Башню духов!' WHERE `entry`=10030;
-UPDATE `acore_string` SET `locale_ruRU`='Орда потеряла Башню духов!' WHERE `entry`=10031;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс потерял Башню духов!' WHERE `entry`=10032;
-UPDATE `acore_string` SET `locale_ruRU`='Орда захватила Северную башню!' WHERE `entry`=10033;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс захватил Северную башню!' WHERE `entry`=10034;
-UPDATE `acore_string` SET `locale_ruRU`='Орда захватила Восточную башню!' WHERE `entry`=10035;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс захватил Восточную башню!' WHERE `entry`=10036;
-UPDATE `acore_string` SET `locale_ruRU`='Орда захватила башню Королевской Стражи!' WHERE `entry`=10037;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс захватил башню Королевской Стражи!' WHERE `entry`=10038;
-UPDATE `acore_string` SET `locale_ruRU`='Орда захватила башню Чумного леса!' WHERE `entry`=10039;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс захватил башню Чумного леса!' WHERE `entry`=10040;
-UPDATE `acore_string` SET `locale_ruRU`='Орда потеряла Северную башню!' WHERE `entry`=10041;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс потерял Северную башню!' WHERE `entry`=10042;
-UPDATE `acore_string` SET `locale_ruRU`='Орда потеряла Восточную башню!' WHERE `entry`=10043;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс потерял Восточную башню!' WHERE `entry`=10044;
-UPDATE `acore_string` SET `locale_ruRU`='Орда потеряла башню Королевской Стражи!' WHERE `entry`=10045;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс потерял башню Королевской Стражи!' WHERE `entry`=10046;
-UPDATE `acore_string` SET `locale_ruRU`='Орда потеряла башню Чумного леса!' WHERE `entry`=10047;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс потерял башню Чумного леса!' WHERE `entry`=10048;
-UPDATE `acore_string` SET `locale_ruRU`='Орда собрала 200 силитиста!' WHERE `entry`=10049;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс собрал 200 силитиста!' WHERE `entry`=10050;
-UPDATE `acore_string` SET `locale_ruRU`='Отведи меня к Северной башне.' WHERE `entry`=10051;
-UPDATE `acore_string` SET `locale_ruRU`='Отведи меня к Восточной башне.' WHERE `entry`=10052;
-UPDATE `acore_string` SET `locale_ruRU`='Отведи меня к башне Королевской Стражи.' WHERE `entry`=10053;
-UPDATE `acore_string` SET `locale_ruRU`='Дай мне флаг, я отнесу его к центральному маяку во славу Альянса!' WHERE `entry`=10054;
-UPDATE `acore_string` SET `locale_ruRU`='Дай мне флаг, я отнесу его к центральному маяку во славу Орды!' WHERE `entry`=10055;
-UPDATE `acore_string` SET `locale_ruRU`='Битва за Берег Древних начнётся через 2 минуты.' WHERE `entry`=10056;
-UPDATE `acore_string` SET `locale_ruRU`='Битва за Берег Древних начнётся через 1 минуту.' WHERE `entry`=10057;
-UPDATE `acore_string` SET `locale_ruRU`='Битва за Берег Древних начнётся через 30 секунд. Приготовьтесь!.' WHERE `entry`=10058;
-UPDATE `acore_string` SET `locale_ruRU`='Да начнётся битва за Берег Древних!' WHERE `entry`=10059;
-UPDATE `acore_string` SET `locale_ruRU`='{} атакованы!' WHERE `entry`=10060;
-UPDATE `acore_string` SET `locale_ruRU`='{} уничтожены!' WHERE `entry`=10061;
-UPDATE `acore_string` SET `locale_ruRU`='Раунд 1 завершён!' WHERE `entry`=10062;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс захватил портал титанов!' WHERE `entry`=10063;
-UPDATE `acore_string` SET `locale_ruRU`='Орда захватила портал титанов!' WHERE `entry`=10064;
-UPDATE `acore_string` SET `locale_ruRU`='Второй раунд битвы за Берег Древних начнётся через 1 минуту.' WHERE `entry`=10065;
-UPDATE `acore_string` SET `locale_ruRU`='Второй раунд начнётся через 30 секунд. Приготовьтесь!' WHERE `entry`=10066;
-UPDATE `acore_string` SET `locale_ruRU`='Зал прорван! Реликвия титанов уязвима!' WHERE `entry`=10067;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс захватил Южное кладбище!' WHERE `entry`=10068;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс захватил Западное кладбище!' WHERE `entry`=10069;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс захватил Восточное кладбище!' WHERE `entry`=10070;
-UPDATE `acore_string` SET `locale_ruRU`='Орда захватила Южное кладбище!' WHERE `entry`=10071;
-UPDATE `acore_string` SET `locale_ruRU`='Орда захватила Западное кладбище!' WHERE `entry`=10072;
-UPDATE `acore_string` SET `locale_ruRU`='Орда захватила Восточное кладбище!' WHERE `entry`=10073;
-UPDATE `acore_string` SET `locale_ruRU`='Халаа беззащитна!' WHERE `entry`=10074;
-UPDATE `acore_string` SET `locale_ruRU`='|cffffff00[|c00077766Объявление|cffffff00]: |cFFF222FF{}|r' WHERE `entry`=11000;
-UPDATE `acore_string` SET `locale_ruRU`='Вы не указали -1 или ID текущего мира.' WHERE `entry`=11001;
-UPDATE `acore_string` SET `locale_ruRU`='Тип движения: {}' WHERE `entry`=11008;
-UPDATE `acore_string` SET `locale_ruRU`='Flags Extra: {}' WHERE `entry`=11009;
-UPDATE `acore_string` SET `locale_ruRU`='Вас не выкинуло из подземелья, хотя Player::CheckInstanceLoginValid() вернул false и режим .gm on не включён' WHERE `entry`=11010;
-UPDATE `acore_string` SET `locale_ruRU`='Предупреждение VisualizeBoundary: не найдено ни одной внутренней точки границы существа — проверьте, нет ли взаимоисключающих границ!' WHERE `entry`=11011;
-UPDATE `acore_string` SET `locale_ruRU`='Ошибка VisualizeBoundary: движение существа ничем не ограничено' WHERE `entry`=11012;
-UPDATE `acore_string` SET `locale_ruRU`='Предупреждение VisualizeBoundary: достигнут аварийный предел заливки — проверьте, не открыта ли граница!' WHERE `entry`=11013;
-UPDATE `acore_string` SET `locale_ruRU`='Вы уже привязаны к {}.' WHERE `entry`=11014;
-UPDATE `acore_string` SET `locale_ruRU`='У этого существа нет активного CreatureAI.' WHERE `entry`=11015;
-UPDATE `acore_string` SET `locale_ruRU`='Выберите игрока или питомца игрока.' WHERE `entry`=11016;
-UPDATE `acore_string` SET `locale_ruRU`='Восстановление поиска подземелий сброшено у всех игроков.' WHERE `entry`=11019;
-UPDATE `acore_string` SET `locale_ruRU`='{} захвачена: {} ' WHERE `entry`=12050;
-UPDATE `acore_string` SET `locale_ruRU`='{} атакует {}' WHERE `entry`=12051;
-UPDATE `acore_string` SET `locale_ruRU`='Осадная мастерская у Разрушенного храма' WHERE `entry`=12052;
-UPDATE `acore_string` SET `locale_ruRU`='Осадная мастерская у Восточной Искры' WHERE `entry`=12053;
-UPDATE `acore_string` SET `locale_ruRU`='Осадная мастерская у Западной Искры' WHERE `entry`=12054;
-UPDATE `acore_string` SET `locale_ruRU`='Осадная мастерская у Затонувшего Кольца' WHERE `entry`=12055;
-UPDATE `acore_string` SET `locale_ruRU`='Орда' WHERE `entry`=12056;
-UPDATE `acore_string` SET `locale_ruRU`='Альянс' WHERE `entry`=12057;
-UPDATE `acore_string` SET `locale_ruRU`='Битва за Озеро Ледяных Оков вот-вот начнётся!' WHERE `entry`=12058;
-UPDATE `acore_string` SET `locale_ruRU`='Вы достигли звания 1: Капрал' WHERE `entry`=12059;
-UPDATE `acore_string` SET `locale_ruRU`='Вы достигли звания 2: Лейтенант' WHERE `entry`=12060;
-UPDATE `acore_string` SET `locale_ruRU`='Юго-восточная башня крепости' WHERE `entry`=12061;
-UPDATE `acore_string` SET `locale_ruRU`='Северо-восточная башня крепости' WHERE `entry`=12062;
-UPDATE `acore_string` SET `locale_ruRU`='Юго-западная башня крепости' WHERE `entry`=12063;
-UPDATE `acore_string` SET `locale_ruRU`='Северо-западная башня крепости' WHERE `entry`=12064;
-UPDATE `acore_string` SET `locale_ruRU`='{} повреждена!' WHERE `entry`=12065;
-UPDATE `acore_string` SET `locale_ruRU`='{} разрушена!' WHERE `entry`=12066;
-UPDATE `acore_string` SET `locale_ruRU`='Битва за Озеро Ледяных Оков началась!' WHERE `entry`=12067;
-UPDATE `acore_string` SET `locale_ruRU`='{} успешно защищает крепость Озера Ледяных Оков!' WHERE `entry`=12068;
-UPDATE `acore_string` SET `locale_ruRU`='Южная башня' WHERE `entry`=12069;
-UPDATE `acore_string` SET `locale_ruRU`='Восточная башня' WHERE `entry`=12070;
-UPDATE `acore_string` SET `locale_ruRU`='Западная башня' WHERE `entry`=12071;
-UPDATE `acore_string` SET `locale_ruRU`='Крепость Озера Ледяных Оков захвачена: {}!' WHERE `entry`=12072;
-UPDATE `acore_string` SET `locale_ruRU`='Отведи меня к кладбищу Крепости.' WHERE `entry`=20070;
-UPDATE `acore_string` SET `locale_ruRU`='Отведи меня к кладбищу Затонувшего Кольца.' WHERE `entry`=20071;
-UPDATE `acore_string` SET `locale_ruRU`='Отведи меня к кладбищу Разрушенного храма.' WHERE `entry`=20072;
-UPDATE `acore_string` SET `locale_ruRU`='Отведи меня к кладбищу Западной Искры.' WHERE `entry`=20073;
-UPDATE `acore_string` SET `locale_ruRU`='Отведи меня к кладбищу Восточной Искры.' WHERE `entry`=20074;
-UPDATE `acore_string` SET `locale_ruRU`='Отведи меня обратно в лагерь высадки Орды.' WHERE `entry`=20075;
-UPDATE `acore_string` SET `locale_ruRU`='Отведи меня обратно в лагерь высадки Альянса.' WHERE `entry`=20076;
-UPDATE `acore_string` SET `locale_ruRU`='Встать в очередь на Озеро Ледяных Оков.' WHERE `entry`=20077;
-UPDATE `acore_string` SET `locale_ruRU`='|cffff0000[Озеро Ледяных Оков]:|r Битва началась!|r' WHERE `entry`=20078;
-UPDATE `acore_string` SET `locale_ruRU`='Эти следы, должно быть, принадлежат Шанго.' WHERE `entry`=28634;
-UPDATE `acore_string` SET `locale_ruRU`='Это не следы Шанго.' WHERE `entry`=28635;
-UPDATE `acore_string` SET `locale_ruRU`='Переключить мгновенный полёт' WHERE `entry`=30077;
-UPDATE `acore_string` SET `locale_ruRU`='Мгновенный полёт ВКЛ' WHERE `entry`=30078;
-UPDATE `acore_string` SET `locale_ruRU`='Мгновенный полёт ВЫКЛ' WHERE `entry`=30079;
-UPDATE `acore_string` SET `locale_ruRU`='У {} нет itemID = {}, удалить нельзя.' WHERE `entry`=30081;
-UPDATE `acore_string` SET `locale_ruRU`='У {} нет столько предметов с itemID = {}, ничего не удалено.' WHERE `entry`=30082;
-UPDATE `acore_string` SET `locale_ruRU`='На поле боя нельзя делиться заданиями.' WHERE `entry`=30083;
-UPDATE `acore_string` SET `locale_ruRU`='На поле боя нельзя запускать проверку готовности.' WHERE `entry`=30084;
-UPDATE `acore_string` SET `locale_ruRU`='Отладка полей боя уже включена в настройках, поэтому включать/выключать её командой нельзя.' WHERE `entry`=30085;
-UPDATE `acore_string` SET `locale_ruRU`='Отладка арен уже включена в настройках, поэтому включать/выключать её командой нельзя.' WHERE `entry`=30086;
-UPDATE `acore_string` SET `locale_ruRU`='Поиск группы переведён в режим очереди на 1 игрока для отладки.' WHERE `entry`=30096;
-UPDATE `acore_string` SET `locale_ruRU`='Поиск группы переведён в обычный режим очереди.' WHERE `entry`=30097;
-UPDATE `acore_string` SET `locale_ruRU`='Отладка поиска группы уже включена в настройках, поэтому включать/выключать её командой нельзя.' WHERE `entry`=30098;
-UPDATE `acore_string` SET `locale_ruRU`='¦ Игрок {} {} (guid: {})' WHERE `entry`=35400;
-UPDATE `acore_string` SET `locale_ruRU`='¦ Режим ГМ активен, Фаза: -1' WHERE `entry`=35401;
-UPDATE `acore_string` SET `locale_ruRU`='├─ Забанен: (Тип: {}, Причина: {}, Срок: {}, Кем: {})' WHERE `entry`=35402;
-UPDATE `acore_string` SET `locale_ruRU`='├─ Мут: (Причина: {}, Срок: {}, Кем: {})' WHERE `entry`=35403;
-UPDATE `acore_string` SET `locale_ruRU`='¦ Аккаунт: {} (ID: {}),\n\n Уровень ГМ: {}' WHERE `entry`=35404;
-UPDATE `acore_string` SET `locale_ruRU`='¦ Последний вход: {} (Неудачных входов: {})' WHERE `entry`=35405;
-UPDATE `acore_string` SET `locale_ruRU`='¦ Email регистрации: {} - Email: {}' WHERE `entry`=35406;
-UPDATE `acore_string` SET `locale_ruRU`='Причина не указана.' WHERE `entry`=35407;
-UPDATE `acore_string` SET `locale_ruRU`='<нет доступа>' WHERE `entry`=35408;
-UPDATE `acore_string` SET `locale_ruRU`='¦ Карта: {}, Зона: {}, Область: {}' WHERE `entry`=35409;
-UPDATE `acore_string` SET `locale_ruRU`='На этом сервере работает модуль |cff4CFF00IndividualXpRate |r.' WHERE `entry`=35411;
-UPDATE `acore_string` SET `locale_ruRU`='[Опыт] Модуль индивидуального опыта отключён.' WHERE `entry`=35412;
-UPDATE `acore_string` SET `locale_ruRU`='[Опыт] Ваш индивидуальный множитель опыта сейчас отключён. Включите его командой .xp enable.' WHERE `entry`=35413;
-UPDATE `acore_string` SET `locale_ruRU`='|cffffffff[Опыт] Ваш текущий множитель опыта: {}.|r' WHERE `entry`=35414;
-UPDATE `acore_string` SET `locale_ruRU`='|cffffffff[Опыт] Максимальный множитель: {}.|r' WHERE `entry`=35415;
-UPDATE `acore_string` SET `locale_ruRU`='[Опыт] Минимальный множитель: 1.' WHERE `entry`=35416;
-UPDATE `acore_string` SET `locale_ruRU`='[Опыт] Вы установили множитель опыта: {}.' WHERE `entry`=35417;
-UPDATE `acore_string` SET `locale_ruRU`='[Опыт] Вы отключили получение опыта.' WHERE `entry`=35418;
-UPDATE `acore_string` SET `locale_ruRU`='[Опыт] Вы включили получение опыта.' WHERE `entry`=35419;
-UPDATE `acore_string` SET `locale_ruRU`='[Опыт] Множитель опыта возвращён к значению по умолчанию: {}.' WHERE `entry`=35420;
+DROP TEMPORARY TABLE IF EXISTS `tmp_ru_strings`;
+CREATE TEMPORARY TABLE `tmp_ru_strings` (`entry` INT UNSIGNED NOT NULL PRIMARY KEY, `txt` TEXT) DEFAULT CHARSET=utf8mb4;
+INSERT INTO `tmp_ru_strings` (`entry`, `txt`) VALUES
+(1, 'Выберите персонажа или существо.'),
+(2, 'Выберите существо.'),
+(3, '[СЕРВЕР] {}'),
+(4, '|cffff0000[Событие]: {}|r'),
+(5, 'Справки по этой команде нет'),
+(6, 'Команда ''{}'' не существует'),
+(7, 'Подкоманда ''{}{}{}'' неоднозначна:'),
+(8, 'Возможные подкоманды:'),
+(9, 'Доступные вам команды:'),
+(10, 'Неверный синтаксис.'),
+(11, 'Уровень вашего аккаунта: {}'),
+(12, 'Активных подключений: {} (макс.: {}) В очереди: {} (макс.: {})'),
+(13, 'Время работы сервера: {}'),
+(14, 'Игрок сохранён.'),
+(15, 'Все игроки сохранены.'),
+(16, 'На сервере сейчас находятся следующие ГМ:'),
+(17, 'Сейчас на сервере нет ни одного ГМ.'),
+(18, 'Нельзя сделать это в полёте.'),
+(19, 'Разница времени обновления: {}.'),
+(20, 'До выключения/перезапуска осталось: {}'),
+(21, '{}: не удалось выполнить команду полёта.'),
+(22, 'Вы не верхом, спешиваться не с чего.'),
+(23, 'Нельзя сделать это во время боя.'),
+(24, 'Вы недавно это использовали.'),
+(25, 'Пароль не изменён (неизвестная ошибка)!'),
+(26, 'Пароль изменён'),
+(27, 'Старый пароль неверен'),
+(28, 'Ваш аккаунт заблокирован.'),
+(29, 'Ваш аккаунт разблокирован.'),
+(30, ', ранг '),
+(31, ' [известно]'),
+(32, ' [изучить]'),
+(33, ' [пассивное]'),
+(34, ' [талант]'),
+(35, ' [активно]'),
+(36, ' [выполнено]'),
+(37, ' (не в сети)'),
+(38, 'вкл'),
+(39, 'выкл'),
+(40, 'Вы: {}'),
+(41, 'видимы'),
+(42, 'невидимы'),
+(43, 'готово'),
+(44, 'Вы'),
+(45, ' <неизвестно> '),
+(46, '<ошибка>'),
+(47, '<несуществующий персонаж>'),
+(48, 'НЕИЗВЕСТНО'),
+(49, 'Для входа нужен уровень не ниже {}.'),
+(50, 'Для входа нужен уровень не ниже {} и предмет {}.'),
+(51, 'Привет! Готов к тренировке?'),
+(52, 'Неверное количество ({}) для предмета {}'),
+(53, 'В письме не может быть больше {} стопок предметов'),
+(54, 'Новые пароли не совпадают'),
+(56, 'Текущее сообщение дня:'),
+(57, 'Мировая БД: {}'),
+(58, 'Библиотека скриптов: {}'),
+(59, 'EventAI существ: {}'),
+(60, 'Игроков в сети: {} (макс.: {})'),
+(61, 'Сейчас разрешены дополнения до {}.'),
+(62, 'Один или несколько параметров имеют неверные значения'),
+(63, 'Неверный id параметра: {}, не существует'),
+(64, 'Неверный параметр realmId: {}'),
+(65, 'Аккаунту {} ({}) выданы права:'),
+(66, 'Аккаунту {} ({}) запрещены права:'),
+(67, 'Аккаунт {} ({}) унаследовал права от уровня доступа {} ({}):'),
+(68, 'Права:'),
+(69, 'Связанные права:'),
+(70, 'Список пуст'),
+(71, '- {} ({})'),
+(72, 'Не удалось выдать право {} ({}) realmId {}. У аккаунта {} ({}) оно уже есть'),
+(73, 'Не удалось выдать право {} ({}) realmId {}. У аккаунта {} ({}) оно в списке запретов'),
+(74, 'Право {} ({}) realmId {} выдано аккаунту {} ({})'),
+(75, 'Не удалось запретить право {} ({}) realmId {}. Аккаунту {} ({}) оно уже запрещено'),
+(76, 'Не удалось запретить право {} ({}) realmId {}. У аккаунта {} ({}) оно в списке выданных'),
+(77, 'Право {} ({}) realmId {} запрещено аккаунту {} ({})'),
+(78, 'Право {} ({}) realmId {} отозвано у аккаунта {} ({})'),
+(79, 'Не удалось отозвать право {} ({}) realmId {}. У аккаунта {} ({}) его нет'),
+(80, 'Победы на полях боя за последние 7 дней\nАльянс: {}\nОрда: {}'),
+(81, 'Сохранение результатов полей боя отключено!'),
+(82, '{}: {}'),
+(83, 'Синтаксис: .rbac account list $account\nПоказать выданные, запрещённые и унаследованные права аккаунта.'),
+(84, 'Синтаксис: .rbac account grant $account $permissionId [$realmId]\nВыдать право аккаунту. Необязательный realmId (-1 = все миры).'),
+(85, 'Синтаксис: .rbac account deny $account $permissionId [$realmId]\nЗапретить право аккаунту. Необязательный realmId (-1 = все миры).'),
+(86, 'Синтаксис: .rbac account revoke $account $permissionId [$realmId]\nОтозвать ранее выданное или запрещённое право. Необязательный realmId (-1 = все миры).'),
+(87, 'НЕИЗВЕСТНАЯ_ОШИБКА'),
+(88, 'Команды двухфакторной аутентификации не настроены.'),
+(89, 'Двухфакторная аутентификация для этого аккаунта уже включена.'),
+(90, 'Указан неверный код двухфакторной аутентификации.'),
+(91, 'Чтобы завершить настройку, подключите устройство, которое будет вторым фактором.\nВаш ключ 2FA: {}\nПосле настройки устройства подтвердите командой .account 2fa setup <код> с полученным кодом.'),
+(92, 'Двухфакторная аутентификация успешно настроена.'),
+(93, 'Двухфакторная аутентификация для этого аккаунта не включена.'),
+(94, 'Чтобы отключить двухфакторную аутентификацию, укажите свежий код с вашего устройства.'),
+(95, 'Двухфакторная аутентификация успешно отключена.'),
+(96, 'Название гильдии ''{}'' уже занято'),
+(97, 'Название гильдии ''{}'' изменено на ''{}'''),
+(98, 'Имя персонажа ''{}'' уже существует, выберите другое'),
+(99, 'Игрок ''{}'' принудительно переименован в ''{}'''),
+(100, 'Общее оповещение: '),
+(101, 'Карта: {} ({}) Зона: {} ({}) Область: {} ({}) Фаза: {}\nX: {} Y: {} Z: {} Ориентация: {}\ngrid[{},{}]cell[{},{}] InstanceID: {}\n ZoneX: {} ZoneY: {}\nGroundZ: {} FloorZ: {} Данные высот (Map: {} VMap: {} MMap: {})'),
+(102, '{} уже телепортируется.'),
+(103, 'Призвать игрока в своё подземелье можно, только если он в вашей группе, а вы — лидер.'),
+(104, 'Вы не можете отправиться в подземелье игрока, так как сейчас состоите в группе.'),
+(105, 'Отправиться в подземелье игрока, не состоя в его группе, можно только в режиме ГМ.'),
+(106, 'Нельзя переместиться к игроку {} из подземелья в подземелье.'),
+(107, 'Нельзя призвать игрока {} из подземелья в подземелье.'),
+(108, 'Вы призываете {}{}.'),
+(109, 'Вас призывает {}.'),
+(110, 'Вы телепортируете {}{} в {}.'),
+(111, 'Вас телепортирует {}.'),
+(112, 'Игрок ({}) не существует.'),
+(113, 'Перемещение к {}.'),
+(114, '{} перемещается к вам.'),
+(115, 'Неверные значения.'),
+(116, 'Персонаж не выбран.'),
+(117, '{} не состоит в группе.'),
+(118, 'Вы изменили здоровье {} на {}/{}.'),
+(119, '{} изменил ваше здоровье на {}/{}.'),
+(120, 'Вы изменили ману {} на {}/{}.'),
+(121, '{} изменил вашу ману на {}/{}.'),
+(122, 'Вы изменили энергию {} на {}/{}.'),
+(123, '{} изменил вашу энергию на {}/{}.'),
+(124, 'Текущая энергия: {}'),
+(125, 'Вы изменили ярость {} на {}/{}.'),
+(126, '{} изменил вашу ярость на {}/{}.'),
+(127, 'Вы изменили уровень {} на {}.'),
+(128, 'GUID {}, фракция {}, flags {}, npcflag {}, DY flag {}'),
+(129, 'Неверная фракция: {} (нет в factiontemplate.dbc).'),
+(130, 'Вы изменили GUID={}: фракция {}, flags {}, npcflag {}, dyflag {}.'),
+(131, 'Вы изменили spellflatid={}, val= {}, mark ={} для {}.'),
+(132, '{} изменил ваш spellflatid={}, val= {}, mark ={}.'),
+(133, '{} теперь имеет доступ ко всем точкам полётов (до выхода из игры).'),
+(134, '{} больше не имеет доступа ко всем точкам полётов (доступны только посещённые).'),
+(135, '{} открыл вам доступ ко всем точкам полётов (до выхода из игры).'),
+(136, '{} убрал доступ ко всем точкам полётов (доступны только посещённые).'),
+(137, 'Вы установили все скорости {} (обычная: {}).'),
+(138, '{} установил все ваши скорости на {} от обычной.'),
+(139, 'Вы установили скорость {} (обычная: {}).'),
+(140, '{} установил вашу скорость на {} от обычной.'),
+(141, 'Вы установили скорость плавания {} (обычная: {}).'),
+(142, '{} установил вашу скорость плавания на {} от обычной.'),
+(143, 'Вы установили скорость бега назад {} (обычная: {}).'),
+(144, '{} установил вашу скорость бега назад на {} от обычной.'),
+(145, 'Вы установили скорость полёта {} (обычная: {}).'),
+(146, '{} установил вашу скорость полёта на {} от обычной.'),
+(147, 'Вы установили размер {} для {}.'),
+(148, '{} установил ваш размер на {}.'),
+(149, 'Такого транспорта нет.'),
+(150, 'Вы выдали транспорт игроку {}.'),
+(151, '{} выдал вам транспорт.'),
+(152, 'USER1: {}, ADD: {}, DIF: {}\n'),
+(153, 'Вы забрали все деньги у {}.'),
+(154, '{} забрал у вас все деньги.'),
+(155, 'Вы забрали {} меди у {}.'),
+(156, '{} забрал у вас {} меди.'),
+(157, 'Вы дали {} меди игроку {}.'),
+(158, '{} дал вам {} меди.'),
+(159, 'Вы слышите звук {}.'),
+(160, 'USER2: {}, ADD: {}, RESULT: {}\n'),
+(161, 'Сброшен бит {} в поле {}.'),
+(162, 'Установлен бит {} в поле {}.'),
+(163, 'Таблица точек телепорта пуста!'),
+(164, 'Точка телепорта не найдена!'),
+(165, 'Нужен параметр поиска.'),
+(166, 'Нет точек телепорта, подходящих под запрос.'),
+(167, 'Это имя зарезервировано, выберите другое'),
+(168, 'Найденные точки:\n{}'),
+(169, 'Письмо отправлено: {}'),
+(170, 'Вы пытаетесь услышать звук {}, но его не существует.'),
+(171, 'Нельзя телепортировать себя к себе!'),
+(172, 'команда серверной консоли'),
+(173, 'Вы изменили силу рун {} на {}/{}.'),
+(174, '{} изменил вашу силу рун на {}/{}.'),
+(175, 'Уровень жидкости: {}, земля: {}, тип: {}, флаги {}, состояние: {}.'),
+(176, 'Неверный тип объекта: нужно разрушаемое здание.'),
+(177, 'Объект {} (GUID: {}) повреждён на {} (текущая прочность: {}).'),
+(178, 'grid[{},{}]cell[{},{}] InstanceID: {}\n ZoneX: {} ZoneY: {}\nGroundZ: {} FloorZ: {} Данные высот (Map: {} VMap: {} MMap: {})'),
+(179, '| Флаги аккаунта:'),
+(186, 'TransMapID: {} TransOffsetX: {} TransOffsetY: {} TransOffsetZ: {} TransOffsetO: {} (ID транспорта: {} {})'),
+(187, 'Это имя недопустимо, выберите другое'),
+(188, 'Указанный секрет двухфакторной аутентификации слишком длинный.'),
+(189, 'Указанный секрет двухфакторной аутентификации недействителен.'),
+(190, 'Двухфакторная аутентификация для ''{}'' успешно включена с указанным секретом.'),
+(191, '|- {}'),
+(192, '|- {} ...'),
+(193, 'Подкоманда ''{}{}{}'' не существует.'),
+(194, 'Команда ''{}'' неоднозначна:'),
+(195, '### ИСПОЛЬЗОВАНИЕ: .{} ...'),
+(196, 'Для ''{}'' нет подробного описания использования.\nДля стандартных команд AzerothCore такого быть не должно — если это произошло, сообщите об ошибке.'),
+(197, 'Id восстановления: {} | Предмет: {} ({}) | Кол-во: {}'),
+(198, 'У игрока нет предметов для восстановления'),
+(199, 'У игрока нет восстанавливаемого предмета с id {}'),
+(200, 'Ничего не выбрано.'),
+(201, 'GUID объекта: {}'),
+(202, 'Имя длиннее допустимого на {} символов.'),
+(203, 'Ошибка: имя может содержать только символы A-Z и a-z.'),
+(204, 'Подпись длиннее допустимой на {} символов.'),
+(205, 'Ещё не реализовано'),
+(206, 'Предмет ''{}'' ''{}'' добавлен в список (maxcount ''{}'', incrtime ''{}'', extendedcost ''{}'')'),
+(207, 'Предмет ''{}'' не найден в базе данных.');
+INSERT INTO `tmp_ru_strings` (`entry`, `txt`) VALUES
+(208, 'Предмет ''{}'' ''{}'' удалён из списка торговца'),
+(209, 'Предмет ''{}'' не найден в списке торговца.'),
+(210, 'Предмет ''{}'' (с extended cost {}) уже есть в списке торговца.'),
+(211, 'Заклинания {} сброшены.'),
+(212, 'Заклинания {} будут сброшены при следующем входе.'),
+(213, 'Таланты {} сброшены.'),
+(214, 'Таланты {} будут сброшены при следующем входе.'),
+(215, 'Ваши заклинания сброшены.'),
+(216, 'Ваши таланты сброшены.'),
+(217, 'Неизвестный вариант ''{}'' для команды .resetall. Введите полное правильное название.'),
+(218, 'Заклинания будут сброшены у всех игроков при входе. Настоятельно рекомендуется перезайти!'),
+(219, 'Таланты будут сброшены у всех игроков при входе. Настоятельно рекомендуется перезайти!'),
+(220, 'Существо (GUID: {}): точка маршрута не найдена.'),
+(221, 'Существо (GUID: {}): последняя точка маршрута не найдена.'),
+(222, 'Существо (GUID: {}): точка маршрута не найдена по ''wpguid''. Пробуем найти по позиции...'),
+(223, 'Для существа (GUID: {}) нет данных о маршруте. Убедитесь, что команда ''wp show on'' выполнена правильно.'),
+(224, 'Выбранное существо игнорируется — используется указанный GUID'),
+(225, 'Существо (GUID: {}) не найдено'),
+(226, 'Выберите визуальную точку маршрута.'),
+(227, 'Визуальные точки маршрута не найдены'),
+(228, 'Не удалось создать визуальную точку маршрута с creatureID: {}'),
+(229, 'Все визуальные точки маршрута удалены'),
+(230, 'Не удалось создать существо-точку маршрута с ID: {}'),
+(231, 'GUID не указан.'),
+(232, 'Номер точки маршрута не указан.'),
+(233, 'Для ''{}'' нужен аргумент.'),
+(234, 'Точка маршрута {} добавлена к GUID: {}'),
+(235, 'Точка маршрута {} добавлена.'),
+(236, 'Точка маршрута изменена.'),
+(237, 'Точка маршрута {} изменена.'),
+(238, 'Экспорт маршрута выполнен.'),
+(239, 'В базе данных нет точек маршрута.'),
+(240, 'Файл импортирован.'),
+(241, 'Точка маршрута удалена.'),
+(242, 'Внимание: не удалось удалить точку маршрута из мира, ID: {}'),
+(243, 'Это бывает, если точка маршрута слишком далеко от вашего персонажа.'),
+(244, 'Точка удалена из базы данных, но не из мира.'),
+(245, 'Они исчезнут после перезапуска сервера.'),
+(246, 'Точка маршрута {}: данные существа: {}, GUID: {}'),
+(247, 'Время ожидания: {}'),
+(248, 'Модель {}: {}'),
+(249, 'Эмоция: {}'),
+(250, 'Заклинание: {}'),
+(251, 'Текст{} (ID: {}): {}'),
+(252, 'AI-скрипт: {}'),
+(253, 'Игроку {} будет предложено сменить имя при следующем входе.'),
+(254, 'Игроку {} (GUID #{}) будет предложено сменить имя при следующем входе.'),
+(255, 'Существо-точка маршрута (GUID: {}) не найдено'),
+(256, 'Не удалось найти NPC...'),
+(257, 'Тип движения существа: ''{}'', точки маршрута удалены (если были).'),
+(258, 'Тип движения существа: ''{}'', точки маршрута не удалены.'),
+(259, 'Неверное значение, используйте on или off'),
+(260, 'Значение сохранено.'),
+(261, 'Значение сохранено. Возможно, нужно перезайти или очистить кэш клиента.'),
+(262, 'Areatrigger с ID {} не найден!'),
+(263, 'Неверная карта или координаты (X: {} Y: {} MapId: {})'),
+(264, 'Неверные координаты зоны (X: {} Y: {} AreaId: {})'),
+(265, 'Зона {} ({}) — часть инстансовой карты {} ({})'),
+(266, 'Ничего не найдено!'),
+(267, 'Объект не найден!'),
+(268, 'Существо не найдено!'),
+(269, 'Внимание: существо найдено несколько раз — вы будете телепортированы к первому найденному в БД.'),
+(270, 'Существо удалено'),
+(271, 'Существо перемещено.'),
+(272, 'Существо (GUID:{}) должно быть на той же карте, что и игрок!'),
+(273, 'Игровой объект (GUID: {}) не найден'),
+(274, 'Игровой объект (GUID: {}) упоминается в списке объектов ненайденного существа {}, удалить нельзя.'),
+(275, 'Игровой объект (GUID: {}) удалён'),
+(276, 'Игровой объект |cffffffff|Hgameobject:{}|h[{}]|h|r (GUID: {}) повёрнут'),
+(277, 'Игровой объект |cffffffff|Hgameobject:{}|h[{}]|h|r (GUID: {}) перемещён'),
+(278, 'Выберите торговца'),
+(279, 'Укажите id предмета'),
+(280, 'У торговца слишком много предметов (макс. 128)'),
+(281, 'Нельзя кикнуть себя, просто выйдите из игры'),
+(282, 'Игрок {} кикнут.'),
+(283, '{} заблокировал чат {} на {}, начиная со следующего входа игрока. Причина: {}.'),
+(284, 'Приём личных сообщений: {}'),
+(285, 'Приём личных сообщений: ВКЛ'),
+(286, 'Приём личных сообщений: ВЫКЛ'),
+(287, 'Существо (GUID: {}) не найдено'),
+(288, 'Нельзя перейти к точке появления {}, их всего {}'),
+(289, 'Новый тикет от {}'),
+(290, 'Тикет {} (обновлён: {}):\n{}'),
+(291, 'Показ новых тикетов: ВКЛ'),
+(292, 'Показ новых тикетов: ВЫКЛ'),
+(293, 'Тикет {} не существует'),
+(294, 'Все тикеты удалены.'),
+(295, 'Тикет персонажа {} удалён.'),
+(296, 'Тикет удалён.'),
+(297, 'Радиус блуждания изменён на: {}'),
+(298, 'Время появления изменено на: {}'),
+(299, 'Честь {} установлена на {}!'),
+(300, 'Ваш чат заблокирован на {}. Кем: {}, причина: {}.'),
+(301, '{} заблокировал чат {} на {}. Причина: {}.'),
+(302, 'Чат игрока уже разблокирован.'),
+(303, 'Ваш чат разблокирован.'),
+(304, 'Вы разблокировали чат {}.'),
+(305, 'Репутация {} ({}) у {} установлена на {}!'),
+(306, 'Очки арены {} установлены на {}!'),
+(307, 'Фракция не найдена!'),
+(308, 'Фракция {} неизвестна!'),
+(309, 'Неверный параметр {}'),
+(310, 'delta должна быть от 0 до {} включительно'),
+(311, '{} - |cffffffff|Hfaction:{}|h[{}]|h|r'),
+(312, ' [видима]'),
+(313, ' [война]'),
+(314, ' [принудительный мир]'),
+(315, ' [скрыта]'),
+(316, ' [принудительно невидима]'),
+(317, ' [неактивна]'),
+(318, 'Ненависть'),
+(319, 'Враждебность'),
+(320, 'Неприязнь'),
+(321, 'Равнодушие'),
+(322, 'Дружелюбие'),
+(323, 'Уважение'),
+(324, 'Почтение'),
+(325, 'Превознесение'),
+(326, 'У фракции {} ({}) не может быть репутации.'),
+(327, ' [нет репутации]'),
+(328, 'Персонажи аккаунта {} (Id: {})'),
+(329, '  {} (GUID {})'),
+(330, 'Игроки не найдены!'),
+(331, 'Extended item cost {} не существует'),
+(332, 'Режим ГМ ВКЛЮЧЁН'),
+(333, 'Режим ГМ ВЫКЛЮЧЕН'),
+(334, 'Значок ГМ в чате ВКЛЮЧЁН'),
+(335, 'Значок ГМ в чате ВЫКЛЮЧЕН'),
+(336, 'Вы починили все предметы {}.'),
+(337, 'Все ваши предметы починил {}.'),
+(338, 'Вы установили режим хождения по воде {} для {}.'),
+(339, 'Ваш режим хождения по воде {} (изменил {}).'),
+(340, '{} теперь следует за вами.'),
+(341, '{} не следует за вами.'),
+(342, '{} больше не следует за вами.'),
+(343, 'Существо (Entry: {}) нельзя приручить.'),
+(344, 'У вас уже есть питомец.'),
+(345, 'Игроку {} будет предложено изменить внешность при следующем входе.'),
+(346, 'Игроку {} (GUID #{}) будет предложено изменить внешность при следующем входе.'),
+(347, 'TaxiNode с ID {} не найден!'),
+(348, 'Игровой объект (Entry: {}) содержит неверные данные и не может быть создан'),
+(349, '{} (idx:{}) - |cffffffff|Htitle:{}|h[{} {}]|h|r {} {} '),
+(350, '{} (idx:{}) - [{} {}] {} {} '),
+(351, 'Звания не найдены!'),
+(352, 'Неверный id звания: {}'),
+(353, 'Звание {} ({}) добавлено в список известных званий игрока {}.'),
+(354, 'Звание {} ({}) удалено из списка известных званий игрока {}.'),
+(355, 'Звание {} ({}) выбрано текущим для игрока {}.'),
+(356, 'Текущее звание игрока {} сброшено, так как оно больше не известно.'),
+(357, 'Состояние чит-команд:'),
+(358, 'Бессмертие: {}.'),
+(359, 'Время произнесения: {}.'),
+(360, 'Восстановление: {}.'),
+(361, 'Ресурс: {}.'),
+(362, 'Хождение по воде: {}.'),
+(363, 'Игрок {} больше не может писать вам личные сообщения.'),
+(364, 'Точки полётов: {}.'),
+(365, 'Удалено надетых предметов: |cffffffff{}|r у {}'),
+(366, 'Удалено предметов в сумках: |cffffffff{}|r у {}'),
+(367, 'Удалено предметов в банке: |cffffffff{}|r у {}'),
+(368, 'Удалено ключей из связки: |cffffffff{}|r у {}'),
+(369, 'Удалено валют: |cffffffff{}|r у {}'),
+(370, 'Удалено предметов из выкупа у торговцев: |cffffffff{}|r у {}'),
+(371, 'У {} удалены все предметы:\n|cffffffff{}|r надетых\n|cffffffff{}|r в сумках\n|cffffffff{}|r в банке\n|cffffffff{}|r ключей в связке\n|cffffffff{}|r видов валюты\n|cffffffff{}|r в выкупе у торговцев'),
+(372, 'У {} удалены все предметы (включая сумки):\n|cffffffff{}|r надетых\n|cffffffff{}|r в сумках\n|cffffffff{}|r в банке\n|cffffffff{}|r ключей в связке\n|cffffffff{}|r видов валюты\n|cffffffff{}|r в выкупе у торговцев\n|cffffffff{}|r обычных сумок\n|cffffffff{}|r банковских сумок'),
+(373, 'У цели нет ауры {}!'),
+(374, 'Не указано количество стаков!'),
+(375, 'Заклинание {} не может складываться!'),
+(400, '|cffff0000[Системное сообщение]:|rСкрипты перезагружены'),
+(401, 'Вы изменили уровень доступа аккаунта {} на {}.'),
+(402, '{} изменил ваш уровень доступа на {}.'),
+(403, 'У вас недостаточный уровень доступа.'),
+(404, 'Движение существа отключено.'),
+(405, 'Движение существа включено.'),
+(406, 'Погоду в этой зоне изменить нельзя.'),
+(407, 'Система погоды на сервере отключена.'),
+(408, '{} забанен на {}. Причина: {}.'),
+(409, '{} забанен навсегда. Причина: {}.'),
+(410, '{} {} не найден'),
+(411, '{} разбанен.'),
+(412, 'Ошибка при снятии бана с {}.'),
+(413, 'Аккаунт не существует: {}'),
+(414, 'Такого персонажа нет. Помните, что имена чувствительны к РеГиСтРу!'),
+(415, 'Такого IP нет в списке банов.'),
+(416, 'Аккаунт {} никогда не был забанен'),
+(417, 'История банов аккаунта {}:'),
+(418, 'Дата бана: {} Срок: {} Активен: {}  Причина: {} Кем: {}'),
+(419, 'Бессрочно'),
+(420, 'Никогда'),
+(421, 'Да'),
+(422, 'Нет'),
+(423, 'IP: {}\nДата бана: {}\nДата разбана: {}\nОсталось: {}\nПричина: {}\nКем: {}'),
+(424, 'Подходящий бан по IP не найден.'),
+(425, 'Подходящий аккаунт не найден.'),
+(426, 'Нет забаненного аккаунта с персонажем, подходящим под этот запрос.'),
+(427, 'Под ваш шаблон подходят IP:'),
+(428, 'Под ваш запрос подходят аккаунты:'),
+(429, 'Вы изучили множество заклинаний/навыков.'),
+(430, 'Вы изучили все заклинания класса.'),
+(431, 'Вы изучили все таланты класса.');
+INSERT INTO `tmp_ru_strings` (`entry`, `txt`) VALUES
+(432, 'Вы изучили все языки.'),
+(433, 'Вы изучили все ремесленные навыки и рецепты.'),
+(434, 'Не удалось найти ''{}'''),
+(435, 'Неверный id предмета: {}'),
+(436, 'Предметы не найдены!'),
+(437, 'Неверный id игрового объекта: {}'),
+(438, 'Найдено предметов {}: {} (инвентарь {} почта {} аукцион {} гильдия {})'),
+(439, 'Найдено игровых объектов {}: {} '),
+(440, 'Неверный id существа: {}'),
+(441, 'Найдено существ {}: {} '),
+(442, 'Область не найдена!'),
+(443, 'Комплекты предметов не найдены!'),
+(444, 'Навыки не найдены!'),
+(445, 'Заклинания не найдены!'),
+(446, 'Задания не найдены!'),
+(447, 'Существа не найдены!'),
+(448, 'Игровые объекты не найдены!'),
+(449, 'Кладбище #{} не существует.'),
+(450, 'Кладбище #{} уже привязано к зоне #{} (текущей).'),
+(451, 'Кладбище #{} привязано к зоне #{} (текущей).'),
+(452, 'Кладбище #{} нельзя привязать к подзоне или несуществующей зоне #{} (внутренняя ошибка).'),
+(453, 'До снятия бана: {}, забанил: {}, причина: {}'),
+(454, 'У кладбища с id= #{} нет фракции, исправьте БД'),
+(455, 'неверная сторона, исправьте базу данных'),
+(456, 'любая'),
+(457, 'Альянс'),
+(458, 'Орда'),
+(459, 'Кладбище #{} (фракция: {}) — ближайшее из привязанных к зоне #{}.'),
+(460, 'К зоне #{} не привязано ни одного кладбища.'),
+(461, 'К зоне #{} не привязано кладбищ для фракции: {}.'),
+(462, 'Такая точка телепорта уже существует!'),
+(463, 'Точка телепорта добавлена.'),
+(464, 'Точка телепорта НЕ добавлена: ошибка базы данных.'),
+(465, 'Точка телепорта удалена.'),
+(466, 'Точки полётов не найдены!'),
+(467, 'У цели аур: {}:'),
+(468, 'id: {} {} effmask: {} заряды: {} стаки: {} слот {} длительность: {} макс. длительность: {} {} {} заклинатель: {} guid: {}'),
+(469, 'У цели {} аур типа {}:'),
+(470, 'id: {} eff: {} значение: {}'),
+(471, 'Задание {} не найдено.'),
+(472, 'Задание {} начинается с предмета. Для корректной работы положите предмет в инвентарь и возьмите задание обычным способом: .additem {}'),
+(473, 'Задание {} ({}) удалено.'),
+(474, 'Задание {} ({}): награда получена.'),
+(475, 'Задание {} ({}) выполнено.'),
+(476, 'Задание {} ({}) уже активно.'),
+(477, 'Режим полёта {}: {}'),
+(478, 'Опкод {} отправлен {}'),
+(479, 'Персонаж успешно загружен!'),
+(480, 'Не удалось загрузить персонажа!'),
+(481, 'Дамп персонажа успешно создан!'),
+(482, 'Не удалось создать дамп персонажа!'),
+(483, 'Заклинание {} сломано, его нельзя применять или изучать!'),
+(484, 'Навык {} ({}) игрока {} установлен на {}, текущий максимум — {} (без постоянных бонусов от талантов).'),
+(485, 'Для этой команды у игрока {} должен быть навык {} ({}).'),
+(486, 'Неверный id навыка ({})'),
+(487, 'Вы изучили стандартные заклинания/навыки ГМ.'),
+(488, 'Вы уже знаете это заклинание.'),
+(489, 'Цель ({}) уже знает это заклинание.'),
+(490, '{} не знает это заклинание.'),
+(491, 'Вы уже забыли это заклинание.'),
+(492, 'Все восстановления заклинаний сброшены для {}.'),
+(493, 'Восстановление заклинания {} сброшено для {}.'),
+(494, 'Команда: Additem, itemId = {}, кол-во = {}'),
+(495, 'Команда: Additemset, itemsetId = {}'),
+(496, 'Удалено: itemID = {}, кол-во = {} у {}'),
+(497, 'Не удалось создать предмет ''{}'' (кол-во: {})'),
+(498, 'Укажите название гильдии!'),
+(499, 'Игрок не найден!'),
+(500, 'Игрок уже состоит в гильдии!'),
+(501, 'Гильдия не создана! (уже существует?)'),
+(502, 'Не найдено предметов из комплекта ''{}''.'),
+(503, 'Расстояние: (3D) {} (2D) {} (точное 3D) {} (точное 2D) {} м.'),
+(504, 'Предмет ''{}'' ''{}'' Ячейка {}'),
+(505, 'Предмет ''{}'' не существует.'),
+(506, 'Предмет ''{}'' ''{}'' добавлен в ячейку {}'),
+(507, 'Не удалось сохранить предмет!'),
+(508, '{} - владелец: {} (guid: {} аккаунт: {} ) {}'),
+(509, '{} - отправитель: {} (guid: {} аккаунт: {} ) получатель: {} (guid: {} аккаунт: {} ) {}'),
+(510, '{} - владелец: {} (guid: {} аккаунт: {} ) {}'),
+(511, 'Неверный тип ссылки!'),
+(512, '{} - |c{}|Hitem:{}:0:0:0:0:0:0:0:0|h[{}]|h|r '),
+(513, '{} - |cffffffff|Hquest:{}:{}|h[{}]|h|r {}'),
+(514, '{} - |cffffffff|Hcreature_entry:{}|h[{}]|h|r '),
+(515, '{} - (entry: {}) |cffffffff|Hcreature:{}|h[{} X:{} Y:{} Z:{} MapId:{}]|h|r'),
+(516, '{} - |cffffffff|Hgameobject_entry:{}|h[{}]|h|r '),
+(517, '{} (Entry: {}) - |cffffffff|Hgameobject:{}|h[{} X:{} Y:{} Z:{} MapId:{}]|h|r '),
+(518, '{} - |cffffffff|Hitemset:{}|h[{} {}]|h|r '),
+(519, '|cffffffff|Htele:{}|h[{}]|h|r '),
+(520, '{} - |cffffffff|Hspell:{}|h[{}]|h|r '),
+(521, '{} - |cffffffff|Hskill:{}|h[{} {}]|h|r {} {}'),
+(522, 'Игровой объект (Entry: {}) не найден'),
+(523, '>> Игровой объект {} (GUID: {}) в точке {} {} {}. Ориентация {}.'),
+(524, 'Выбранный объект:\n|cffffffff|Hgameobject:{}|h[{}]|h|r GUID: {} ID: {}\nX: {} Y: {} Z: {} MapId: {}\nОриентация: {}\nPhasemask {}'),
+(525, '>> Игровой объект ''{}'' ({}) (GUID: {}) добавлен в точке ''{} {} {}''.'),
+(526, '{} (lowguid: {}) стек генераторов движения:'),
+(527, '   Покой'),
+(528, '   Случайное'),
+(529, '   По маршруту'),
+(530, '   Случайное (животное)'),
+(531, '   Растерянность'),
+(532, '   К игроку {} (lowguid {})'),
+(533, '   К существу {} (lowguid {})'),
+(534, '   К <NULL>'),
+(535, '   Возврат домой в (X:{} Y:{} Z:{})'),
+(536, '   Возврат домой у игрока?!?'),
+(537, '   Полёт на транспорте'),
+(538, '   Неизвестный генератор движения ({})'),
+(539, 'Игрок выбрал NPC\nGUID в БД: {}, текущий GUID: {}.\nТекущий Entry: {} из ({}, {}, {}).\nDisplayID: {} (исходный: {}).\nФракция: {}.\nnpcFlags: {}.'),
+(540, 'Уровень: {}.'),
+(541, 'Здоровье (базовое): {}. (макс.): {}. (текущее): {}.'),
+(542, 'Unit Flags: {}.\nUnit Flags 2: {}.\nDynamic Flags: {}.\nFaction Template: {}.'),
+(543, 'Добыча: {} Карманы: {} Снятие шкур: {}'),
+(544, 'Позиция: {} {} {}.'),
+(545, '* торговец ({})'),
+(546, '* учитель ({})'),
+(547, 'InstanceID: {}'),
+(548, 'Игрок{} {} (guid: {}) Аккаунт: {} (id: {}) Email: {} Уровень ГМ: {} Последний IP: {} Последний вход: {} Задержка: {}мс'),
+(549, 'Раса: {} Класс: {} Время в игре: {} Уровень: {} Деньги: {}з{}с{}м'),
+(550, 'До снятия мута: {}, кем: {}, причина: {}'),
+(551, '{} теперь исследовал все зоны.'),
+(552, '{} больше не имеет исследованных зон.'),
+(553, '{} открыл для вас все зоны.'),
+(554, '{} скрыл от вас все зоны.'),
+(555, 'SetData выполнен для [GUID: {}, entry: {}, имя: {}] Поле: {}, Данные: {}, с {}'),
+(556, 'Найдено существ поблизости (радиус {}): {} '),
+(557, '{} повысил ваш уровень до ({})'),
+(558, '{} понизил ваш уровень до ({})'),
+(559, '{} сбросил прогресс вашего уровня.'),
+(560, 'Область отмечена как исследованная.'),
+(561, 'Область отмечена как неисследованная.'),
+(562, 'GUID={}: updateIndex: {}, значение:  {}.'),
+(563, 'Вы изменили у GUID={} UpdateIndex: {} на значение {}.'),
+(564, 'Индекс значения {} слишком велик для {} (количество: {}).'),
+(565, 'Set {} uint32 Value:[OPCODE]:{} [VALUE]:{}'),
+(566, 'Вы установили {} поле:{} в uint32 значение: {}'),
+(567, 'Set {} float Value:[OPCODE]:{} [VALUE]:{}'),
+(568, 'Вы установили {} поле:{} в float значение: {}'),
+(569, 'Get {} uint32 Value:[OPCODE]:{} [VALUE]:{}'),
+(570, 'uint32 значение {} в {}: {}'),
+(571, 'Get {} float Value:[OPCODE]:{} [VALUE]:{}'),
+(572, 'float значение {} в {}: {}'),
+(573, '.Set32Bit:[OPCODE]:{} [VALUE]:{}'),
+(574, 'Вы установили бит поля:{} в значение: {}'),
+(575, '.Mod32Value:[OPCODE]:{} [VALUE]:{}'),
+(576, 'Вы изменили значение поля:{} на: {}'),
+(577, 'Теперь вы невидимы.'),
+(578, 'Теперь вы видимы.'),
+(579, 'У выбранного игрока или существа нет цели атаки.'),
+(580, 'Игрок {} изучил все стандартные заклинания расы/класса и заклинания за выполненные задания.'),
+(581, 'Найдено игровых объектов поблизости (радиус {}): {} '),
+(582, 'Время появления: полное:{} осталось:{}'),
+(583, '{} - |cffffffff|Hgameevent:{}|h[{}]|h|r{}'),
+(584, 'События не найдены!'),
+(585, 'Событие не существует!'),
+(586, 'Событие {}: {}{}\nНачало: {} Конец: {} Периодичность: {} Длительность: {}\nСледующая смена состояния: {}'),
+(587, 'Событие {} ({}) уже активно!'),
+(588, 'Событие {} ({}) не активно!'),
+(589, '   Движение к точке (X:{} Y:{} Z:{})'),
+(590, '   Бегство в страхе'),
+(591, '   Отвлечение'),
+(592, 'Вы изучили все рецепты ремесла: {}'),
+(593, 'Забаненные аккаунты:'),
+(594, '|    Аккаунт    |  Дата бана   |  Дата разбана |    Кем       |    Причина    |'),
+(595, 'Забаненные IP:'),
+(596, '|      IP       |  Дата бана   |  Дата разбана |    Кем       |    Причина    |'),
+(597, 'Текущие ГМ:'),
+(598, '|    Аккаунт    |  ГМ  |'),
+(599, 'ГМ нет.'),
+(600, 'Событие {} ({}) запущено'),
+(601, 'Событие {} ({}) остановлено'),
+(602, ' [награда получена]'),
+(603, 'Do Action выполнен для [GUID: {}, entry: {}, имя: {}] Действие: {}'),
+(705, 'Вы сможете снова говорить через {}.'),
+(706, 'С надеванием/размещением этих предметов в инвентаре возникли проблемы.'),
+(707, '{} просит не беспокоить: {}'),
+(708, '{} отошёл: {}'),
+(709, 'Не беспокоить'),
+(710, 'Отошёл'),
+(711, 'Очередь на {} (ур. {}–{})\nВ очереди Альянса: {} (нужно ещё минимум {})\nВ очереди Орды: {} (нужно ещё минимум {})'),
+(712, '|cffff0000[Очередь на поле боя]:|r {} -- [{}-{}] [{}/{}]|r'),
+(713, 'Очередь на {} (стычка {}) (ур. {}–{})\nВ очереди: {} (нужно ещё минимум {})'),
+(714, 'Карта: {}, Область: {}, Зона: {}, Фаза: {}'),
+(715, 'Вы не соответствуете требованиям поля боя по уровню'),
+(716, 'Карта: {}, Область: {}'),
+(717, '|cffff0000[Очередь на поле боя]:|r {} -- [{}-{}] Началось!|r'),
+(718, '|cffff0000[Очередь на арену]:|r {} -- Вступили: {}x{} : {}|r'),
+(719, '|cffff0000[Очередь на арену]:|r {} -- Вышли: {}x{} : {}|r'),
+(720, 'Ваша группа слишком велика для этого поля боя. Перегруппируйтесь, чтобы вступить.'),
+(721, 'Ваша группа слишком велика для этой арены. Перегруппируйтесь, чтобы вступить.'),
+(722, 'В вашей группе есть игроки не из вашей команды арены. Перегруппируйтесь, чтобы вступить.'),
+(723, 'В вашей группе недостаточно игроков для этого матча.'),
+(726, '|cffff0000[Очередь на арену]:|r {} (стычка {}) -- [{}-{}] [{}/{}]|r'),
+(727, 'В вашей группе есть игрок не в сети. Исключите его перед вступлением.'),
+(728, 'В вашей группе есть игроки противоположной фракции. Вступить на поле боя группой нельзя.'),
+(729, 'В вашей группе игроки из разных уровневых диапазонов поля боя. Вступить группой нельзя.'),
+(730, 'Кто-то из вашей группы уже стоит в очереди на это поле боя. Ему нужно выйти из неё, чтобы вступить группой.'),
+(731, 'Кто-то из вашей группы — дезертир. Вступить группой нельзя.'),
+(732, 'Кто-то из вашей группы уже стоит в трёх очередях на поля боя. Вступить группой нельзя.'),
+(733, 'Нельзя телепортироваться на карту поля боя или арены.'),
+(734, 'Нельзя призывать игроков на карту поля боя или арены.');
+INSERT INTO `tmp_ru_strings` (`entry`, `txt`) VALUES
+(735, 'Чтобы телепортироваться к игроку на поле боя, нужен режим ГМ.'),
+(736, 'Нельзя телепортироваться на поле боя с другого поля боя. Сначала покиньте текущее.'),
+(737, 'Арены переведены в режим 1х1 для отладки. Не вступайте группой.'),
+(738, 'Арены переведены в обычный режим по числу игроков.'),
+(739, 'Поля боя переведены в режим 1х0 для отладки.'),
+(740, 'Поля боя переведены в обычный режим по числу игроков.'),
+(741, 'Начисление очков арены по рейтингу команд, это может занять несколько минут. Подождите...'),
+(742, 'Распределение очков арены между игроками...'),
+(743, 'Очки арены игрокам в сети начислены.'),
+(744, 'Обновление числа игр, очков арены и т.д. для загруженных команд арены, отправка статистики игрокам в сети...'),
+(745, 'Изменения выполнены.'),
+(746, 'Начисление очков арены завершено.'),
+(747, 'Это поле боя отключено. Встать в очередь нельзя.'),
+(748, 'Арены отключены. Встать в очередь нельзя.'),
+(749, '¦ ОС: {} - Задержка: {} мс'),
+(750, 'Недостаточно игроков. Игра закроется через {} мин.'),
+(751, 'Недостаточно игроков. Игра закроется через {} сек.'),
+(752, '¦ Последний IP: {} (Привязка: {})'),
+(773, '|cffff0000[Очередь на арену]:|r {} -- Вступили: {}x{}|r'),
+(774, '|cffff0000[Очередь на арену]:|r {} -- Вышли: {}x{}|r'),
+(775, '|cffff0000[Очередь на арену]:|r Вступили: {}x{} : {}|r'),
+(776, '|cffff0000[Очередь на арену]:|r Вышли: {}x{} : {}|r'),
+(777, '|cffff0000[Очередь на арену]:|r Вступили: {}x{}|r'),
+(778, '|cffff0000[Очередь на арену]:|r Вышли: {}x{}|r'),
+(785, 'Тестирование арены: {}'),
+(786, '|cffff0000[Автоматически]:|r'),
+(787, '|cffffff00[|c1f40af20Объявление от|r |cffff0000{}|cffffff00]:|r {}|r'),
+(800, 'Недопустимое имя'),
+(801, 'У вас недостаточно золота'),
+(802, 'У вас недостаточно свободных ячеек'),
+(803, 'У вашего партнёра недостаточно свободных ячеек в сумках'),
+(804, 'У вас нет прав на это действие'),
+(805, 'Неизвестный язык'),
+(806, 'Вы не знаете этого языка'),
+(807, 'Укажите имя персонажа'),
+(808, 'Игрок {} не найден или не в сети'),
+(809, 'Аккаунт персонажа {} не найден'),
+(811, 'Глава гильдии'),
+(812, 'Офицер'),
+(813, 'Ветеран'),
+(814, 'Участник'),
+(815, 'Новичок'),
+(816, 'Внимание: вы вошли в зону, где полёты запрещены, и сейчас будете спешены!'),
+(817, 'Entry {} не найден в таблице creature_template.'),
+(818, 'Entry {} не найден в sCreatureStorage. Возможно, это новая строка в creature_template, но добавлять новых существ без перезапуска нельзя — разрешено только изменение.'),
+(819, 'Город'),
+(820, '* есть диалог ({})'),
+(821, '* выдаёт задания ({})'),
+(822, '* учитель класса ({})'),
+(823, '* учитель профессии ({})'),
+(824, '* торговец боеприпасами ({})'),
+(825, '* торговец едой ({})'),
+(826, '* торговец ядами ({})'),
+(827, '* торговец реагентами ({})'),
+(828, '* может чинить ({})'),
+(829, '* распорядитель полётов ({})'),
+(830, '* целитель душ ({})'),
+(831, '* проводник духов ({})'),
+(832, '* хозяин таверны ({})'),
+(833, '* банкир ({})'),
+(834, '* регистратор ({})'),
+(835, '* изготовитель гербовых накидок ({})'),
+(836, '* военачальник ({})'),
+(837, '* аукционист ({})'),
+(838, '* смотритель стойл ({})'),
+(839, '* банкир гильдии ({})'),
+(840, '* реагирует на клик ({})'),
+(841, '* почтовый ящик ({})'),
+(842, '* транспорт игрока ({})'),
+(843, '¦ Уровень: {} ({}/{} опыта (осталось {}))'),
+(844, '¦ Раса: {} {}, {}'),
+(845, '¦ Жив?: {}'),
+(846, '¦ Фаза: {}'),
+(847, '¦ Деньги: {}з{}с{}м'),
+(848, '¦ Карта: {}, Зона: {}'),
+(849, '¦ Гильдия: {} (ID: {})'),
+(850, '├─ Звание: {}'),
+(851, '├─ Заметка: {}'),
+(852, '├─ Заметка офицера: {}'),
+(853, '¦ Время в игре: {}'),
+(854, '¦ Письма: {} прочитано/{} всего'),
+(855, 'Мужской'),
+(856, 'Женский'),
+(857, 'Команда арены [{}] не найдена'),
+(858, 'Команда арены с названием "{}" уже существует'),
+(859, '{} уже состоит в команде арены такого размера'),
+(860, 'Команда арены в бою'),
+(861, 'Арена с названием "{}" или похожим не найдена'),
+(862, '[{}] не состоит в команде "{}"'),
+(863, '[{}] уже капитан команды "{}"'),
+(864, 'Создана команда арены [Название: "{}"][Id: {}][Тип: {}][GUID капитана: {}]'),
+(865, 'Команда арены "{}"[Id: {}] распущена'),
+(866, 'Команда арены [Id: {}] переименована из "{}" в "{}"'),
+(867, 'Команда арены "{}"[Id: {}]: капитан сменён с [{}] на [{}]'),
+(868, 'Команда арены: "{}"[{}] - Рейтинг: {} - Тип: {}x{}'),
+(869, 'Имя:"{}"[guid:{}] - ЛР: {} - {}'),
+(870, '|"{}"[ID:{}]({}x{})|'),
+(871, '¦ Уровень: {}'),
+(872, 'Введённый email не совпадает с email регистрации, проверьте ввод'),
+(873, 'Новые email не совпадают'),
+(874, 'Email изменён'),
+(875, 'Email не может быть длиннее 255 символов, email не изменён!'),
+(876, 'Email не изменён (неизвестная ошибка)!'),
+(877, 'Менять не нужно: новый email совпадает со старым'),
+(878, 'Ваш email: {}'),
+(879, '¦ Email регистрации: {} - Email: {}'),
+(880, 'Уровень доступа: {}'),
+(881, 'Для смены пароля нужен email.'),
+(882, 'Для входа нужно выполнить задания:'),
+(883, 'Для входа нужно получить достижения:'),
+(884, 'Для входа в инвентаре должны быть предметы:'),
+(885, '- Примечание:'),
+(886, 'Вход невозможен. Требования не выполнены.'),
+(887, 'Для входа средний уровень предметов вашей экипировки должен быть не ниже {}. Сейчас он равен: {}.'),
+(888, 'Для входа ваш уровень должен быть ниже {}.'),
+(889, 'Для входа лидер группы ({}) должен выполнить задания:'),
+(890, 'Для входа лидер группы ({}) должен получить достижения:'),
+(891, 'Для входа у лидера группы ({}) в инвентаре должны быть предметы:'),
+(1000, 'Завершение работы службы...'),
+(1001, 'Аккаунт удалён: {}'),
+(1002, 'Аккаунт {} НЕ удалён (вероятно, изменился формат sql-файла)'),
+(1003, 'Аккаунт {} НЕ удалён (неизвестная ошибка)'),
+(1004, 'Аккаунт создан: {}'),
+(1006, 'Аккаунт с таким именем уже существует!'),
+(1007, 'Аккаунт {} НЕ создан (вероятно, изменился формат sql-файла)'),
+(1008, 'Аккаунт {} НЕ создан (неизвестная ошибка)'),
+(1009, 'Игрок {} (Guid: {}) Аккаунт {} (Id: {}) удалён.'),
+(1010, '-[         Аккаунт][    Персонаж][             IP][Карта][Зона][Доп][ГМ]-'),
+(1011, '|<Ошибка>       | {} |<Ошибка>         |<Ош>| <Ошибка>  |'),
+(1012, '-==================================================================-'),
+(1013, '-[{}][{}][{}][{}][{}][{}][{}]-'),
+(1014, 'Нет игроков в сети.'),
+(1015, '-======================== Персонажи в сети ========================-'),
+(1016, '| GUID       | Имя                  | Ур.   | Аккаунт                      | Дата удаления       |'),
+(1017, '| {} | {} | {} | {} ({}) | {} |'),
+(1018, '=================================================================================================='),
+(1019, 'Персонажи не найдены.'),
+(1020, 'Восстанавливаются персонажи:'),
+(1021, 'Удаляются персонажи:'),
+(1022, 'ОШИБКА: новое имя можно задать, только если выбран один персонаж!'),
+(1023, 'Персонажа ''{}'' (GUID: {} Аккаунт {}) нельзя восстановить: аккаунт не существует!'),
+(1024, 'Персонажа ''{}'' (GUID: {} Аккаунт {}) нельзя восстановить: список персонажей аккаунта заполнен!'),
+(1025, 'Персонажа ''{}'' (GUID: {} Аккаунт {}) нельзя восстановить: новое имя уже занято!'),
+(1026, 'GUID: {} Имя: {} Уровень: {} Аккаунт: {} ({}) Дата: {}'),
+(1027, 'Журналирование запросов SQL-драйвера включено.'),
+(1028, 'Журналирование запросов SQL-драйвера отключено.'),
+(1031, 'Пароль аккаунта НЕ может быть длиннее 16 символов (ограничение клиента). Аккаунт НЕ создан.'),
+(1100, 'Аккаунту {} (Id: {}) теперь разрешены дополнения до {}.'),
+(1101, 'Сообщение дня в мире {} для языка {} изменено на:\\r {}'),
+(1102, 'Сообщение отправлено {}: {}'),
+(1103, '{} - {} {}'),
+(1104, '{} - {}'),
+(1105, '{} - {}'),
+(1106, '{} - {} {}'),
+(1107, '{} - {}'),
+(1108, '{} - {} {}'),
+(1109, '{} - {} {} {} {}'),
+(1110, '{} - {} X:{} Y:{} Z:{} MapId:{}'),
+(1111, '{} - {} X:{} Y:{} Z:{} MapId:{}'),
+(1112, 'Не удалось открыть файл: {}'),
+(1113, 'У аккаунта {} ({}) максимальное число персонажей (ограничение клиента)'),
+(1114, 'Файл дампа содержит повреждённые данные!'),
+(1115, 'Недопустимое имя персонажа!'),
+(1116, 'Недопустимый guid персонажа!'),
+(1117, 'Guid персонажа {} уже используется!'),
+(1118, '{} - гильдия: {} (guid: {}) {}'),
+(1119, 'Укажите пол: male или female.'),
+(1120, 'Вы изменили пол {} на {}.'),
+(1121, '{} изменил ваш пол на {}.'),
+(1122, '({}/{} +пост. {} +врем. {})'),
+(1123, 'Питомец не найден'),
+(1124, 'Неверный тип питомца'),
+(1125, 'Ваш питомец изучил все таланты'),
+(1126, 'Таланты вашего питомца сброшены.'),
+(1127, 'Таланты питомца {} сброшены.'),
+(1128, '{} - |cffffffff|Htaxinode:{}|h[{} {}]|h|r (Карта:{} X:{} Y:{} Z:{})'),
+(1129, '{} - {} {} (Карта:{} X:{} Y:{} Z:{})'),
+(1130, 'Нельзя сделать дамп удалённых персонажей, отмена.'),
+(1131, 'Под ваш запрос подходят персонажи:'),
+(1132, 'Забаненные персонажи:'),
+(1133, '|   Персонаж    |  Дата бана   |  Дата разбана |    Кем       |    Причина    |'),
+(1134, 'Отправка тикетов разрешена.'),
+(1135, 'Отправка тикетов запрещена.'),
+(1136, 'Персонаж {} никогда не был забанен!'),
+(1137, 'Режим разработчика ВКЛЮЧЁН'),
+(1138, 'Режим разработчика ВЫКЛЮЧЕН'),
+(1139, '   Следование за игроком {} (lowguid {})'),
+(1140, '   Следование за существом {} (lowguid {})'),
+(1141, '   Следование за <NULL>'),
+(1142, '   Движение от эффекта'),
+(1143, 'moveFlags цели: {}, moveFlagsExtra: {}.'),
+(1144, 'moveFlags цели установлены: {}, moveFlagsExtra: {}'),
+(1145, '{} уже состоит в группе!'),
+(1146, '{} вступил в группу {}.'),
+(1147, '{} не состоит в группе!'),
+(1148, 'Группа заполнена!'),
+(1149, 'Тип группы: {}, игроков: {}.'),
+(1150, 'Имя: {} ({}),\n\n Зона: {}, Фаза: {}, GUID: {}, Флаги: {}, Роли: {}'),
+(1151, 'Список писем: писем: {}, игрок: {}({})'),
+(1152, 'Письмо Id: {} Тема: "{}" Деньги: {}з{}с{}м');
+INSERT INTO `tmp_ru_strings` (`entry`, `txt`) VALUES
+(1153, 'Отправитель: {}({}),\n\n Получатель: {}({})'),
+(1154, 'Доставка: {}, истекает: {}'),
+(1155, 'Предмет: {}[Entry:{} Guid:{} Кол-во:{}]'),
+(1156, 'Список писем: у этого персонажа нет писем.'),
+(1157, 'Все настройки перезагружены из файлов конфигурации.'),
+(1158, '=========================================================='),
+(1159, '|--------------------------------------------------------|'),
+(1160, '|            |  Альянс  |   Орда   | Нейтрал. |  Всего   |'),
+(1161, '          Альянс/Орда/Нейтральные/Всего'),
+(1162, '| {} | {} | {} | {} | {} |'),
+(1163, '{} = {} / {} / {} / {}'),
+(1164, 'Количество'),
+(1165, 'Доля предметов'),
+(1166, '|            |  Альянс  |   Орда   | Нейтрал. |  Кол-во  |'),
+(1167, '          Альянс/Орда/Нейтральные/Кол-во'),
+(1168, 'Серые'),
+(1169, 'Белые'),
+(1170, 'Зелёные'),
+(1171, 'Синие'),
+(1172, 'Фиолетовые'),
+(1173, 'Оранжевые'),
+(1174, 'Жёлтые'),
+(1175, 'Количество предметов {} установлено на {}.'),
+(1176, 'Доля предметов для {} установлена на {}.'),
+(1177, 'Сведения о гильдии {} (Id: {})'),
+(1178, '| Глава гильдии: {} (GUID: {})'),
+(1179, '| Дата создания: {}'),
+(1180, '| Участников: {}'),
+(1181, '| Банк гильдии: {} золота'),
+(1182, '| Сообщение дня гильдии: {}'),
+(1183, '| Информация о гильдии: {}'),
+(1184, '| Звания гильдии:'),
+(1185, '| {} - {}'),
+(1186, 'Режим повелителя зверей: {}'),
+(1200, 'Вы пытаетесь посмотреть ролик {}, но его не существует.'),
+(1201, 'Вы пытаетесь посмотреть видео {}, но его не существует.'),
+(1202, 'Отладка areatrigger включена.'),
+(1203, 'Отладка areatrigger выключена.'),
+(1204, 'Вы достигли areatrigger {}.'),
+(1331, 'Генерал Северного Волка мёртв!'),
+(1332, 'Генерал Грозовой Вершины мёртв!'),
+(1334, 'Ваш тикет закрыт.'),
+(1335, 'Вы получили ответ на тикет.'),
+(1500, 'Либо:'),
+(1501, 'Или:   '),
+(1502, 'Значение ''{}'' недопустимо для типа {}.'),
+(1503, 'В строке найдены неверные последовательности UTF-8.'),
+(1504, 'Ссылка содержит неверные данные.'),
+(1505, 'Аккаунт ''{}'' не существует.'),
+(1506, 'Аккаунт с ID {} не существует.'),
+(1507, '{} не существует.'),
+(1508, 'Персонаж ''{}'' не существует.'),
+(1509, '''{}'' — недопустимое имя персонажа.'),
+(1510, 'Достижение с ID {} не существует.'),
+(1511, 'Точка телепорта {} не существует.'),
+(1512, 'Точка телепорта ''{}'' не существует.'),
+(1513, 'Предмет с ID {} не существует.'),
+(1514, 'Заклинание с ID {} не существует.'),
+(1515, 'Ожидалось ''{}'', получено ''{}''.'),
+(1516, 'Задание с ID {} не существует'),
+(2000, '|cff00ff00Новый тикет от|r|cffff00ff {}.|r |cff00ff00Номер тикета:|r|cffff00ff {}.|r'),
+(2001, '|cff00ff00Персонаж|r|cffff00ff {} |r|cff00ff00изменил тикет:|r|cffff00ff {}.|r'),
+(2002, '|cff00ff00Персонаж|r|cffff00ff {} |r|cff00ff00отозвал тикет:|r|cffff00ff {}.|r'),
+(2003, '|cff00ff00Закрыл|r:|cff00ccff {}|r '),
+(2004, '|cff00ff00Удалил|r:|cff00ccff {}|r '),
+(2005, 'Тикет не найден.'),
+(2006, 'Закройте тикет, прежде чем удалить его навсегда.'),
+(2007, 'Тикет {} уже назначен.'),
+(2008, 'Тикетов загружено из базы данных: {}.'),
+(2009, 'Список открытых тикетов.'),
+(2010, 'Список открытых тикетов, авторы которых в сети.'),
+(2011, 'Список закрытых тикетов.'),
+(2012, 'Указано неверное имя. Нужно имя ГМ, находящегося в сети.'),
+(2013, 'Этот тикет уже назначен вам. Чтобы снять назначение, используйте .ticket unassign {} и назначьте заново.'),
+(2014, 'Тикет {} не назначен, снимать назначение не с чего.'),
+(2015, 'Нельзя снимать тикеты с сотрудников с уровнем доступа выше вашего.'),
+(2016, 'Нельзя закрыть тикет {}: он назначен другому ГМ.'),
+(2017, '|cffaaffaaТикет|r:|cffaaccff {}.|r '),
+(2018, '|cff00ff00Создал|r:|cff00ccff {}|r '),
+(2019, '|cff00ff00Изменён|r:|cff00ccff {} назад|r '),
+(2020, '|cff00ff00Назначен|r:|cff00ccff {}|r '),
+(2021, '|cff00ff00Назначение снял|r:|cff00ccff {}|r '),
+(2022, '|cff00ff00Текст тикета|r: [{}]|r'),
+(2023, '|cff00ff00Комментарий ГМ|r: [{}]|r'),
+(2024, '|cff00ccff{}|r |cff00ff00добавил комментарий|r: [{}]|r'),
+(2025, '|cff00ff00Создан|r:|cff00ccff {} назад|r '),
+(2027, 'Есть открытые тикеты, сначала закройте их!'),
+(2028, 'Все закрытые тикеты удалены, счётчик сброшен на |cffff00ff 1|r'),
+(2029, '|cff00ff00Ответ на тикет|r: [{}]|r'),
+(2030, '|cff00ff00Выполнил|r:|cff00ccff {}|r'),
+(2031, '|cff00ff00Ответ дополнен|r:|cff00ccff [{}]|r'),
+(2032, '|cff00ff00Ответ удалил|r:|cff00ccff {}|r'),
+(5000, 'Вы заморозили игрока {}.'),
+(5001, 'Было бы забавно, но нет... заморозить себя нельзя!'),
+(5002, 'Неверный ввод, проверьте имя цели.'),
+(5003, 'Вы разморозили игрока {}.'),
+(5004, 'Замороженных игроков нет.'),
+(5005, 'На сервере заморожены игроки:'),
+(5006, '- {}'),
+(5007, 'Для входа в это подземелье нужно быть в рейдовой группе.'),
+(5008, 'Это подземелье закрыто.'),
+(5009, 'Звук {} воспроизведён для всего сервера'),
+(5010, 'linkGUID: {}, Entry: {} ({})'),
+(5011, 'Нельзя телепортировать себя к себе!'),
+(5012, 'Карты не найдены!'),
+(5013, '[Континент]'),
+(5014, '[Подземелье]'),
+(5015, '[Поле боя]'),
+(5016, '[Арена]'),
+(5017, '[Рейд]'),
+(5020, 'Phasemask: {}'),
+(5021, 'Броня: {}'),
+(5022, 'Передача прав владельца первому вошедшему в канал "{}": включена.'),
+(5023, 'Передача прав владельца первому вошедшему в канал "{}": отключена.'),
+(5024, 'Entry: {}'),
+(5025, 'Тип: {}'),
+(5026, 'DisplayID: {}'),
+(5027, 'Имя: {}'),
+(5028, 'Lootid: {}'),
+(5029, 'Достигнут лимит результатов (макс.: {})'),
+(5031, 'AIName: {} ScriptName: {}'),
+(5032, 'Поле боя не найдено!'),
+(5033, 'Критерии достижений не найдены!'),
+(5034, 'Мировое PvP не найдено!'),
+(5036, 'EquipmentId: {} (исходный: {}).'),
+(5037, 'MechanicImmuneMask: {}'),
+(5038, 'Unit Flags: {}'),
+(5039, 'Консоль'),
+(5040, 'Персонаж'),
+(5041, 'Навсегда'),
+(5042, 'Вы на открытом воздухе.'),
+(5043, 'Вы в помещении.'),
+(5044, 'нет данных VMAP для информации об области'),
+(5045, 'Карта: {} | ID: {} | пост.: {} | продлено: {} | сложность: {} | можно сбросить: {} | до сброса: {}'),
+(5046, 'Привязки игрока: {}'),
+(5047, 'Привязки группы: {}'),
+(5048, 'Снятие привязки: карта {} инст. {} пост. {} сложн. {} можно сбросить {} до сброса {}'),
+(5049, 'Снято привязок к подземельям: {}'),
+(5050, 'Загружено подземелий: {}'),
+(5051, 'Игроков в подземельях: {}'),
+(5052, 'Сохранений подземелий: {}'),
+(5053, 'Привязанных игроков: {}'),
+(5054, 'Привязанных групп: {}'),
+(5055, 'Карта не является подземельем.'),
+(5056, 'У карты нет данных подземелья.'),
+(5057, 'Состояние босса id {} установлено на {} ({}).'),
+(5058, 'Состояние босса id {} ({}): {} ({}).'),
+(5059, 'Муты аккаунта: {}'),
+(5060, 'У аккаунта нет мутов: {}'),
+(5061, 'Дата мута: {} Длительность: {} мин. Причина: {} Кем: {}'),
+(5062, 'SpellSchoolImmuneMask: {}'),
+(5063, 'Кэшированные данные персонажа: \n|- Имя: {} (Guid: {}) \n|- Аккаунт: {} \n|- Класс: {} \n|- Раса: {} \n|- Пол: {} \n|- Уровень: {} \n|- Писем: {} \n|- Гильдия: {} \n|- ID группы: {} \n|- Команда арены 2x2: {} \n|- Команда арены 3x3: {} \n|- Команда арены 5x5: {}'),
+(5064, 'Кэш персонажа {} ({}) очищен.'),
+(5065, 'Кэш персонажа {} ({}) обновлён.'),
+(5066, 'Кэш персонажа {} не найден'),
+(5067, 'Задание {} ({}) добавлено.'),
+(5068, 'Задание {} ({}) не найдено в журнале заданий.'),
+(5069, 'Для получения награды задание должно быть активно и выполнено'),
+(5070, 'Команда отключена в настройках'),
+(5071, 'Указанная запись extendedcost не существует.'),
+(5072, 'Возврат {} ({}) превысит лимит очков чести цели (лимит: {}, сейчас: {}, к возврату: {}).'),
+(5073, 'Не удалось вернуть предмет {}: будет превышен лимит очков чести.'),
+(5074, 'Предмет {} ({}) возвращён, восстановлено очков чести: {}.'),
+(5075, 'Возврат {} ({}) превысит лимит очков арены цели (лимит: {}, сейчас: {}, к возврату: {}).'),
+(5076, 'Не удалось вернуть предмет {}: будет превышен лимит очков арены.'),
+(5077, 'Предмет {} ({}) возвращён, восстановлено очков арены: {}.'),
+(5078, 'Предмет не найден в инвентаре персонажа (включая банк)'),
+(5079, 'Отключать автоматические объявления можно с уровня {}.'),
+(5080, 'Теперь вы получаете общие сообщения {}.'),
+(5081, 'Вы больше не будете получать общие сообщения {}.'),
+(5082, 'Неверный синтаксис. Укажите ''starter'' или ''ender''.'),
+(5083, 'Персонаж {} ({}) перенесён с аккаунта {} ({}) на аккаунт {} ({}).'),
+(5084, 'Не удалось применить заклинание! SpellCastResult: {} ({}).'),
+(5085, 'Объект {} (entry :{} guid: {}) возрождён!'),
+(5086, 'В радиусе {} м дверей не найдено.'),
+(5087, 'Дверь {} (Entry: {}) открыта!'),
+(5088, 'Задание: {} ({}) \nСостояние: {}'),
+(5089, 'Задание {} нельзя взять. Причины:'),
+(5090, '  - Задание отключено.'),
+(5091, '  - Задание уже взято или выполнено.'),
+(5092, '  - Не подходит класс.'),
+(5093, '  - Не подходит раса.'),
+(5094, '  - Слишком низкий уровень (нужен: {}).'),
+(5095, '  - Слишком высокий уровень (макс.: {}).'),
+(5096, '  - Не выполнены требования к навыку.'),
+(5097, '  - Не выполнены требования к репутации.'),
+(5098, '  - Не выполнено предыдущее задание цепочки.'),
+(5099, '  - Уже есть задание на время.'),
+(5100, '  - Конфликт с заданием из взаимоисключающей группы.'),
+(5101, '  - Следующее задание цепочки уже начато.'),
+(5102, '  - Предыдущее задание цепочки всё ещё активно.'),
+(5103, '  - Конфликт с заданием-указателем.'),
+(5104, '  - Ежедневное задание сегодня недоступно.'),
+(5105, '  - Еженедельное задание на этой неделе уже выполнено.'),
+(5106, '  - Ежемесячное задание в этом месяце уже выполнено.'),
+(5107, '  - Сезонное задание в этом сезоне уже выполнено.'),
+(5108, '  - Не выполнены условия:'),
+(5109, '  - Журнал заданий заполнен.'),
+(5110, '    - Условие не выполнено: тип {} value1: {} value2: {} value3: {}'),
+(5118, 'Очки чести сброшены у всех игроков.');
+INSERT INTO `tmp_ru_strings` (`entry`, `txt`) VALUES
+(5119, 'Очки арены сброшены у всех игроков.'),
+(5123, '  [З] {}'),
+(5124, '  [П] {} ({}с)'),
+(5125, '  [М] {}'),
+(6604, 'Вы не можете говорить, кричать и использовать эмоции до {} уровня.'),
+(6605, 'Вы не можете писать личные сообщения до {} уровня.'),
+(6606, 'Вы не можете писать в каналы до {} уровня.'),
+(6607, 'Вы не можете пользоваться аукционом до {} уровня.'),
+(6608, 'Вы не можете отправлять тикеты до {} уровня.'),
+(6609, 'Вы не можете торговать до {} уровня.'),
+(6610, 'Нельзя торговать с персонажами ниже {} уровня.'),
+(6611, 'Вы не можете отправлять почту до {} уровня.'),
+(6612, 'Нельзя отправлять почту персонажам ниже {} уровня.'),
+(6613, '|cfff00000[Объявление ГМ]: {}|r'),
+(6614, 'Оповещение для ГМ - '),
+(6615, '|cffffff00[|c1f40af20Объявление ГМ от|r |cffff0000{}|cffffff00]:|r {}|r'),
+(6616, 'Режим тишины ВКЛЮЧЁН для {}'),
+(6617, 'Режим наблюдателя ГМ ВКЛЮЧЁН'),
+(6618, 'Режим наблюдателя ГМ ВЫКЛЮЧЕН'),
+(7523, 'МИР: подключения запрещены.'),
+(7524, 'МИР: подключения разрешены.'),
+(9980, 'Игрок: {}, Состояние: {}, Подземелья: {} ({}),\n\n Роли: {}, Комментарий: {}'),
+(9981, 'Группа поиска?: {}, Состояние: {}, Подземелье: {}'),
+(9982, 'Не в группе'),
+(9983, 'Очереди очищены'),
+(9984, 'Параметры поиска группы: {}'),
+(9985, 'Параметры поиска группы изменены'),
+(9986, 'Нет'),
+(9987, 'Проверка ролей'),
+(9988, 'В очереди'),
+(9989, 'Предложение'),
+(9990, 'Голосование за исключение'),
+(9991, 'В подземелье'),
+(9992, 'Подземелье пройдено'),
+(9993, 'Поиск рейда'),
+(9994, 'Танк'),
+(9995, 'Лекарь'),
+(9996, 'Урон'),
+(9997, 'Лидер'),
+(9998, 'Нет'),
+(9999, 'Ошибка'),
+(10001, 'Орда захватила Смотровую площадку!'),
+(10002, 'Альянс захватил Смотровую площадку!'),
+(10003, 'Орда захватила Стадион!'),
+(10004, 'Альянс захватил Стадион!'),
+(10005, 'Орда захватила Разбитый холм!'),
+(10006, 'Альянс захватил Разбитый холм!'),
+(10007, 'Орда потеряла Смотровую площадку!'),
+(10008, 'Альянс потерял Смотровую площадку!'),
+(10009, 'Орда потеряла Стадион!'),
+(10010, 'Альянс потерял Стадион!'),
+(10011, 'Орда потеряла Разбитый холм!'),
+(10012, 'Альянс потерял Разбитый холм!'),
+(10013, 'Орда захватила Западный маяк!'),
+(10014, 'Альянс захватил Западный маяк!'),
+(10015, 'Орда захватила Восточный маяк!'),
+(10016, 'Альянс захватил Восточный маяк!'),
+(10017, 'Орда захватила кладбище Двух Шпилей!'),
+(10018, 'Альянс захватил кладбище Двух Шпилей!'),
+(10019, 'Орда потеряла Западный маяк!'),
+(10020, 'Альянс потерял Западный маяк!'),
+(10021, 'Орда потеряла Восточный маяк!'),
+(10022, 'Альянс потерял Восточный маяк!'),
+(10023, 'Орда потеряла кладбище Двух Шпилей!'),
+(10024, 'Альянс потерял кладбище Двух Шпилей!'),
+(10025, 'Орда захватила Халаа!'),
+(10026, 'Альянс захватил Халаа!'),
+(10027, 'Орда потеряла Халаа!'),
+(10028, 'Альянс потерял Халаа!'),
+(10029, 'Орда захватила Башню духов!'),
+(10030, 'Альянс захватил Башню духов!'),
+(10031, 'Орда потеряла Башню духов!'),
+(10032, 'Альянс потерял Башню духов!'),
+(10033, 'Орда захватила Северную башню!'),
+(10034, 'Альянс захватил Северную башню!'),
+(10035, 'Орда захватила Восточную башню!'),
+(10036, 'Альянс захватил Восточную башню!'),
+(10037, 'Орда захватила башню Королевской Стражи!'),
+(10038, 'Альянс захватил башню Королевской Стражи!'),
+(10039, 'Орда захватила башню Чумного леса!'),
+(10040, 'Альянс захватил башню Чумного леса!'),
+(10041, 'Орда потеряла Северную башню!'),
+(10042, 'Альянс потерял Северную башню!'),
+(10043, 'Орда потеряла Восточную башню!'),
+(10044, 'Альянс потерял Восточную башню!'),
+(10045, 'Орда потеряла башню Королевской Стражи!'),
+(10046, 'Альянс потерял башню Королевской Стражи!'),
+(10047, 'Орда потеряла башню Чумного леса!'),
+(10048, 'Альянс потерял башню Чумного леса!'),
+(10049, 'Орда собрала 200 силитиста!'),
+(10050, 'Альянс собрал 200 силитиста!'),
+(10051, 'Отведи меня к Северной башне.'),
+(10052, 'Отведи меня к Восточной башне.'),
+(10053, 'Отведи меня к башне Королевской Стражи.'),
+(10054, 'Дай мне флаг, я отнесу его к центральному маяку во славу Альянса!'),
+(10055, 'Дай мне флаг, я отнесу его к центральному маяку во славу Орды!'),
+(10056, 'Битва за Берег Древних начнётся через 2 минуты.'),
+(10057, 'Битва за Берег Древних начнётся через 1 минуту.'),
+(10058, 'Битва за Берег Древних начнётся через 30 секунд. Приготовьтесь!.'),
+(10059, 'Да начнётся битва за Берег Древних!'),
+(10060, '{} атакованы!'),
+(10061, '{} уничтожены!'),
+(10062, 'Раунд 1 завершён!'),
+(10063, 'Альянс захватил портал титанов!'),
+(10064, 'Орда захватила портал титанов!'),
+(10065, 'Второй раунд битвы за Берег Древних начнётся через 1 минуту.'),
+(10066, 'Второй раунд начнётся через 30 секунд. Приготовьтесь!'),
+(10067, 'Зал прорван! Реликвия титанов уязвима!'),
+(10068, 'Альянс захватил Южное кладбище!'),
+(10069, 'Альянс захватил Западное кладбище!'),
+(10070, 'Альянс захватил Восточное кладбище!'),
+(10071, 'Орда захватила Южное кладбище!'),
+(10072, 'Орда захватила Западное кладбище!'),
+(10073, 'Орда захватила Восточное кладбище!'),
+(10074, 'Халаа беззащитна!'),
+(11000, '|cffffff00[|c00077766Объявление|cffffff00]: |cFFF222FF{}|r'),
+(11001, 'Вы не указали -1 или ID текущего мира.'),
+(11008, 'Тип движения: {}'),
+(11009, 'Flags Extra: {}'),
+(11010, 'Вас не выкинуло из подземелья, хотя Player::CheckInstanceLoginValid() вернул false и режим .gm on не включён'),
+(11011, 'Предупреждение VisualizeBoundary: не найдено ни одной внутренней точки границы существа — проверьте, нет ли взаимоисключающих границ!'),
+(11012, 'Ошибка VisualizeBoundary: движение существа ничем не ограничено'),
+(11013, 'Предупреждение VisualizeBoundary: достигнут аварийный предел заливки — проверьте, не открыта ли граница!'),
+(11014, 'Вы уже привязаны к {}.'),
+(11015, 'У этого существа нет активного CreatureAI.'),
+(11016, 'Выберите игрока или питомца игрока.'),
+(11019, 'Восстановление поиска подземелий сброшено у всех игроков.'),
+(12050, '{} захвачена: {} '),
+(12051, '{} атакует {}'),
+(12052, 'Осадная мастерская у Разрушенного храма'),
+(12053, 'Осадная мастерская у Восточной Искры'),
+(12054, 'Осадная мастерская у Западной Искры'),
+(12055, 'Осадная мастерская у Затонувшего Кольца'),
+(12056, 'Орда'),
+(12057, 'Альянс'),
+(12058, 'Битва за Озеро Ледяных Оков вот-вот начнётся!'),
+(12059, 'Вы достигли звания 1: Капрал'),
+(12060, 'Вы достигли звания 2: Лейтенант'),
+(12061, 'Юго-восточная башня крепости'),
+(12062, 'Северо-восточная башня крепости'),
+(12063, 'Юго-западная башня крепости'),
+(12064, 'Северо-западная башня крепости'),
+(12065, '{} повреждена!'),
+(12066, '{} разрушена!'),
+(12067, 'Битва за Озеро Ледяных Оков началась!'),
+(12068, '{} успешно защищает крепость Озера Ледяных Оков!'),
+(12069, 'Южная башня'),
+(12070, 'Восточная башня'),
+(12071, 'Западная башня'),
+(12072, 'Крепость Озера Ледяных Оков захвачена: {}!'),
+(20070, 'Отведи меня к кладбищу Крепости.'),
+(20071, 'Отведи меня к кладбищу Затонувшего Кольца.'),
+(20072, 'Отведи меня к кладбищу Разрушенного храма.'),
+(20073, 'Отведи меня к кладбищу Западной Искры.'),
+(20074, 'Отведи меня к кладбищу Восточной Искры.'),
+(20075, 'Отведи меня обратно в лагерь высадки Орды.'),
+(20076, 'Отведи меня обратно в лагерь высадки Альянса.'),
+(20077, 'Встать в очередь на Озеро Ледяных Оков.'),
+(20078, '|cffff0000[Озеро Ледяных Оков]:|r Битва началась!|r'),
+(28634, 'Эти следы, должно быть, принадлежат Шанго.'),
+(28635, 'Это не следы Шанго.'),
+(30077, 'Переключить мгновенный полёт'),
+(30078, 'Мгновенный полёт ВКЛ'),
+(30079, 'Мгновенный полёт ВЫКЛ'),
+(30081, 'У {} нет itemID = {}, удалить нельзя.'),
+(30082, 'У {} нет столько предметов с itemID = {}, ничего не удалено.'),
+(30083, 'На поле боя нельзя делиться заданиями.'),
+(30084, 'На поле боя нельзя запускать проверку готовности.'),
+(30085, 'Отладка полей боя уже включена в настройках, поэтому включать/выключать её командой нельзя.'),
+(30086, 'Отладка арен уже включена в настройках, поэтому включать/выключать её командой нельзя.'),
+(30096, 'Поиск группы переведён в режим очереди на 1 игрока для отладки.'),
+(30097, 'Поиск группы переведён в обычный режим очереди.'),
+(30098, 'Отладка поиска группы уже включена в настройках, поэтому включать/выключать её командой нельзя.'),
+(35400, '¦ Игрок {} {} (guid: {})'),
+(35401, '¦ Режим ГМ активен, Фаза: -1'),
+(35402, '├─ Забанен: (Тип: {}, Причина: {}, Срок: {}, Кем: {})'),
+(35403, '├─ Мут: (Причина: {}, Срок: {}, Кем: {})'),
+(35404, '¦ Аккаунт: {} (ID: {}),\n\n Уровень ГМ: {}'),
+(35405, '¦ Последний вход: {} (Неудачных входов: {})'),
+(35406, '¦ Email регистрации: {} - Email: {}'),
+(35407, 'Причина не указана.'),
+(35408, '<нет доступа>'),
+(35409, '¦ Карта: {}, Зона: {}, Область: {}'),
+(35411, 'На этом сервере работает модуль |cff4CFF00IndividualXpRate |r.'),
+(35412, '[Опыт] Модуль индивидуального опыта отключён.'),
+(35413, '[Опыт] Ваш индивидуальный множитель опыта сейчас отключён. Включите его командой .xp enable.'),
+(35414, '|cffffffff[Опыт] Ваш текущий множитель опыта: {}.|r'),
+(35415, '|cffffffff[Опыт] Максимальный множитель: {}.|r'),
+(35416, '[Опыт] Минимальный множитель: 1.'),
+(35417, '[Опыт] Вы установили множитель опыта: {}.'),
+(35418, '[Опыт] Вы отключили получение опыта.'),
+(35419, '[Опыт] Вы включили получение опыта.'),
+(35420, '[Опыт] Множитель опыта возвращён к значению по умолчанию: {}.');
+UPDATE `acore_string` AS a INNER JOIN `tmp_ru_strings` AS t ON t.`entry` = a.`entry`
+SET a.`locale_ruRU` = t.`txt` WHERE a.`entry` = t.`entry`;
+DROP TEMPORARY TABLE IF EXISTS `tmp_ru_strings`;
